@@ -1,3 +1,8 @@
+#ifndef BIBLIO_H
+#define BIBLIO_H
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,3 +40,7 @@ typedef AVL* pArbre;
 
 
 typedef File* pFile;
+
+
+
+#endif
