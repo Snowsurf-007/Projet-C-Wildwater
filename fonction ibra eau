@@ -93,18 +93,58 @@ Arbre* dblrotG(Arbre* arbre){
 	return rotationgauche(arbre);	
 }
 Arbre* rotationgauche( Arbre* arbre){
+	if (arbre == NULL){
+		exit(1);
+	}
 	Arbre* pivot = arbre->fd;
 	arbre->fd=pivot->fg;
 	pivot->fg=arbre;
+	int ea = arbre->eq;
+	int ep =pivot->eq
+	arbre->eq =ae -max2(ep, 0, 0)-1;
+	pivot->eq= min2(ea-2, ea+ep-2,ep-1);
 	arbre=pivot;
 	return arbre;
 }
 Arbre* rotationdroite( Arbre* arbre){
+	if (arbre == NULL){
+		exit(1);
+	}
 	Arbre* pivot = arbre->fg;
 	arbre->fg=pivot->fd;
 	pivot->fd=arbre;
+	int ea = arbre->eq;
+	int ep =pivot->eq
+	arbre->eq =ae -min(ep, 0, 0)+1;
+	pivot->eq= max(ea+2, ea+ep+2,ep+1);
 	arbre=pivot;
 	return arbre;
+}
+int min(int a, int b, int c){
+	if (a<=b){
+		if(a<=c){
+		return a;
+		}
+		return c;	
+	}
+	if (b<=c){
+		return b;
+	}
+	return c
+	
+}
+int max(int a, int b, int c){
+	if (a<=b){
+		if(b<=c){
+		return c;
+		}
+		return b;	
+	}
+	if (a<=c){
+		return c;
+	}
+	return a
+	
 }
 
 
