@@ -1,148 +1,230 @@
-#include<stdio.h>
-#include<stdlib.h>
+int max(int a, int b){
+    return (a > b) ? a : b;
+}
+
+
+
+int min(int a, int b){
+    return (a < b) ? a : b;
+}
 
 
 
-
-typedef struct Arbre{
-	int usine;
-	int eau;
-	struct Arbre* fg;
-	struct Arbre* fd;
-	int eq;
-}Arbre;
-
-Arbre* creerArbre( int u, int e){
-	Arbre* arbre=malloc(sizeof(Arbre));
-	if(arbre== NULL){
-		exit(1);
-	}
-	arbre->usine=u;
-	arbre->eau=e;
-	arbre->fg=NULL;
-	arbre->fd=NULL;
-	arbre->eq=0;
-	return arbre;
-}
-Arbre* eqAVL(Arbre* arbre){
-	if(arbre->eq >= 2){
-		if(arbre->fd->eq >=0){
-			return rotationgauche(arbre);
-		}
-		return dblrotG(arbre);
-	}
-	else if(arbre->eq <=-2){
-		if(arbre->fg->eq<=0){
-			return rotationdroite(arbre);
-		}
-		return dblrotD(arbre);
-	}
-	return arbre;
-}	
-Arbre* insertAVL(Arbre* arbre, int u, int e, int *h){
-	if(arbre == NULL){
-		*h=1;
-		return creerArbre( u, e);
-	}
-	else if(u < arbre->elmt){
-		arbre->fg = insertAVL(arbre->fg, u, e, h);
-		*h= -*h;
-	}
-	else if(u > arbre->elmt){
-		arbre->fd = insertAVL(arbre->fd, u, e, h);
-	}
-	else{
-		arbre->eau= arbre->eau + e;
-		*h=0;
-		return arbre;
-	}
-	if(*h != 0){
-		arbre->eq = arbre->eq + *h;
-		arbre = eqAVL(arbre);
-		if(arbre->eq == 0){
-			*h = 0;
-		}
-		else{
-			*h = 1;
-		}
-	}
-	return arbre;
-}
-Arbre* eqAVL(Arbre* arbre){
-	if(arbre->eq >= 2){
-		if(arbre->fd->eq >=0){
-			return rotationgauche(arbre);
-		}
-		return dblrotG(arbre);
-	}
-	else if(arbre->eq <=-2){
-		if(arbre->fg->eq<=0){
-			return rotationdroite(arbre);
-		}
-		return dblrotD(arbre);
-	}
-	return arbre;
-}
-Arbre* dblrotD(Arbre* arbre){
-	arbre->fg = rotationgauche(arbre->fg);
-	return rotationdroite(arbre);	
+int recherche(pArbre a, int e){
+  if(a==NULL){
+    return 1;
+  }
+  else if(e==a->elmt){
+    return 0;
+  }
+  else if(e<a->elmt){
+    return recherche(a->fg, e);
+  }
+  else if(e>a->elmt){
+    return recherche(a->fd, e);
+  }
 }
 
-Arbre* dblrotG(Arbre* arbre){
-	arbre->fd = rotationdroite(arbre->fd);
-	return rotationgauche(arbre);	
+
+
+pArbre creationAVL(int e){
+  pArbre new=malloc(sizeof(AVL));
+  new->elmt=e;
+  new->fg=NULL;
+  new->fd=NULL;
+  new->equil=0;
+  return new;
 }
-Arbre* rotationgauche( Arbre* arbre){
-	if (arbre == NULL){
-		exit(1);
-	}
-	Arbre* pivot = arbre->fd;
-	arbre->fd=pivot->fg;
-	pivot->fg=arbre;
-	int ea = arbre->eq;
-	int ep =pivot->eq
-	arbre->eq =ae -max2(ep, 0, 0)-1;
-	pivot->eq= min2(ea-2, ea+ep-2,ep-1);
-	arbre=pivot;
-	return arbre;
+
+
+
+AVL* rotationGauche(AVL* a){
+    AVL* p=a->fd;
+    int eq_a=a->equil; 
+    int eq_p=p->equil;
+
+    a->fd=p->fg;
+    p->fg = a;
+
+    a->equil=eq_a - max(eq_p, 0) - 1;
+    p->equil=min(min(eq_a - 2, eq_a + eq_p - 2), eq_p - 1);
+
+    return p;
 }
-Arbre* rotationdroite( Arbre* arbre){
-	if (arbre == NULL){
-		exit(1);
-	}
-	Arbre* pivot = arbre->fg;
-	arbre->fg=pivot->fd;
-	pivot->fd=arbre;
-	int ea = arbre->eq;
-	int ep =pivot->eq
-	arbre->eq =ae -min(ep, 0, 0)+1;
-	pivot->eq= max(ea+2, ea+ep+2,ep+1);
-	arbre=pivot;
-	return arbre;
+
+
+
+AVL* rotationDroite(AVL* a){
+    AVL* p=a->fg;
+    int eq_a=a->equil;
+    int eq_p=p->equil;
+
+    a->fg=p->fd;
+    p->fd=a;
+
+    a->equil=eq_a - min(eq_p, 0) + 1;
+    p->equil=max(max(eq_a + 2, eq_a + eq_p + 2), eq_p + 1);
+
+    return p;
 }
-int min(int a, int b, int c){
-	if (a<=b){
-		if(a<=c){
-		return a;
-		}
-		return c;	
-	}
-	if (b<=c){
-		return b;
-	}
-	return c
-	
+
+
+
+AVL* doubleRotationGauche(AVL* a){
+    a->fd = rotationDroite(a->fd);
+    return rotationGauche(a);
 }
-int max(int a, int b, int c){
-	if (a<=b){
-		if(b<=c){
-		return c;
-		}
-		return b;	
-	}
-	if (a<=c){
-		return c;
-	}
-	return a
-	
+
+
+
+AVL* doubleRotationDroite(AVL* a){
+    a->fg = rotationGauche(a->fg);
+    return rotationDroite(a);
+}
+
+
+
+int hauteur(pArbre a){
+    if(a==NULL){
+    	return -1;
+    }
+    int hg=hauteur(a->fg);
+    int hd=hauteur(a->fd);
+    return max(hg, hd) + 1;
+}
+
+
+
+int equilibre(pArbre a){
+	return hauteur(a->fd) - hauteur(a->fg);
+}
+
+
+
+void equilibrage(pArbre a){
+  if(a->equil==0 || a->equil==1 || a->equil==-1){
+    return;
+  }
+  else if(a->equil<-2 || a->equil>2){
+   if(a->fg->equil>0){
+    rotationGauche;
+   }
+  }
+}
+
+
+
+pArbre insertAVL(pArbre a, int e){
+  if(a==NULL){
+    return creationAVL(e);
+  }
+  else if(e==a->elmt){
+    printf("Cet élément est deja présent dans l'AVL\n");
+    return a;
+  }
+  else if(e<a->elmt){
+    a->fg=insertAVL(a->fg, e);
+  }
+  else if(e>a->elmt){
+    a->fd=insertAVL(a->fd, e);
+  }
+  equilibrage(a);
+  return a;
+}
+
+
+
+void supprAVL(){
+
+}
+
+
+
+void traiter(pArbre a){
+  if(a==NULL){
+    return;
+  }
+  else{
+    printf("%d  ", a->elmt);
+  }
+}
+
+
+
+void infixe(pArbre a){
+  if (a==NULL){
+  	return;
+  }
+  infixe(a->fg);
+  traiter(a);
+  infixe(a->fd);
+}
+
+
+
+void prefixe(pArbre a){
+  if (a==NULL){
+  	return;
+  }
+  traiter(a);
+  prefixe(a->fg);
+  prefixe(a->fd);
+}
+
+
+
+void suffixe(pArbre a){
+  if (a==NULL){
+  	return;
+  }
+  suffixe(a->fg);
+  suffixe(a->fd);
+  traiter(a);
+}
+
+
+
+void largeur(pArbre a){
+
+}
+
+
+
+int main(){
+  pArbre a = NULL;
+  int element = 0;
+  int valeurs[] = {10, 3, 5, 15, -8, 20, 12, 7, 45, 9, -75, -41, 61, 157, 1};
+
+  for(int i=0; i<15; i++){
+    a=insertAVL(a, valeurs[i]);
+  }
+  
+  infixe(a);
+  prefixe(a);
+  suffixe(a);
+  //largeur(a);
+  
+  element=13;
+  if (recherche(a, element) == 0) {
+    printf("\nL'élément %d est présent dans l'arbre.\n", element);
+  } 
+  else {
+    printf("\nL'élément %d n'est pas présent dans l'arbre.\n", element);
+  }
+  element=12;
+  if (recherche(a, element) == 0) {
+    printf("\nL'élément %d est présent dans l'arbre.\n", element);
+  } 
+  else {
+    printf("\nL'élément %d n'est pas présent dans l'arbre.\n", element);
+  }
+  
+  element = 15;
+  printf("\nSuppression de l'élément %d dans l'arbre.\n", element);
+  //a=supprAVL(a, element);
+  
+  infixe(a);
+  printf("\n");
+  
+  return 0;
 }
