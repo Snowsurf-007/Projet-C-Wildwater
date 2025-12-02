@@ -146,9 +146,3 @@ int max(int a, int b, int c){
 	return a
 	
 }
-
-
-int main(){
-
-return 0;
-}
