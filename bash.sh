@@ -12,3 +12,4 @@ then
 fi
 
 cat fuite.txt
+# awk -F';' '$NF ~ /-/' fichier.csv > temp.txt #recupere les lignes contenant des usines
