@@ -1,0 +1,114 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+
+
+typedef struct Arbre{
+	int usine;
+	int eau;
+	struct Arbre* fg;
+	struct Arbre* fd;
+	int eq;
+}Arbre;
+
+Arbre* creerArbre( int u, int e){
+	Arbre* arbre=malloc(sizeof(Arbre));
+	if(arbre== NULL){
+		exit(1);
+	}
+	arbre->usine=u;
+	arbre->eau=e;
+	arbre->fg=NULL;
+	arbre->fd=NULL;
+	arbre->eq=0;
+	return arbre;
+}
+Arbre* eqAVL(Arbre* arbre){
+	if(arbre->eq >= 2){
+		if(arbre->fd->eq >=0){
+			return rotationgauche(arbre);
+		}
+		return dblrotG(arbre);
+	}
+	else if(arbre->eq <=-2){
+		if(arbre->fg->eq<=0){
+			return rotationdroite(arbre);
+		}
+		return dblrotD(arbre);
+	}
+	return arbre;
+}	
+Arbre* insertAVL(Arbre* arbre, int u, int e, int *h){
+	if(arbre == NULL){
+		*h=1;
+		return creerArbre( u, e);
+	}
+	else if(u < arbre->elmt){
+		arbre->fg = insertAVL(arbre->fg, u, e, h);
+		*h= -*h;
+	}
+	else if(u > arbre->elmt){
+		arbre->fd = insertAVL(arbre->fd, u, e, h);
+	}
+	else{
+		arbre->eau= arbre->eau + e;
+		*h=0;
+		return arbre;
+	}
+	if(*h != 0){
+		arbre->eq = arbre->eq + *h;
+		arbre = eqAVL(arbre);
+		if(arbre->eq == 0){
+			*h = 0;
+		}
+		else{
+			*h = 1;
+		}
+	}
+	return arbre;
+}
+Arbre* eqAVL(Arbre* arbre){
+	if(arbre->eq >= 2){
+		if(arbre->fd->eq >=0){
+			return rotationgauche(arbre);
+		}
+		return dblrotG(arbre);
+	}
+	else if(arbre->eq <=-2){
+		if(arbre->fg->eq<=0){
+			return rotationdroite(arbre);
+		}
+		return dblrotD(arbre);
+	}
+	return arbre;
+}
+Arbre* dblrotD(Arbre* arbre){
+	arbre->fg = rotationgauche(arbre->fg);
+	return rotationdroite(arbre);	
+}
+
+Arbre* dblrotG(Arbre* arbre){
+	arbre->fd = rotationdroite(arbre->fd);
+	return rotationgauche(arbre);	
+}
+Arbre* rotationgauche( Arbre* arbre){
+	Arbre* pivot = arbre->fd;
+	arbre->fd=pivot->fg;
+	pivot->fg=arbre;
+	arbre=pivot;
+	return arbre;
+}
+Arbre* rotationdroite( Arbre* arbre){
+	Arbre* pivot = arbre->fg;
+	arbre->fg=pivot->fd;
+	pivot->fd=arbre;
+	arbre=pivot;
+	return arbre;
+}
+
+
+int main(){
+
+return 0;
+}
