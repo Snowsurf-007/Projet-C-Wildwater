@@ -10,6 +10,14 @@
 #include <time.h>
 #include <unistd.h>
 
+typedef struct AVL{
+  int elmt;
+  int equil;
+  Char* ID
+  struct AVL* fg;
+  struct AVL* fd;
+}AVL;
+
 
 
 typedef struct Chainon{
@@ -25,21 +33,11 @@ typedef struct File{
 }File;
 
 
-
-typedef struct AVL{
-  int elmt;
-  int equil;
-  struct AVL* fg;
-  struct AVL* fd;
-}AVL;
+typedef AVL*;
 
 
 
-typedef AVL* pArbre;
-
-
-
-typedef File* pFile;
+typedef File*;
 
 
 
