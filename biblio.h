@@ -33,11 +33,6 @@ typedef struct File{
 }File;
 
 
-typedef AVL*;
-
-
-
-typedef File*;
 
 
 
