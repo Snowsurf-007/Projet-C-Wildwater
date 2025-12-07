@@ -21,5 +21,8 @@ suite (corection)
 if [ $# -ne 3 ]
 then
 	awk -F';' '$NF ~ /-/' la.csv > temp.txt
-	cut -d';' -f2,4  temp.txt > temp2.txt 
+	cut -d';' -f2,4  temp.txt > histo.txt 
 fi
+
+gnuplot> set style data histograms
+gnuplot> plot './histo.txt' using 2:xtic(1)
