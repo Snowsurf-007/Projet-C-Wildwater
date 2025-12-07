@@ -1,3 +1,6 @@
+07/12
+ajouts lecture.c qui lit un fichier trié "ID;nombre", il faut pas oublier de le passer quand on appelle lecture dans le bash
+Constante TAILLEID
 4/12
 Changement dans la structure AVL
 J ai fait des fonction pour insert en comparant des chaines et pas des int 
