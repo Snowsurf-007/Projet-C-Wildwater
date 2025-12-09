@@ -9,7 +9,7 @@ int min(int a, int b){
 }
 
 Arbre* creationStrAVL(int e,char*c){   //pour les str
-  pArbre new=malloc(sizeof(AVL));
+  AVL* new=malloc(sizeof(AVL));
   new->elmt=e;
   new->fg=NULL;
   new->fd=NULL;
@@ -17,7 +17,7 @@ Arbre* creationStrAVL(int e,char*c){   //pour les str
   new->ID=c;
   return new;
 }
-int recherche(pArbre a, int e){
+int recherche(AVL* a, int e){
   if(a==NULL){
     return 1;
   }
@@ -34,8 +34,8 @@ int recherche(pArbre a, int e){
 
 
 
-pArbre creationAVL(int e){
-  pArbre new=malloc(sizeof(AVL));
+AVL* creationAVL(int e){
+  AVL* new=malloc(sizeof(AVL));
   new->elmt=e;
   new->fg=NULL;
   new->fd=NULL;
@@ -91,7 +91,7 @@ AVL* doubleRotationDroite(AVL* a){
 
 
 
-int hauteur(pArbre a){
+int hauteur(AVL* a){
     if(a==NULL){
     	return -1;
     }
@@ -102,13 +102,13 @@ int hauteur(pArbre a){
 
 
 
-int equilibre(pArbre a){
+int equilibre(AVL* a){
 	return hauteur(a->fd) - hauteur(a->fg);
 }
 
 
 
-void equilibrage(pArbre a){
+void equilibrage(AVL* a){
   if(a->equil==0 || a->equil==1 || a->equil==-1){
     return;
   }
@@ -121,7 +121,7 @@ void equilibrage(pArbre a){
 
 
 
-pArbre insertAVL(pArbre a, int e){
+AVL* insertAVL(AVL* a, int e){
   if(a==NULL){
     return creationAVL(e);
 *h=1;
@@ -194,7 +194,7 @@ void supprAVL(){
 
 
 
-void traiter(pArbre a){
+void traiter(AVL* a){
   if(a==NULL){
     return;
   }
@@ -205,7 +205,7 @@ void traiter(pArbre a){
 
 
 
-void infixe(pArbre a){
+void infixe(AVL* a){
   if (a==NULL){
   	return;
   }
@@ -216,7 +216,7 @@ void infixe(pArbre a){
 
 
 
-void prefixe(pArbre a){
+void prefixe(AVL* a){
   if (a==NULL){
   	return;
   }
@@ -227,7 +227,7 @@ void prefixe(pArbre a){
 
 
 
-void suffixe(pArbre a){
+void suffixe(AVL* a){
   if (a==NULL){
   	return;
   }
@@ -238,6 +238,6 @@ void suffixe(pArbre a){
 
 
 
-void largeur(pArbre a){
+void largeur(AVL* a){
 
 }
