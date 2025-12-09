@@ -2,242 +2,162 @@ int max(int a, int b){
     return (a > b) ? a : b;
 }
 
-
-
 int min(int a, int b){
     return (a < b) ? a : b;
 }
 
-Arbre* creationStrAVL(int e,char*c){   //pour les str
-  AVL* new=malloc(sizeof(AVL));
-  new->elmt=e;
-  new->fg=NULL;
-  new->fd=NULL;
-  new->equil=0;
-  new->ID=c;
-  return new;
-}
-int recherche(AVL* a, int e){
-  if(a==NULL){
-    return 1;
-  }
-  else if(e==a->elmt){
-    return 0;
-  }
-  else if(e<a->elmt){
-    return recherche(a->fg, e);
-  }
-  else if(e>a->elmt){
-    return recherche(a->fd, e);
-  }
+int hauteur(AVL* a){
+    if(a == NULL) return -1;
+    return 1 + max(hauteur(a->fg), hauteur(a->fd));
 }
 
-
-
-AVL* creationAVL(int e){
-  AVL* new=malloc(sizeof(AVL));
-  new->elmt=e;
-  new->fg=NULL;
-  new->fd=NULL;
-  new->equil=0;
-  return new;
+int equilibre(AVL* a){
+    if(a == NULL) return 0;
+    return hauteur(a->fd) - hauteur(a->fg);
 }
 
+int recherche(AVL* a, char* e){
+    if(a == NULL)
+        return 1;
+
+    int z = strcmp(a->ID, e);
+
+    if(z == 0)
+        return 0;
+    else if(z > 0)
+        return recherche(a->fg, e);
+    else
+        return recherche(a->fd, e);
+}
+
+AVL* creationAVL(int e, char* c){
+    AVL* newNode = malloc(sizeof(AVL));
+    if(!newNode){
+        printf("Erreur : malloc\n");
+        exit(1);
+    }
+
+    newNode->elmt = e;
+    newNode->fg = NULL;
+    newNode->fd = NULL;
+    newNode->equil = 0;
+    newNode->ID = strdup(c);
+
+    return newNode;
+}
 
 
 AVL* rotationGauche(AVL* a){
-    AVL* p=a->fd;
-    int eq_a=a->equil; 
-    int eq_p=p->equil;
+    AVL* p = a->fd;
 
-    a->fd=p->fg;
+    a->fd = p->fg;
     p->fg = a;
 
-    a->equil=eq_a - max(eq_p, 0) - 1;
-    p->equil=min(min(eq_a - 2, eq_a + eq_p - 2), eq_p - 1);
+    a->equil = equilibre(a);
+    p->equil = equilibre(p);
 
     return p;
 }
-
 
 
 AVL* rotationDroite(AVL* a){
-    AVL* p=a->fg;
-    int eq_a=a->equil;
-    int eq_p=p->equil;
+    AVL* p = a->fg;
 
-    a->fg=p->fd;
-    p->fd=a;
+    a->fg = p->fd;
+    p->fd = a;
 
-    a->equil=eq_a - min(eq_p, 0) + 1;
-    p->equil=max(max(eq_a + 2, eq_a + eq_p + 2), eq_p + 1);
+    a->equil = equilibre(a);
+    p->equil = equilibre(p);
 
     return p;
 }
-
-
 
 AVL* doubleRotationGauche(AVL* a){
     a->fd = rotationDroite(a->fd);
     return rotationGauche(a);
 }
 
-
-
 AVL* doubleRotationDroite(AVL* a){
     a->fg = rotationGauche(a->fg);
     return rotationDroite(a);
 }
 
+AVL* equilibrage(AVL* a){
+    a->equil = equilibre(a);
 
-
-int hauteur(AVL* a){
-    if(a==NULL){
-    	return -1;
+    if(a->equil == 2){ // trop à droite
+        if(a->fd->equil < 0)
+            return doubleRotationGauche(a);
+        else
+            return rotationGauche(a);
     }
-    int hg=hauteur(a->fg);
-    int hd=hauteur(a->fd);
-    return max(hg, hd) + 1;
-}
+    else if(a->equil == -2){ // trop à gauche
+        if(a->fg->equil > 0)
+            return doubleRotationDroite(a);
+        else
+            return rotationDroite(a);
+    }
 
-
-
-int equilibre(AVL* a){
-	return hauteur(a->fd) - hauteur(a->fg);
-}
-
-
-
-void equilibrage(AVL* a){
-  if(a->equil==0 || a->equil==1 || a->equil==-1){
-    return;
-  }
-  else if(a->equil<-2 || a->equil>2){
-   if(a->fg->equil>0){
-    rotationGauche;
-   }
-  }
-}
-
-
-
-AVL* insertAVL(AVL* a, int e){
-  if(a==NULL){
-    return creationAVL(e);
-*h=1;
-  }
-  else if(e==a->elmt){
-    printf("Cet élément est deja présent dans l'AVL\n");
     return a;
-  }
-  else if(e<a->elmt){
-    a->fg=insertAVL(a->fg, e);
-*h=-*h
-  }
-  else if(e>a->elmt){
-    a->fd=insertAVL(a->fd, e);
-  }
- else{
-        *h=0;
-        return a;
-    }
-    if(*h!=0){
-        a->equil=a->equil+*h;
-        a=equilibrage(a);
-        if(a->equil==0){
-            *h=0;
-        }
-        else{
-            *h=1;
-        }
-  a=equilibrage(a);
-  return a;
 }
 
-Arbre* insertStrAVL(Arbre* a, char* e,int* h) {
-    if (a == NULL) {
-        return creationAVL(e);
-        *h=1;
+AVL* insertStrAVL(AVL* a, char* e, int* h, int nb){
+
+    if(a == NULL){
+        *h = 1;
+        return creationAVL(nb, e);
     }
 
     int z = strcmp(a->ID, e);
 
-    if (z == 0) {
-        printf("Cet élément est déjà présent dans l'AVL\n");
+    if(z == 0){
+        printf("Déjà présent\n");
+        *h = 0;
         return a;
     }
-    else if (z > 0) {
-        a->fg = insertStrAVL(a->fg, e);
-        *h=-*h
+    else if(z > 0){
+        a->fg = insertStrAVL(a->fg, e, h, nb);
+        *h = -*h; // IMPORTANT !
     }
-    else if(z < 0){
-        a->fd = insertStrAVL(a->fd, e);
-    }
-    else{
-        *h=0;
-        return a;
-    }
-    if(*h!=0){
-        a->equil=a->equil+*h;
-        a=equilibrage(a);
-        if(a->equil==0){
-            *h=0;
-        }
-        else{
-            *h=1;
-        }
+    else {
+        a->fd = insertStrAVL(a->fd, e, h, nb);
     }
 
-void supprAVL(){
+    if(*h != 0){
+        a = equilibrage(a);
 
+        if(a->equil == 0)
+            *h = 0;
+        else
+            *h = 1;
+    }
+
+    return a;
 }
-
-
 
 void traiter(AVL* a){
-  if(a==NULL){
-    return;
-  }
-  else{
-    printf("%d  ", a->elmt);
-  }
+    if(a != NULL)
+        printf("%d (%s)  eq=%d\n", a->elmt, a->ID, a->equil);
 }
-
-
 
 void infixe(AVL* a){
-  if (a==NULL){
-  	return;
-  }
-  infixe(a->fg);
-  traiter(a);
-  infixe(a->fd);
+    if(a == NULL) return;
+    infixe(a->fg);
+    traiter(a);
+    infixe(a->fd);
 }
-
-
 
 void prefixe(AVL* a){
-  if (a==NULL){
-  	return;
-  }
-  traiter(a);
-  prefixe(a->fg);
-  prefixe(a->fd);
+    if(a == NULL) return;
+    traiter(a);
+    prefixe(a->fg);
+    prefixe(a->fd);
 }
-
-
 
 void suffixe(AVL* a){
-  if (a==NULL){
-  	return;
-  }
-  suffixe(a->fg);
-  suffixe(a->fd);
-  traiter(a);
+    if(a == NULL) return;
+    suffixe(a->fg);
+    suffixe(a->fd);
+    traiter(a);
 }
 
-
-
-void largeur(AVL* a){
-
-}
