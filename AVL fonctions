@@ -16,7 +16,7 @@ Arbre* creationStrAVL(int e,char*c){   //pour les str
   new->equil=0;
   new->ID=c;
   return new;
-
+}
 int recherche(pArbre a, int e){
   if(a==NULL){
     return 1;
