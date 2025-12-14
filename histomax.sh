@@ -13,7 +13,7 @@ fi
 
 gnuplot <<EOF
 set terminal pdf
-set output "hitotest.pdf
+set output "hitotest.pdf"
 set style data histograms
 set style fill solid 1.0 border -1
 set boxwidth 0.8
