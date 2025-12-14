@@ -6,7 +6,7 @@ then
 	sed -i 's/ //g' temp2.csv
 	sed -i 's/;/ /g' temp2.csv
 	sort max_vol.dat
-	head -n 50 temp2.csv > max_vol.date
+	head -n 10 temp2.csv > max_vol.date
 	tail -n 50 temp2.csv > max_vol.date
 	#awk -F';' '$1 ~ /'$2'/' $1 > usine.csv
 fi
