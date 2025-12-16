@@ -8,7 +8,7 @@ then
 	sort max_vol.dat
 	head -n 50 temp2.csv > max_vol.date
 	tail -n 50 temp2.csv > max_vol.date
-	#awk -F';' '$1 ~ /'$2'/' $1 > usine.csv
+
 fi
 
 gnuplot <<EOF
@@ -24,5 +24,3 @@ EOF
 #echo "deuxieme"
 #cat ID.txt #fichier avec les ID
 #cat eau.txt	#fichier avec l'eau
-
-
