@@ -82,9 +82,8 @@ case "$commande" in
 		awk -F';' '$1 ~ /Junction #[A-Za-z0-9]+/' fichier_filtré.csv > JR.csv
 		awk -F';' '$1 ~ /Service #[A-Za-z0-9]+/' fichier_filtré.csv > RU.csv
 		#partie appel code C
-		#make
-		#gcc -o leaks leaks.c
-		#./leaks "$fichier" "$usine"
+		make
+		./leaks "$fichier" "$usine"
 		#verif retour code C
 		ret=$?
 		if [ $ret -ne 0 ] 
