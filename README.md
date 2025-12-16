@@ -12,7 +12,7 @@ L’application est composée :
 
 Les données représentent une topologie simplifiée de la distribution d’eau (sources, usines de traitement, stockages, jonctions, raccordements et usagers), avec des volumes annuels et des pourcentages de fuites.
 
-🛠️ Compilation & Exécution
+# 🛠️ Compilation & Exécution
 
 Ouvrez votre terminal et entrez les commandes suivantes :
 
