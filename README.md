@@ -37,17 +37,13 @@ Ouvrez votre terminal et entrez les commandes suivantes :
 
 ```
 git clone https://github.com/Snowsurf-007/Projet-C-Wildwater
+```
+puis
+```
 cd Projet-C-Wildwater
 ```
 
 Le script Shell constitue le point d’entrée du projet.
-
-
-Syntaxe générale
-
-```
-./myScript.sh <fichier_donnees.csv> <commande> [option]
-```
 
 Commandes disponibles :
 
