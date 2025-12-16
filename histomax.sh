@@ -17,7 +17,7 @@ set output "histogrands.png"
 set style data histograms
 set style fill solid 1.0 border -1
 set boxwidth 0.8
-plot "max_vol10.date" using 2:xtic(1) "10premiers"
+plot "max_vol10.date" using 2:xtic(1) title "10 premiers"
 EOF
 
 gnuplot <<EOF
@@ -26,8 +26,14 @@ set output "histopetits.png"
 set style data histograms
 set style fill solid 1.0 border -1
 set boxwidth 0.8
-plot "max_vol50.date" using 2:xtic(1) "50derniers"
+plot "max_vol50.date" using 2:xtic(1) title "50 derniers"
 EOF
+
+
+#cat temp.txt
+#echo "deuxieme"
+#cat ID.txt #fichier avec les ID
+#cat eau.txt	#fichier avec l'eau
 
 
 #cat temp.txt
