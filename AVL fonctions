@@ -1,3 +1,5 @@
+#include "biblio.h"
+
 int max(int a, int b){
     return (a > b) ? a : b;
 }
@@ -46,7 +48,9 @@ AVL* creationAVL(int e, char* c){
     return newNode;
 }
 
-
+/* =====================
+   ROTATION GAUCHE
+   ===================== */
 AVL* rotationGauche(AVL* a){
     AVL* p = a->fd;
 
@@ -59,7 +63,9 @@ AVL* rotationGauche(AVL* a){
     return p;
 }
 
-
+/* =====================
+   ROTATION DROITE
+   ===================== */
 AVL* rotationDroite(AVL* a){
     AVL* p = a->fg;
 
@@ -82,6 +88,9 @@ AVL* doubleRotationDroite(AVL* a){
     return rotationDroite(a);
 }
 
+/* =====================
+   ÉQUILIBRAGE
+   ===================== */
 AVL* equilibrage(AVL* a){
     a->equil = equilibre(a);
 
@@ -101,6 +110,9 @@ AVL* equilibrage(AVL* a){
     return a;
 }
 
+/* =====================
+   INSERTION AVL
+   ===================== */
 AVL* insertStrAVL(AVL* a, char* e, int* h, int nb){
 
     if(a == NULL){
@@ -135,6 +147,10 @@ AVL* insertStrAVL(AVL* a, char* e, int* h, int nb){
     return a;
 }
 
+/* =====================
+   AFFICHAGE
+   ===================== */
+
 void traiter(AVL* a){
     if(a != NULL)
         printf("%d (%s)  eq=%d\n", a->elmt, a->ID, a->equil);
@@ -161,3 +177,29 @@ void suffixe(AVL* a){
     traiter(a);
 }
 
+void test(FILE* f){
+    char* c=malloc(TAILLEID*sizeof(char));
+    if(c==NULL){
+        exit(545);
+    }
+    int d;
+    AVL* a = NULL;
+    int h = 0;
+   while (fscanf(f, "%21[^;]", c) == 1) {   // lit jusqu'à ';'
+    fgetc(f);                             // consomme le ';'
+    fscanf(f, "%f", &d);      // lit le nombre
+    fgetc(f);                             // consomme le '\n'
+        
+
+        a = insertStrAVL(a, c, &h, d);
+   }
+
+    printf("\n=== PARCOURS INFIXE (tri) ===\n");
+    infixe(a);
+
+    printf("\n=== PARCOURS PREFIXE ===\n");
+    prefixe(a);
+
+    printf("\n=== PARCOURS SUFFIXE ===\n");
+    suffixe(a);
+}
