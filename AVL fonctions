@@ -113,39 +113,40 @@ AVL* equilibrage(AVL* a){
 /* =====================
    INSERTION AVL
    ===================== */
-AVL* insertStrAVL(AVL* a, char* e, int* h, int nb){
-
-    if(a == NULL){
-        *h = 1;
-        return creationAVL(nb, e);
+Arbre* insertStrAVL(Arbre* a, char* e,int* h) {
+    if (a == NULL) {
+        return creationAVL(e);
+        *h=1;
     }
 
     int z = strcmp(a->ID, e);
 
-    if(z == 0){
-        printf("Déjà présent\n");
-        *h = 0;
+    if (z == 0) {
+        printf("Cet élément est déjà présent dans l'AVL\n");
         return a;
     }
-    else if(z > 0){
-        a->fg = insertStrAVL(a->fg, e, h, nb);
-        *h = -*h; // IMPORTANT !
+    else if (z > 0) {
+        a->fg = insertStrAVL(a->fg, e);
+        *h=-*h
     }
-    else {
-        a->fd = insertStrAVL(a->fd, e, h, nb);
+    else if(z < 0){
+        a->fd = insertStrAVL(a->fd, e);
     }
-
-    if(*h != 0){
-        a = equilibrage(a);
-
-        if(a->equil == 0)
-            *h = 0;
-        else
-            *h = 1;
+    else{
+        *h=0;
+        return a;
     }
-
-    return a;
-}
+    if(*h!=0){
+        a->equil=a->equil+*h;
+        a=equilibrage(a);
+        if(a->equil==0){
+            *h=0;
+        }
+        else{
+            *h=1;
+        }
+    }
+    
 
 /* =====================
    AFFICHAGE
