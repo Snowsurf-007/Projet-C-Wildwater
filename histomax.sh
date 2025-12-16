@@ -5,7 +5,7 @@ then
 	cut -d';' -f2,4 temp.csv > temp2.csv
 	sed -i 's/ //g' temp2.csv
 	sed -i 's/;/ /g' temp2.csv
-	sort max_vol.dat
+	sort temp2.csv
 	head -n 10 temp2.csv > max_vol10.date
 	tail -n 50 temp2.csv > max_vol50.date
 
@@ -13,20 +13,20 @@ fi
 
 gnuplot <<EOF
 set terminal png
-set output "hitotest.png"
+set output "histogrands.png"
 set style data histograms
 set style fill solid 1.0 border -1
 set boxwidth 0.8
-plot "max_vol10.date" using 2:xtic(1) notitle
+plot "max_vol10.date" using 2:xtic(1) "10premiers"
 EOF
 
 gnuplot <<EOF
 set terminal png
-set output "hitotest2.png"
+set output "histopetits.png"
 set style data histograms
 set style fill solid 1.0 border -1
 set boxwidth 0.8
-plot "max_vol50.date" using 2:xtic(1) notitle
+plot "max_vol50.date" using 2:xtic(1) "50derniers"
 EOF
 
 
