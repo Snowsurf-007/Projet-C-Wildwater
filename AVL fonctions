@@ -123,6 +123,7 @@ Arbre* insertStrAVL(Arbre* a, char* e,int* h) {
 
     if (z == 0) {
         printf("Cet élément est déjà présent dans l'AVL\n");
+        a->elmt+=nb;
         return a;
     }
     else if (z > 0) {
