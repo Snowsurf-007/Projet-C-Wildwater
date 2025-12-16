@@ -51,11 +51,16 @@ Syntaxe générale
 
 Commandes disponibles :
 - Histogrammes
+Capacité maximale de traitement :
 ```
 ./myScript.sh wildwater.dat histo max
-
+```
+Volume total capté depuis les sources :
+```
 ./myScript.sh wildwater.dat histo src
-
+```
+Volume total traité par les usines :
+```
 ./myScript.sh wildwater.dat histo real
 ```
 
