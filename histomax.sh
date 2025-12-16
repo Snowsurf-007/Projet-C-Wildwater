@@ -15,23 +15,29 @@ then
 fi
 
 gnuplot <<EOF
+set terminal png font "Arial,3"
 set terminal png
 set output "histopetits.png"
 set style data histograms
 set yrange [0:*]   # 0 jusqu’au max automatique
 set style fill solid 1.0 border -1
 set boxwidth 0.8
-set ylabel " en 10^-3 M.m^3"
+ #font réduit la taille de la police à 6
+set xtics rotate by -90 font ",5" nomirror
+set ylabel " en 10^-3 M.m^3 (eau traiter par an)"
+set xlabel " Nom des usines"
 plot "max_vol50.date" using 2:xtic(1) title "50 plus petites usines"
 EOF
 
 gnuplot <<EOF
+set xtics rotate by -90 font ",6" nomirror
+set terminal png font "Arial,3"
 set terminal png
+set xlabel " Nom des usines"
 set output "histogrands.png"
 set style data histograms
 set style fill solid 1.0 border -1
 set boxwidth 0.8
-set ylabel " en 10^-3 M.m^3"
-plot "max_vol10.date" using 2:xtic(1) title "10 plus grandes usines "
+set ylabel " en 10^-3 M.m^3 (eau traiter par an)"
+plot "max_vol10.date" using 2:xtic(1) title "10 plus grandes usines"
 EOF
-
