@@ -49,7 +49,7 @@ Syntaxe générale
 
 
 Commandes disponibles
-Histogrammes
+- Histogrammes
 
 ./myScript.sh wildwater.dat histo max
 
@@ -57,7 +57,7 @@ Histogrammes
 
 ./myScript.sh wildwater.dat histo real
 
-Calcul des fuites
+- Calcul des fuites
 
 ./myScript.sh wildwater.dat leaks "Facility complex #RH400057F"
 
