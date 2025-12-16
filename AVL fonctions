@@ -177,7 +177,7 @@ void suffixe(AVL* a){
     traiter(a);
 }
 
-void test(FILE* f){
+void recupAVL(FILE* f){
     char* c=malloc(TAILLEID*sizeof(char));
     if(c==NULL){
         exit(545);
