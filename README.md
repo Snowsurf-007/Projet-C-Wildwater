@@ -48,7 +48,7 @@ Syntaxe générale
 ./myScript.sh <fichier_donnees.csv> <commande> [option]
 
 
-Commandes disponibles
+Commandes disponibles :
 - Histogrammes
 
 ./myScript.sh wildwater.dat histo max
