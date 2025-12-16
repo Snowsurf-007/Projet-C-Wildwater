@@ -2,7 +2,7 @@
 Synthèse et analyse d’un réseau de distribution d’eau
 CYTech – préING2 – 2025/2026
 
-# 🎯 Description du projet
+## 🎯 **Description du projet**
 
 Ce projet a pour objectif de réaliser un outil d’analyse de données d’un système de distribution d’eau potable à partir d’un fichier CSV de grande taille (> 500 Mo).
 L’application est composée :
@@ -12,7 +12,7 @@ L’application est composée :
 
 Les données représentent une topologie simplifiée de la distribution d’eau (sources, usines de traitement, stockages, jonctions, raccordements et usagers), avec des volumes annuels et des pourcentages de fuites.
 
-# ⚙️ Fonctionnalités
+## ⚙️ **Fonctionnalités**
 1. Histogrammes des usines de traitement
 
 Génération de fichiers de données et d’images (PNG) représentant les performances des usines selon l’un des critères suivants :
@@ -38,7 +38,7 @@ Ouvrez votre terminal et entrez les commandes suivantes :
 git clone https://github.com/Snowsurf-007/Projet-C-Wildwater
 cd Projet-C-Wildwater
 
-# ▶️ Utilisation
+## ▶️ **Utilisation**
 
 Le script Shell constitue le point d’entrée du projet.
 
@@ -61,7 +61,7 @@ Commandes disponibles :
 
 ./myScript.sh wildwater.dat leaks "Facility complex #RH400057F"
 
-# 📂 Fichiers de sortie
+## 📂 **Fichiers de sortie**
 
 - 📄 Fichiers de données (.dat, .txt, .csv)
 - 🖼️ Images PNG des histogrammes générés
