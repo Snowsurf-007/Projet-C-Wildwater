@@ -1,8 +1,8 @@
 # Nom de l'exécutable
-EXEC = operation_flocon
+EXEC = leaks
 
 # Fichiers source
-SRCS = main.c fonctions.c interface_utilisateur.c
+SRCS = leaks.c
 
 # Fichiers objets
 OBJS = $(SRCS:.c=.o)
