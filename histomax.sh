@@ -9,8 +9,8 @@ then
 	head -n 50 temp3.csv > max_vol50.date
 	tail -n 10 temp3.csv > max_vol10.date
 	#transforme les chiffres de la deuxiemes colones en flottant et divise
-	#awk '{ $2 = $2 / 1000; print $1, $2 }' temp3.csv > temp3div.csv
-	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp3.csv | sed 's/,/./g' > temp3div.csv
+	awk '{ $2 = $2 / 1000; print $1, $2 }' temp3.csv > temp3div.csv
+	#awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp3.csv | sed 's/,/./g' > temp3div.csv
 	tail -n 10 temp3div.csv > max_vol10.date
 	head -n 50 temp3div.csv > max_vol50.date
 fi
