@@ -67,3 +67,10 @@ Commandes disponibles :
 - 🖼️ Images PNG des histogrammes générés
 - 🗃️ Fichier d’historique des fuites par usine (.dat)
 - 🏷️ Noms de fichiers distincts selon le traitement effectué
+
+
+## 👥 **Auteurs**
+
+* Ibrahima **TRAORE**
+* Hugo **TRENY**
+* Lucien **LEHEUDRE--EPSTEIN**
