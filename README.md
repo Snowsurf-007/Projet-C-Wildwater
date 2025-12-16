@@ -71,6 +71,13 @@ Commandes disponibles :
 ./myScript.sh wildwater.dat leaks "Facility complex #RH400057F"
 ```
 
+## ⚠️ **Gestion des erreurs**
+
+- Commande incorrecte ou incomplète → message d’erreur et arrêt
+- Identifiant d’usine introuvable → retour de la valeur -1
+- Vérification systématique du code retour du programme C
+- Aucune erreur inattendue (segmentation fault, crash, etc.)
+
 ## 📂 **Fichiers de sortie**
 
 - Fichiers de données (.dat, .txt, .csv)
