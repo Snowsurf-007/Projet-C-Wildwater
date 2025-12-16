@@ -31,7 +31,7 @@ Les résultats incluent :
 - Si l’identifiant de l’usine est inconnu, la valeur -1 est retournée.
 - Les résultats sont historisés dans un fichier .dat.
 
-# 🛠️ Exécution
+## 🛠️ **Exécution**
 
 Ouvrez votre terminal et entrez les commandes suivantes :
 
