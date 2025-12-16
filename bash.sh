@@ -74,17 +74,17 @@ case "$commande" in
 	#partie fuite en C
 	leaks)
 		usine="$3"
-		awk -F';' '$1 ~ /^Unit #NM000000T/' fichier.dat > fichier_filtré.csv
-		awk -F';' '$2 ~ /^Unit #NM000000T/' fichier.dat >> fichier_filtré.csv
-		cut -d';' -f2,3,5 fichier_filtré.csv > fichier_filtré2.csv
-		awk -F';' '$2 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré2.csv > US.csv
-		awk -F';' '$1 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré2.csv > SJ.csv
-		awk -F';' '$1 ~ /Junction #[A-Za-z0-9]+/' fichier_filtré2.csv > JR.csv
-		awk -F';' '$1 ~ /Service #[A-Za-z0-9]+/' fichier_filtré2.csv > RU.csv
+		awk -F';' -v var="$usine" '$1 ~ ("^" var) { print }' "$fichier" > leaks_usine.csv
+		awk -F';' -v var="$usine" '$2 ~ ("^" var) { print }' "$fichier" >> leaks_usine.csv
+		cut -d';' -f2,3,5 leaks_usine.csv > fichier_filtré.csv
+		awk -F';' '$2 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv > US.csv
+		awk -F';' '$1 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv > SJ.csv
+		awk -F';' '$1 ~ /Junction #[A-Za-z0-9]+/' fichier_filtré.csv > JR.csv
+		awk -F';' '$1 ~ /Service #[A-Za-z0-9]+/' fichier_filtré.csv > RU.csv
 		#partie appel code C
 		#make
-		gcc -o leaks leaks.c
-		./leaks "$fichier" "$usine"
+		#gcc -o leaks leaks.c
+		#./leaks "$fichier" "$usine"
 		#verif retour code C
 		ret=$?
 		if [ $ret -ne 0 ] 
