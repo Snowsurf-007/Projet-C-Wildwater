@@ -6,7 +6,7 @@ debut=$(date +%s.%N)
 #verification bon nombre d'arguments
 if [ $# -lt 3 ] #trop peu d'arguments
 then 
-	echo "ERREUR: commande icomplete, il manque des arguments !"
+	echo "ERREUR: commande incomplete, il manque des arguments !"
 	#Trouve et donne le temps mis par le programme pour l'executionS
 	fin=$(date +%s.%N)
 	time=`echo "$fin-$debut" | bc`
