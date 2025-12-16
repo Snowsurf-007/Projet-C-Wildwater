@@ -46,12 +46,12 @@ Syntaxe générale
 ./myScript.sh <fichier_donnees.csv> <commande> [option]
 
 Commandes disponibles
-Histogrammes :
+Histogrammes
 ./myScript.sh wildwater.dat histo max
 ./myScript.sh wildwater.dat histo src
 ./myScript.sh wildwater.dat histo real
 
-Calcul des fuites :
+Calcul des fuites
 ./myScript.sh wildwater.dat leaks "Facility complex #RH400057F"
 
 # 📂 Fichiers de sortie
