@@ -44,11 +44,13 @@ Le script Shell constitue le point d’entrée du projet.
 
 Syntaxe générale
 ./myScript.sh <fichier_donnees.csv> <commande> [option]
+
 Commandes disponibles
 Histogrammes :
 ./myScript.sh wildwater.dat histo max
 ./myScript.sh wildwater.dat histo src
 ./myScript.sh wildwater.dat histo real
+
 Calcul des fuites :
 ./myScript.sh wildwater.dat leaks "Facility complex #RH400057F"
 
