@@ -50,21 +50,22 @@ Syntaxe générale
 ```
 
 Commandes disponibles :
-- Histogrammes
-Capacité maximale de traitement :
+1/ Histogrammes :
+
+* Capacité maximale de traitement :
 ```
 ./myScript.sh wildwater.dat histo max
 ```
-Volume total capté depuis les sources :
+* Volume total capté depuis les sources :
 ```
 ./myScript.sh wildwater.dat histo src
 ```
-Volume total traité par les usines :
+* Volume total traité par les usines :
 ```
 ./myScript.sh wildwater.dat histo real
 ```
 
-- Calcul des fuites
+2/ Calcul des fuites :
 ```
 ./myScript.sh wildwater.dat leaks "Facility complex #RH400057F"
 ```
