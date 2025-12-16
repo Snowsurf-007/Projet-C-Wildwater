@@ -35,38 +35,41 @@ Génération de fichiers de données et d’images (PNG) représentant les perfo
 
 Ouvrez votre terminal et entrez les commandes suivantes :
 
+```
 git clone https://github.com/Snowsurf-007/Projet-C-Wildwater
-
 cd Projet-C-Wildwater
-
+```
 
 Le script Shell constitue le point d’entrée du projet.
 
 
 Syntaxe générale
 
+```
 ./myScript.sh <fichier_donnees.csv> <commande> [option]
-
+```
 
 Commandes disponibles :
 - Histogrammes
-
+```
 ./myScript.sh wildwater.dat histo max
 
 ./myScript.sh wildwater.dat histo src
 
 ./myScript.sh wildwater.dat histo real
+```
 
 - Calcul des fuites
-
+```
 ./myScript.sh wildwater.dat leaks "Facility complex #RH400057F"
+```
 
 ## 📂 **Fichiers de sortie**
 
-- 📄 Fichiers de données (.dat, .txt, .csv)
-- 🖼️ Images PNG des histogrammes générés
-- 🗃️ Fichier d’historique des fuites par usine (.dat)
-- 🏷️ Noms de fichiers distincts selon le traitement effectué
+- Fichiers de données (.dat, .txt, .csv)
+- Images PNG des histogrammes générés
+- Fichier d’historique des fuites par usine (.dat)
+- Noms de fichiers distincts selon le traitement effectué
 
 
 ## 👥 **Auteurs**
