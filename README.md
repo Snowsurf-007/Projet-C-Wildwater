@@ -42,9 +42,11 @@ cd Projet-C-Wildwater
 
 Le script Shell constitue le point d’entrée du projet.
 
+
 Syntaxe générale
 
 ./myScript.sh <fichier_donnees.csv> <commande> [option]
+
 
 Commandes disponibles
 Histogrammes
