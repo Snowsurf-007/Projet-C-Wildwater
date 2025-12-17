@@ -6,12 +6,12 @@ then
 	sed -i 's/ //g' temp2.csv
 	sed -i 's/;/ /g' temp2.csv
 	sort -k2 -n temp2.csv > temp3.csv
-	head -n 50 temp3.csv > max_vol50.dat
-	tail -n 10 temp3.csv > max_vol10.dat
+	head -n 50 temp3.csv > max_vol50.csv
+	tail -n 10 temp3.csv > max_vol10.csv
 	#transforme les chiffres de la deuxiemes colones en flottant et divise
 	awk '{ $2 = $2 / 1000; print $1, $2 }' temp3.csv > temp3div.csv
-	tail -n 10 temp3div.csv > max_vol10.dat
-	head -n 50 temp3div.csv > max_vol50.dat
+	tail -n 10 temp3div.csv > max_vol10.csv
+	head -n 50 temp3div.csv > max_vol50.csv
 fi
 
 gnuplot <<EOF
@@ -53,3 +53,10 @@ set style data histograms
 set boxwidth 1
 plot "max_vol10.date" using 2:xtic(1) title ""
 EOF
+
+#rm temp.csv
+#rm temp2.csv
+#rm temp3.csv
+#rm temp3div.csv
+#rm max_vol10.dat
+#rm max_vol50.dat
