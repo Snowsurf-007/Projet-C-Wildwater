@@ -24,7 +24,7 @@ set tmargin 5
 set bmargin 15
 set xtics rotate by -90 offset 0,-2 nomirror
 set terminal png
-set output "histolow.png"
+set output "max_vol50.png"
 set xlabel "Nom des usines"
 set ylabel "Volume (M.m^3)"
 set xtics rotate by -90 font ",10" nomirror
@@ -44,7 +44,7 @@ set tmargin 5
 set bmargin 15
 set xtics rotate by -90 offset 0,-2 nomirror
 set terminal png
-set output "histohigh.png"
+set output "max_vol10.png"
 set xlabel "Nom des usines"
 set ylabel "Volume (M.m^3)"
 set xtics rotate by -90 font ",10" nomirror
