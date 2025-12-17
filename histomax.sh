@@ -9,7 +9,8 @@ then
 	head -n 50 temp3.csv > max_vol50.csv
 	tail -n 10 temp3.csv > max_vol10.csv
 	#transforme les chiffres de la deuxiemes colones en flottant et divise
-	awk '{ $2 = $2 / 1000; print $1, $2 }' temp3.csv > temp3div.csv
+	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp3.csv | sed 's/,/./g' > temp3div.csv
+	#awk '{ $2 = $2 / 1000; print $1, $2 }' temp3.csv > temp3div.csv
 	tail -n 10 temp3div.csv > max_vol10.csv
 	head -n 50 temp3div.csv > max_vol50.csv
 fi
@@ -27,11 +28,11 @@ set output "histolow.png"
 set xlabel "Nom des usines"
 set ylabel "Volume (M.m^3)"
 set xtics rotate by -90 font ",10" nomirror
-set yrange [0:1.25]
+set yrange [0:2]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
-plot "max_vol50.date" using 2:xtic(1) title ""
+plot "max_vol50.csv" using 2:xtic(1) title "" lc rgb "cyan"
 EOF
 
 gnuplot <<EOF
@@ -51,12 +52,12 @@ set yrange [0:75000]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
-plot "max_vol10.date" using 2:xtic(1) title ""
+plot "max_vol10.csv" using 2:xtic(1) title "" lc rgb "cyan"
 EOF
 
-#rm temp.csv
-#rm temp2.csv
-#rm temp3.csv
-#rm temp3div.csv
-#rm max_vol10.dat
-#rm max_vol50.dat
+rm temp.csv
+rm temp2.csv
+rm temp3.csv
+rm temp3div.csv
+rm max_vol10.csv
+rm max_vol50.csv
