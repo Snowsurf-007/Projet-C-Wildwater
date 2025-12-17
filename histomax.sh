@@ -6,8 +6,8 @@ then
 	sed -i 's/ //g' temp2.csv
 	sed -i 's/;/ /g' temp2.csv
 	sort -k2 -n temp2.csv > temp3.csv
-	head -n 50 temp3.csv > max_vol50.date
-	tail -n 10 temp3.csv > max_vol10.date
+	head -n 50 temp3.csv > max_vol50.dat
+	tail -n 10 temp3.csv > max_vol10.dat
 	#transforme les chiffres de la deuxiemes colones en flottant et divise
 	awk '{ $2 = $2 / 1000; print $1, $2 }' temp3.csv > temp3div.csv
 	tail -n 10 temp3div.csv > max_vol10.dat
