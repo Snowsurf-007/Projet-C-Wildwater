@@ -57,5 +57,5 @@ EOF
 
 rm temp.csv
 rm temp2.csv
+rm temp3.csv
 rm max_vol10.csv
-rm max_vol50.csv
