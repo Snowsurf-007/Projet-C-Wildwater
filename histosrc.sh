@@ -10,8 +10,8 @@ then
 	tail -n 10 temp3.csv > max_vol10.csv
 	#transforme les chiffres de la deuxiemes colones en flottant et divise
 	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp3.csv | sed 's/,/./g' > vol_max.csv
-	tail -n 10 temp3div.csv > max_vol10.csv
-	head -n 50 temp3div.csv > max_vol50.csv
+	tail -n 10 vol_max.csv > max_vol10.csv
+	head -n 50 vol_max.csv > max_vol50.csv
 fi
 
 gnuplot <<EOF
