@@ -7,6 +7,7 @@ debut=$(date +%s.%N)
 if [ $# -lt 3 ] #trop peu d'arguments
 then 
 	echo "ERREUR: commande incomplete, il manque des arguments !"
+	
 	#Trouve et donne le temps mis par le programme pour l'executionS
 	fin=$(date +%s.%N)
 	time=`echo "$fin-$debut" | bc`
@@ -18,6 +19,7 @@ fi
 if [ $# -gt 3 ] #trop d'arguments
 then 
 	echo "ERREUR: trop d'argument !"
+	
 	#Trouve et donne le temps mis par le programme pour l'execution
 	fin=$(date +%s.%N)
 	time=`echo "$fin-$debut" | bc`
@@ -32,6 +34,7 @@ fichier="$1"
 if [ ! -r "$fichier" ]
 then
 	echo "ERREUR: fichier d'entrée introuvable ou non lisible !"
+	
 	#Trouve et donne le temps mis par le programme pour l'execution
 	fin=$(date +%s.%N)
 	time=$((fin-debut))
@@ -62,6 +65,7 @@ case "$commande" in
 				bash historeal.sh "$fichier";;
 			*)
 				echo "Commande inconnue, veuillez relancer le programme"
+				
 				#Trouve et donne le temps mis par le programme pour l'execution
     				fin=$(date +%s.%N)
 				time=$((fin-debut))
@@ -74,6 +78,7 @@ case "$commande" in
 	#partie fuite en C
 	leaks)
 		usine="$3"
+		
 		awk -F';' -v var="$usine" '$1 ~ ("^" var) { print }' "$fichier" > leaks_usine.csv
 		awk -F';' -v var="$usine" '$2 ~ ("^" var) { print }' "$fichier" >> leaks_usine.csv
 		cut -d';' -f2,3,5 leaks_usine.csv > fichier_filtré.csv
@@ -81,12 +86,13 @@ case "$commande" in
 		awk -F';' '$1 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv > SJ.csv
 		awk -F';' '$1 ~ /Junction #[A-Za-z0-9]+/' fichier_filtré.csv > JR.csv
 		awk -F';' '$1 ~ /Service #[A-Za-z0-9]+/' fichier_filtré.csv > RU.csv
+		
 		#partie appel code C
 		make
-		./leaks "$fichier" "$usine"
-		#verif retour code C
-		ret=$?
-		if [ $ret -ne 0 ] 
+		
+		#verif retour make
+		retmake=$?
+		if [ $retmake -ne 0 ] 
 		then
 			echo "Échec du code C !"
 			fin=$(date +%s.%N)
@@ -97,15 +103,32 @@ case "$commande" in
 			exit 5
 		fi
 		;;
+		
+		./leaks "$fichier" "$usine"
+		
+		#verif retour code C
+		retc=$?
+		if [ $retc -ne 0 ] 
+		then
+			echo "Échec du code C !"
+			fin=$(date +%s.%N)
+			time=$((fin-debut))
+			time=`echo "$fin-$debut" | bc`
+			time=`echo "$time*1000" | bc`
+		    	echo "Le programme a mis $time ms à être exécuté"
+			exit 6
+		fi
+		;;
 	*)
 		echo "Commande inconnue, veuillez relancer le programme"
+		
 		#Trouve et donne le temps mis par le programme pour l'execution
 		fin=$(date +%s.%N)
 		time=$((fin-debut))
 		time=`echo "$fin-$debut" | bc`
 		time=`echo "$time*1000" | bc`
 	    	echo "Le programme a mis $time ms à être exécuté"
-    		exit 5;;
+    		exit 7;;
 esac
 
 
