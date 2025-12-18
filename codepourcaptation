@@ -205,25 +205,14 @@ AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
         }
     }
 }
-void affiche(AVL *root) {
-    if (root == NULL) return;
+void ecrire(File* f, AVL* usine ) {
 
-    affiche(root->fg);        // sous-arbre gauche
-    printf("%d ", root->key);      // noeud courant
-   if(c==NULL){
-        exit(545);
+    if(usine!=NULL){
+        ecrire(f,usine->fg);
+        fprintf(f, "%s",usine->ID );
+        fprintf(f, "%d",usine->elmt );
+        ecrire(f, usine->fd);
     }
-    int a;
-   AVL* usine= NULL; 
-   while (fscanf(f, "%99[^;]", c) == 1) {   // lit jusqu'à ';'
-    fgetc(f);                             // consomme le ';'
-    fscanf(f, "%d", &a);      // lit le nombre
-    fgetc(f);
-    insertStrAVL(usine, c, h, a);                          
-    return 0;
-    }
-}
-   affiche(root->fd);       // sous-arbre droit
 }
 int main(int argc, char* argv[]){
    // printf("rentre");
@@ -247,4 +236,14 @@ int main(int argc, char* argv[]){
     insertStrAVL(usine, c, h, a);                          
     return 0;
     }
+    void ecrire(File* f, AVL* usine ){
+
+       if(usine!=NULL){
+           ecrire(usine->fg);
+           fprintf(f, "%s",usine->ID );
+           fprintf(f, "%d",usine->elmt );
+           ecrire(usine->fd);
+       }
+    }
+
 }
