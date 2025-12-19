@@ -1,4 +1,11 @@
 #include "biblio.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/* =====================
+   UTILS
+   ===================== */
 
 int max(int a, int b){
     return (a > b) ? a : b;
@@ -7,6 +14,10 @@ int max(int a, int b){
 int min(int a, int b){
     return (a < b) ? a : b;
 }
+
+/* =====================
+   HAUTEUR / ÉQUILIBRE
+   ===================== */
 
 int hauteur(AVL* a){
     if(a == NULL) return -1;
@@ -18,39 +29,37 @@ int equilibre(AVL* a){
     return hauteur(a->fd) - hauteur(a->fg);
 }
 
-int recherche(AVL* a, char* e){
-    if(a == NULL)
-        return 1;
+/* =====================
+   CRÉATION AVL
+   ===================== */
 
-    int z = strcmp(a->ID, e);
-
-    if(z == 0)
-        return 0;
-    else if(z > 0)
-        return recherche(a->fg, e);
-    else
-        return recherche(a->fd, e);
-}
-
-AVL* creationAVL(int e, char* c){
-    AVL* newNode = malloc(sizeof(AVL));
-    if(!newNode){
-        printf("Erreur : malloc\n");
+AVL* creationAVL(Arbre* e, char* c){
+    AVL* n = malloc(sizeof(AVL));
+    if(!n){
+        perror("malloc");
         exit(1);
     }
 
-    newNode->elmt = e;
-    newNode->fg = NULL;
-    newNode->fd = NULL;
-    newNode->equil = 0;
-    newNode->ID = strdup(c);
+    n->arbre = e;
+    n->fg = NULL;
+    n->fd = NULL;
+    n->equil = 0;
 
-    return newNode;
+    /* ⚠️ COPIE DE L’ID (OBLIGATOIRE) */
+    n->ID = malloc(strlen(c) + 1);
+    if(!n->ID){
+        perror("malloc");
+        exit(1);
+    }
+    strcpy(n->ID, c);
+
+    return n;
 }
 
 /* =====================
-   ROTATION GAUCHE
+   ROTATIONS
    ===================== */
+
 AVL* rotationGauche(AVL* a){
     AVL* p = a->fd;
 
@@ -63,9 +72,6 @@ AVL* rotationGauche(AVL* a){
     return p;
 }
 
-/* =====================
-   ROTATION DROITE
-   ===================== */
 AVL* rotationDroite(AVL* a){
     AVL* p = a->fg;
 
@@ -91,71 +97,66 @@ AVL* doubleRotationDroite(AVL* a){
 /* =====================
    ÉQUILIBRAGE
    ===================== */
+
 AVL* equilibrage(AVL* a){
     a->equil = equilibre(a);
 
-    if(a->equil == 2){ // trop à droite
+    if(a->equil == 2){
         if(a->fd->equil < 0)
             return doubleRotationGauche(a);
         else
             return rotationGauche(a);
     }
-    else if(a->equil == -2){ // trop à gauche
+    else if(a->equil == -2){
         if(a->fg->equil > 0)
             return doubleRotationDroite(a);
         else
             return rotationDroite(a);
     }
-
     return a;
 }
 
 /* =====================
    INSERTION AVL
    ===================== */
-Arbre* insertStrAVL(Arbre* a, char* e,int* h) {
-    if (a == NULL) {
-        return creationAVL(e);
-        *h=1;
+
+AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre* p){
+
+    if(a == NULL){
+        *h = 1;
+        return creationAVL(p, e);
     }
 
-    int z = strcmp(a->ID, e);
+    int z = strcmp(e, a->ID);
 
-    if (z == 0) {
-        printf("Cet élément est déjà présent dans l'AVL\n");
-        a->elmt+=nb;
+    if(z == 0){
+        /* ⚠️ NE JAMAIS ÉCRASER a->arbre */
+        *h = 0;
         return a;
-    }
-    else if (z > 0) {
-        a->fg = insertStrAVL(a->fg, e);
-        *h=-*h
     }
     else if(z < 0){
-        a->fd = insertStrAVL(a->fd, e);
+        a->fg = insertStrAVL(a->fg, e, h, p);
+        *h = -*h;
     }
     else{
-        *h=0;
-        return a;
+        a->fd = insertStrAVL(a->fd, e, h, p);
     }
-    if(*h!=0){
-        a->equil=a->equil+*h;
-        a=equilibrage(a);
-        if(a->equil==0){
-            *h=0;
-        }
-        else{
-            *h=1;
-        }
+
+    if(*h != 0){
+        a = equilibrage(a);
+        *h = (a->equil == 0) ? 0 : 1;
     }
-    
+
+    return a;
+}
 
 /* =====================
-   AFFICHAGE
+   AFFICHAGE AVL
    ===================== */
 
 void traiter(AVL* a){
-    if(a != NULL)
-        printf("%d (%s)  eq=%d\n", a->elmt, a->ID, a->equil);
+    if(a)
+        printf("(%s) eq=%d\n", a->ID, a->equil);
 }
 
 void infixe(AVL* a){
@@ -177,31 +178,4 @@ void suffixe(AVL* a){
     suffixe(a->fg);
     suffixe(a->fd);
     traiter(a);
-}
-
-void recupAVL(FILE* f){
-    char* c=malloc(TAILLEID*sizeof(char));
-    if(c==NULL){
-        exit(545);
-    }
-    int d;
-    AVL* a = NULL;
-    int h = 0;
-   while (fscanf(f, "%21[^;]", c) == 1) {   // lit jusqu'à ';'
-    fgetc(f);                             // consomme le ';'
-    fscanf(f, "%f", &d);      // lit le nombre
-    fgetc(f);                             // consomme le '\n'
-        
-
-        a = insertStrAVL(a, c, &h, d);
-   }
-
-    printf("\n=== PARCOURS INFIXE (tri) ===\n");
-    infixe(a);
-
-    printf("\n=== PARCOURS PREFIXE ===\n");
-    prefixe(a);
-
-    printf("\n=== PARCOURS SUFFIXE ===\n");
-    suffixe(a);
 }
