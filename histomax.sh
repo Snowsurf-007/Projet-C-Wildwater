@@ -15,9 +15,9 @@ then
 	head -n 50 temp.csv > max_vol50.csv
 	tail -n 10 temp.csv > max_vol10.csv
 	#transforme les chiffres de la deuxiemes colones en flottant et divise
-	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp.csv | sed 's/,/./g' > vol_max.csv
-	tail -n 10 vol_max.csv > max_vol10.csv
-	head -n 50 vol_max.csv > max_vol50.csv
+	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp.csv | sed 's/,/./g' > temp2.csv
+	tail -n 10 temp2.csv > max_vol10.csv
+	head -n 50 temp2.csv > max_vol50.csv
 
 gnuplot <<EOF
 set title "Histogramme des capacités maximales des 50 plus petites usines" font ",20" center
@@ -58,6 +58,8 @@ set style data histograms
 set boxwidth 1
 plot "max_vol10.csv" using 2:xtic(1) title "" lc rgb "blue"
 EOF
+
+	sort -k1 -r temp2.csv > vol_max.csv
 
 	rm temp*.csv
 	rm max_vol10.csv
