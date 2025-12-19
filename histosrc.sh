@@ -1,10 +1,10 @@
 #!/bin/bash
 if [ $# -ne 3 ]
 then
-	awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > test.txt
-	cut -d';' -f3,4 test.txt > test2.txt
-	gcc -o testcapt calc2.c 
-	./testcapt test2.txt
+	awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > temp.csv
+	cut -d';' -f3,4 temp01.csv > temp2.csv
+	gcc -o src calc2.c 
+	./src temp2.csv
 	sed -i 's/ //g' temp2.csv
 	sed -i 's/;/ /g' temp2.csv
 	sort -k2 -n temp2.csv > temp3.csv
