@@ -15,12 +15,19 @@ CFLAGS = -Wall -Wextra -std=c11
 
 # Options de liaison
 LDFLAGS = -lm
-
-all: $(EXEC)
-
-$(EXEC): $(OBJS) biblio.h
+	
+histosrc: $(OBJS) biblio.h
 	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
-
+	
+historeal: $(OBJS) biblio.h
+	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+	
+histoall: $(OBJS) biblio.h
+	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+	
+leaks: $(OBJS) biblio.h
+	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+	
 # Nettoyage des fichiers objets
 clean:
 	rm -f $(OBJS) $(EXEC)
