@@ -1,18 +1,23 @@
 #!/bin/bash
+
+if [ $# -eq 3 ]
+then
+	exit
+fi
+
 if [ $# -ne 3 ]
 then
 	awk -F';' '$NF ~ /-/' $1 > temp.csv #mettre le nom du fichier en premier argument
 	cut -d';' -f2,4 temp.csv > temp2.csv
-	sed  's/ //g' temp2.csv > temp4.csv
-	sed  's/;/ /g' temp4.csv > temp5.csv
-	sort -k2 -n temp5.csv > temp3.csv
-	head -n 50 temp3.csv > max_vol50.csv
-	tail -n 10 temp3.csv > max_vol10.csv
+	sed  's/ //g' temp2.csv > temp.csv
+	sed  's/;/ /g' temp.csv > temp2.csv
+	sort -k2 -n temp2.csv > temp.csv
+	head -n 50 temp.csv > max_vol50.csv
+	tail -n 10 temp.csv > max_vol10.csv
 	#transforme les chiffres de la deuxiemes colones en flottant et divise
-	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp3.csv | sed 's/,/./g' > vol_max.csv
+	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp.csv | sed 's/,/./g' > vol_max.csv
 	tail -n 10 vol_max.csv > max_vol10.csv
 	head -n 50 vol_max.csv > max_vol50.csv
-fi
 
 gnuplot <<EOF
 set title "50 plus petites usines" font ",20" center
@@ -31,7 +36,7 @@ set yrange [0.5:1.5]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
-plot "max_vol50.csv" using 2:xtic(1) title "" lc rgb "cyan"
+plot "max_vol50.csv" using 2:xtic(1) title "" lc rgb "blue"
 EOF
 
 gnuplot <<EOF
@@ -51,9 +56,11 @@ set yrange [0:75000]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
-plot "max_vol10.csv" using 2:xtic(1) title "" lc rgb "cyan"
+plot "max_vol10.csv" using 2:xtic(1) title "" lc rgb "blue"
 EOF
 
-rm temp*.csv
-rm max_vol10.csv
-rm max_vol50.csv
+	rm temp*.csv
+	rm max_vol10.csv
+	rm max_vol50.csv
+
+fi
