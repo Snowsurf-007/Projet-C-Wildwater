@@ -75,7 +75,7 @@ case "$commande" in
 				time=`echo "$fin-$debut" | bc`
 				time=`echo "$time*1000" | bc`
 	    			echo "Le programme a mis $time ms à être exécuté"
-				exit 5
+				exit
 				#partie appel fonction histogramme src
 				#bash histosrc.sh "$fichier"
 				#verif retour code
@@ -96,7 +96,7 @@ case "$commande" in
 				time=`echo "$fin-$debut" | bc`
 				time=`echo "$time*1000" | bc`
 	    			echo "Le programme a mis $time ms à être exécuté"
-				exit 5
+				exit
 				#partie appel fonction histogramme max
 				#bash historeal.sh "$fichier"
 				#verif retour code
@@ -117,7 +117,7 @@ case "$commande" in
 				time=`echo "$fin-$debut" | bc`
 				time=`echo "$time*1000" | bc`
 	    			echo "Le programme a mis $time ms à être exécuté"
-				exit 5
+				exit
 				#partie appel fonction histogramme max
 				#bash histoall.sh "$fichier"
 				#verif retour code
