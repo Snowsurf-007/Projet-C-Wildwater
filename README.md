@@ -51,7 +51,7 @@ Commandes disponibles :
 
 * Capacité maximale de traitement :
 ```
-bash bash.sh c-wildwater_v3.dat histo max
+bash MyShell.sh c-wildwater_v3.dat histo max
 ```
 * Volume total capté depuis les sources :
 ```
