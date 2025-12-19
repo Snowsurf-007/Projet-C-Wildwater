@@ -37,7 +37,6 @@ then
 	
 	#Trouve et donne le temps mis par le programme pour l'execution
 	fin=$(date +%s.%N)
-	time=$((fin-debut))
 	time=`echo "$fin-$debut" | bc`
 	time=`echo "$time*1000" | bc`
     	echo "Le programme a mis $time ms à être exécuté"
@@ -56,23 +55,74 @@ case "$commande" in
 		case "$option" in
 			max) 
 				#partie appel fonction histogramme max
-				bash histomax.sh "$fichier";;
+				bash histomax.sh "$fichier"
+				#verif retour code
+				ret=$?
+				if [ $ret -ne 0 ] 
+				then
+					echo "Échec de la création de l'histogramme !"
+					fin=$(date +%s.%N)
+					time=`echo "$fin-$debut" | bc`
+					time=`echo "$time*1000" | bc`
+		    			echo "Le programme a mis $time ms à être exécuté"
+					exit 4
+				fi
+				;;
+				
 			src)
 				#partie appel fonction histogramme src
-				bash histosrc.sh "$fichier";;
+				bash histosrc.sh "$fichier"
+				#verif retour code
+				ret=$?
+				if [ $ret -ne 0 ] 
+				then
+					echo "Échec de la création de l'histogramme !"
+					fin=$(date +%s.%N)
+					time=`echo "$fin-$debut" | bc`
+					time=`echo "$time*1000" | bc`
+		    			echo "Le programme a mis $time ms à être exécuté"
+					exit 5
+				fi
+				;;
 			real)
 				#partie appel fonction histogramme max
-				bash historeal.sh "$fichier";;
+				bash historeal.sh "$fichier"
+				#verif retour code
+				ret=$?
+				if [ $ret -ne 0 ] 
+				then
+					echo "Échec de la création de l'histogramme !"
+					fin=$(date +%s.%N)
+					time=`echo "$fin-$debut" | bc`
+					time=`echo "$time*1000" | bc`
+		    			echo "Le programme a mis $time ms à être exécuté"
+					exit 6
+				fi
+				;;
+			all)
+				#partie appel fonction histogramme max
+				bash histoall.sh "$fichier"
+				#verif retour code
+				ret=$?
+				if [ $ret -ne 0 ] 
+				then
+					echo "Échec de la création de l'histogramme !"
+					fin=$(date +%s.%N)
+					time=`echo "$fin-$debut" | bc`
+					time=`echo "$time*1000" | bc`
+		    			echo "Le programme a mis $time ms à être exécuté"
+					exit 7
+				fi
+				;;
 			*)
 				echo "Commande inconnue, veuillez relancer le programme"
 				
 				#Trouve et donne le temps mis par le programme pour l'execution
     				fin=$(date +%s.%N)
-				time=$((fin-debut))
 				time=`echo "$fin-$debut" | bc`
 				time=`echo "$time*1000" | bc`
 			    	echo "Le programme a mis $time ms à être exécuté"
-    				exit 4;;
+    				exit 8;;
 		esac;;
 	
 	#partie fuite en C
@@ -82,29 +132,13 @@ case "$commande" in
 		awk -F';' -v var="$usine" '$1 ~ ("^" var) { print }' "$fichier" > leaks_usine.csv
 		awk -F';' -v var="$usine" '$2 ~ ("^" var) { print }' "$fichier" >> leaks_usine.csv
 		cut -d';' -f2,3,5 leaks_usine.csv > fichier_filtré.csv
-		awk -F';' '$1 ~ /-/ && $3 ~ /-/ {print $2 ";" $4}' fichier_filtré.csv > US.csv
-		awk -F';' '$2 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv >> US.csv
+		awk -F';' '$2 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv > US.csv
 		awk -F';' '$1 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv > SJ.csv
 		awk -F';' '$1 ~ /Junction #[A-Za-z0-9]+/' fichier_filtré.csv > JR.csv
 		awk -F';' '$1 ~ /Service #[A-Za-z0-9]+/' fichier_filtré.csv > RU.csv
 		
 		#partie appel code C
-		make
-		
-		#verif retour make
-		retmake=$?
-		if [ $retmake -ne 0 ] 
-		then
-			echo "Échec du code C !"
-			fin=$(date +%s.%N)
-			time=$((fin-debut))
-			time=`echo "$fin-$debut" | bc`
-			time=`echo "$time*1000" | bc`
-		    	echo "Le programme a mis $time ms à être exécuté"
-			exit 5
-		fi
-		;;
-		
+		make leaks
 		./leaks "$fichier" "$usine"
 		
 		#verif retour code C
@@ -113,11 +147,10 @@ case "$commande" in
 		then
 			echo "Échec du code C !"
 			fin=$(date +%s.%N)
-			time=$((fin-debut))
 			time=`echo "$fin-$debut" | bc`
 			time=`echo "$time*1000" | bc`
 		    	echo "Le programme a mis $time ms à être exécuté"
-			exit 6
+			exit 9
 		fi
 		;;
 	*)
@@ -125,11 +158,10 @@ case "$commande" in
 		
 		#Trouve et donne le temps mis par le programme pour l'execution
 		fin=$(date +%s.%N)
-		time=$((fin-debut))
 		time=`echo "$fin-$debut" | bc`
 		time=`echo "$time*1000" | bc`
 	    	echo "Le programme a mis $time ms à être exécuté"
-    		exit 7;;
+    		exit 10;;
 esac
 
 
