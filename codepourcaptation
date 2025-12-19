@@ -88,7 +88,31 @@ int recherche(AVL* a, char* e){
     else
         return recherche(a->fd, e);
 }
+void traiter(AVL* a){
+    if(a != NULL)
+        printf("%d (%s)  eq=%d\n", a->elmt, a->ID, a->equil);
+}
 
+void infixe(AVL* a){
+    if(a == NULL) return;
+    infixe(a->fg);
+    traiter(a);
+    infixe(a->fd);
+}
+
+void prefixe(AVL* a){
+    if(a == NULL) return;
+    traiter(a);
+    prefixe(a->fg);
+    prefixe(a->fd);
+}
+
+void suffixe(AVL* a){
+    if(a == NULL) return;
+    suffixe(a->fg);
+    suffixe(a->fd);
+    traiter(a);
+}
 AVL* creationAVL(int e, char* c){
     AVL* newNode = malloc(sizeof(AVL));
     if(!newNode){
@@ -172,8 +196,8 @@ AVL* equilibrage(AVL* a){
    ===================== */
 AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
     if (a == NULL) {
+    	*h=1;
         return creationAVL(capter, e);
-        *h=1;
     }
 
     int z = strcmp(a->ID, e);
@@ -204,6 +228,7 @@ AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
             *h=1;
         }
     }
+    return a;
 }
 void ecrire(FILE * f, AVL* usine ) {
 
@@ -215,8 +240,8 @@ void ecrire(FILE * f, AVL* usine ) {
     }
 }
 int main(int argc, char* argv[]){
-	int* h;
-	*h=0;
+	int h;
+	h=0;
     FILE* f=NULL;
     f=fopen(argv[1],"r+");
     if(f==NULL){
@@ -227,15 +252,12 @@ int main(int argc, char* argv[]){
         exit(545);
     }
     int a;
-    char * ID;
+    char* ID =malloc(TAILLEID*sizeof(char));
     AVL* usine= NULL; 
-   while (fscanf(f, "%99[^;]", c) == 1) {   // lit jusqu'à ';'    
-    fscanf(f, "%s", &ID);  
-    fgetc(f);
-    fscanf(f, "%d", &a);                     // consomme le ';'
-    insertStrAVL(usine, ID, h, a); 
-    fgetc(f);                          
-    }
+    while (fscanf(f, "%1000[^;]; %d", ID, &a) == 2) {
+    	usine = insertStrAVL(usine, ID, &h, a);
+    }                                     
+    prefixe(usine);
     fclose(f);
     return 0;
 }
