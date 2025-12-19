@@ -82,7 +82,8 @@ case "$commande" in
 		awk -F';' -v var="$usine" '$1 ~ ("^" var) { print }' "$fichier" > leaks_usine.csv
 		awk -F';' -v var="$usine" '$2 ~ ("^" var) { print }' "$fichier" >> leaks_usine.csv
 		cut -d';' -f2,3,5 leaks_usine.csv > fichier_filtré.csv
-		awk -F';' '$2 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv > US.csv
+		awk -F';' '$1 ~ /-/ && $3 ~ /-/ {print $2 ";" $4}' fichier_filtré.csv > US.csv
+		awk -F';' '$2 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv >> US.csv
 		awk -F';' '$1 ~ /Storage #[A-Za-z0-9]+/' fichier_filtré.csv > SJ.csv
 		awk -F';' '$1 ~ /Junction #[A-Za-z0-9]+/' fichier_filtré.csv > JR.csv
 		awk -F';' '$1 ~ /Service #[A-Za-z0-9]+/' fichier_filtré.csv > RU.csv
