@@ -51,20 +51,20 @@ Commandes disponibles :
 
 * Capacité maximale de traitement :
 ```
-bash MyShell.sh c-wildwater_v3.dat histo max
+bash myScript.sh c-wildwater_v3.dat histo max
 ```
 * Volume total capté depuis les sources :
 ```
-bash MyShell.sh c-wildwater_v3.dat histo src
+bash myScript.sh c-wildwater_v3.dat histo src
 ```
 * Volume total traité par les usines :
 ```
-bash MyShell.sh c-wildwater_v3.dat histo real
+bash myScript.sh c-wildwater_v3.dat histo real
 ```
 
 2/ Calcul des fuites :
 ```
-bash MyShell.sh c-wildwater_v3.dat leaks "Facility complex #RH400057F"
+bash myScript.sh c-wildwater_v3.dat leaks "Facility complex #RH400057F"
 ```
 
 ## ⚠️ **Gestion des erreurs**
