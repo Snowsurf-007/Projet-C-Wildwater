@@ -205,17 +205,16 @@ AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
         }
     }
 }
-void ecrire(File* f, AVL* usine ) {
+void ecrire(FILE * f, AVL* usine ) {
 
     if(usine!=NULL){
         ecrire(f,usine->fg);
-        fprintf(f, "%s",usine->ID );
-        fprintf(f, "%d",usine->elmt );
+        fprintf(f, "%s ",usine->ID );
+        fprintf(f, "%d\n",usine->elmt );
         ecrire(f, usine->fd);
     }
 }
 int main(int argc, char* argv[]){
-   // printf("rentre");
 	int* h;
 	*h=0;
     FILE* f=NULL;
@@ -228,22 +227,15 @@ int main(int argc, char* argv[]){
         exit(545);
     }
     int a;
-   AVL* usine= NULL; 
-   while (fscanf(f, "%99[^;]", c) == 1) {   // lit jusqu'à ';'
-    fgetc(f);                             // consomme le ';'
-    fscanf(f, "%d", &a);      // lit le nombre
+    char * ID;
+    AVL* usine= NULL; 
+   while (fscanf(f, "%99[^;]", c) == 1) {   // lit jusqu'à ';'    
+    fscanf(f, "%s", &ID);  
     fgetc(f);
-    insertStrAVL(usine, c, h, a);                          
+    fscanf(f, "%d", &a);                     // consomme le ';'
+    insertStrAVL(usine, ID, h, a); 
+    fgetc(f);                          
+    }
+    fclose(f);
     return 0;
-    }
-    void ecrire(File* f, AVL* usine ){
-
-       if(usine!=NULL){
-           ecrire(usine->fg);
-           fprintf(f, "%s",usine->ID );
-           fprintf(f, "%d",usine->elmt );
-           ecrire(usine->fd);
-       }
-    }
-
 }
