@@ -55,16 +55,16 @@ bash MyShell.sh c-wildwater_v3.dat histo max
 ```
 * Volume total capté depuis les sources :
 ```
-bash bash.sh c-wildwater_v3.dat histo src
+bash MyShell.sh c-wildwater_v3.dat histo src
 ```
 * Volume total traité par les usines :
 ```
-bash bash.sh c-wildwater_v3.dat histo real
+bash MyShell.sh c-wildwater_v3.dat histo real
 ```
 
 2/ Calcul des fuites :
 ```
-bash bash.sh c-wildwater_v3.dat leaks "Facility complex #RH400057F"
+bash MyShell.sh c-wildwater_v3.dat leaks "Facility complex #RH400057F"
 ```
 
 ## ⚠️ **Gestion des erreurs**
