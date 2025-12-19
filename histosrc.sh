@@ -1,8 +1,10 @@
 #!/bin/bash
 if [ $# -ne 3 ]
 then
-	awk -F';' '$NF ~ /-/' $1 > temp.csv #mettre le nom du fichier en premier argument
-	cut -d';' -f2,4 temp.csv > temp2.csv
+	awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > test.txt
+	cut -d';' -f3,4 test.txt > test2.txt
+	gcc -o testcapt calc2.c 
+	./testcapt test2.txt
 	sed -i 's/ //g' temp2.csv
 	sed -i 's/;/ /g' temp2.csv
 	sort -k2 -n temp2.csv > temp3.csv
