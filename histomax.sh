@@ -20,7 +20,7 @@ then
 	head -n 50 vol_max.csv > max_vol50.csv
 
 gnuplot <<EOF
-set title "50 plus petites usines" font ",20" center
+set title "Histogramme des capacités maximales des 50 plus petites usines" font ",20" center
 set terminal png size 1600,800 font "Arial,10"
 set lmargin 10
 set rmargin 5
@@ -40,7 +40,7 @@ plot "max_vol50.csv" using 2:xtic(1) title "" lc rgb "blue"
 EOF
 
 gnuplot <<EOF
-set title "10 plus grandes usines" font ",20" center
+set title "Histogramme des capacités maximales des 10 plus grandes usines" font ",20" center
 set terminal png size 1600,800 font "Arial,10"
 set lmargin 10
 set rmargin 5
