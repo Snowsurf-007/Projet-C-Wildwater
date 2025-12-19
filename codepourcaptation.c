@@ -203,7 +203,7 @@ AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
     int z = strcmp(a->ID, e);
 
     if (z == 0) {
-        printf("Cet élément est déjà présent dans l'AVL\n");
+        //printf("Cet élément est déjà présent dans l'AVL\n");
         a->elmt = a->elmt+ capter; 
         return a;
     }
@@ -234,7 +234,7 @@ void ecrire(FILE * f, AVL* usine ) {
 
     if(usine!=NULL){
         ecrire(f,usine->fg);
-        fprintf(f, "%s;%d\n",usine->ID, usine->elmt);
+        fprintf(f, "%s;%d",usine->ID, usine->elmt);
         ecrire(f, usine->fd);
     }
 }
@@ -247,8 +247,8 @@ int main(int argc, char* argv[]){
     if(f==NULL){
         exit(45);
     }
-    fichier = fopen("test3.csv", "w+");
-    if(f==NULL){
+    fichier = fopen(argv[2], "w+");
+    if(fichier==NULL){
         exit(0);
     }
     int a;
@@ -256,9 +256,9 @@ int main(int argc, char* argv[]){
     AVL* usine= NULL; 
     while (fscanf(f, "%1000[^;]; %d", ID, &a) == 2) {
     	usine = insertStrAVL(usine, ID, &h, a);
-    	printf("la\n");
     }                                    
     ecrire(fichier, usine);
+    fputs("dsffdf", fichier);
     fclose(fichier);
     fclose(f);
     return 0;
