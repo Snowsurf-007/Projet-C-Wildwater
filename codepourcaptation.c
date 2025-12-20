@@ -196,7 +196,7 @@ int main(int argc, char* argv[]){
     int a;
     char* ID =malloc(TAILLEID*sizeof(char));
     AVL* usine= NULL; 
-    while (fscanf(f, "%1000[^;]; %d", ID, &a) == 2) {
+    while (fscanf(f, "%1000[^;];%d", ID, &a) == 2) {
     	usine = insertStrAVL(usine, ID, &h, a);
     }                                    
     ecrire(fichier, usine);
