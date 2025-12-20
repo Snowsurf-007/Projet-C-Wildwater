@@ -33,6 +33,8 @@ Arbre* insert(char* id, int nb) {
 
 	new->elmt = nb;
 	new->enfants = NULL;
+	new->nb_enfants=0;
+	new->litre=-1;
 	return new;
 }
 
@@ -164,7 +166,8 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 		enfant->elmt = fuite;
 
 		// ajouter enfant C  la liste chaC.nC)e du parent
-		parent->enfants = empiler(parent->enfants, enfant); //potentiellement augmenter nombre enfants
+		parent->enfants = empiler(parent->enfants, enfant);
+		parent->nb_enfants+=1;
 	
 	
 	}
@@ -189,7 +192,7 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 			enfant->elmt = fuite;
 			parent->enfants = empiler(parent->enfants, enfant);
-		
+		    	parent->nb_enfants+=1;
 
 	
 		}
@@ -197,8 +200,33 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 	
 	}
-return usine;
+//	afficherAVL(avl);
+//afficherABR(usine,0);
 
+return usine;
 	// --- Affichage pour vC)rification ---
 
+}
+
+void calcul(Arbre* a,float* somme){
+    if(a->enfants==NULL){
+        *somme += a->litre;
+        return;
+    }
+    
+    if(a->litre==-1){
+        a->litre=a->elmt;
+    }
+    printf("Noeud %s | litre = %.2f | nb_enfants = %d\n",
+       a->ID, a->litre, a->nb_enfants);
+
+    float vol=(a->litre)/a->nb_enfants;
+    Chainon* temp=a->enfants;
+    while(temp!=NULL){
+        temp->enfant->litre=vol-(((temp->enfant->elmt)*vol)/100.0);
+        calcul(temp->enfant,somme);
+        temp=temp->next;
+    }
+    
+    return;
 }
