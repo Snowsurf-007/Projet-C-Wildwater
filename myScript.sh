@@ -70,7 +70,7 @@ case "$commande" in
 				;;
 				
 			src)	
-				echo "La fonction de l'histogramme all n'est pas disponible pour l'instant ;/ !"
+				echo "La fonction de l'histogramme src n'est pas disponible pour l'instant ;/ !"
 				fin=$(date +%s.%N)
 				time=`echo "$fin-$debut" | bc`
 				time=`echo "$time*1000" | bc`
@@ -112,7 +112,7 @@ case "$commande" in
 				#fi
 				;;
 			all)	
-				echo "La fonction de l'histogramme src n'est pas disponible pour l'instant ;/ !"
+				echo "La fonction de l'histogramme all n'est pas disponible pour l'instant ;/ !"
 				fin=$(date +%s.%N)
 				time=`echo "$fin-$debut" | bc`
 				time=`echo "$time*1000" | bc`
