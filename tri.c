@@ -209,6 +209,9 @@ return usine;
 }
 
 void calcul(Arbre* a,float* somme){
+	if(a==NULL){
+	*somme=-1
+	}
     if(a->enfants==NULL){
         *somme += a->litre;
         return;
