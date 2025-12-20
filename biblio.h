@@ -25,6 +25,7 @@ typedef struct Arbre {
 	struct Chainon* enfants;
 	float elmt;
 	float litre;
+	int nb_enfants;
 	char*ID;
 } Arbre;
 
@@ -73,5 +74,5 @@ Arbre* creation(char* idav);
 Arbre* creation2(char* idam, char* idav, float fuite);
 void affichage(Arbre* a,int niveau);
 Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU);
-
+void calcul(Arbre* a,float* somme);
 #endif // BIBLIO_H
