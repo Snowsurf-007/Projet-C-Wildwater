@@ -233,3 +233,37 @@ void calcul(Arbre* a,float* somme){
     
     return;
 }
+
+int main(int argc, char* argv[]) {
+    
+    // passer US SJ JR RU
+FILE* f1 = fopen(argv[1], "r+");
+    if(f1 == NULL){
+        perror("Erreur ouverture fichier");
+        exit(545);
+    }
+    FILE* f2 = fopen(argv[2], "r+");
+    if(f2 == NULL){
+        perror("Erreur ouverture fichier");
+        exit(545);
+    }
+    FILE* f3 = fopen(argv[3], "r+");
+    if(f3 == NULL){
+        perror("Erreur ouverture fichier");
+        exit(545);
+    }
+    FILE* f4 = fopen(argv[4], "r+");
+    if(f4 == NULL){
+        perror("Erreur ouverture fichier");
+        exit(545);
+    }
+    Arbre*res=NULL;
+res=mega_arbre(f1,f2,f3,f4);
+float max=res->elmt;
+float* somme;
+*somme=0;
+calcul(res,somme);
+printf("%f",max-*somme);
+
+ return 0;   
+}
