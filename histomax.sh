@@ -2,7 +2,7 @@
 
 if [ $# -ne 1 ]
 then
-	exit 1
+	exit 10
 fi
 
 if [ $# -eq 1 ]
