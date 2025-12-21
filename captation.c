@@ -12,6 +12,8 @@
 #include <unistd.h>
 #define TAILLEID 100
 
+
+
 typedef struct AVL{
   int elmt;
   int equil;
@@ -28,11 +30,11 @@ typedef struct Chainon{
 }Chainon;
 
 
+
 typedef struct File{
   struct Chainon* head;
   struct Chainon* tail;
 }File;
-
 
 
 
@@ -61,19 +63,27 @@ int max(int a, int b){
     return (a > b) ? a : b;
 }
 
+
+
 int min(int a, int b){
     return (a < b) ? a : b;
 }
+
+
 
 int hauteur(AVL* a){
     if(a == NULL) return -1;
     return 1 + max(hauteur(a->fg), hauteur(a->fd));
 }
 
+
+
 int equilibre(AVL* a){
     if(a == NULL) return 0;
     return hauteur(a->fd) - hauteur(a->fg);
 }
+
+
 
 int recherche(AVL* a, char* e){
     if(a == NULL)
@@ -88,31 +98,9 @@ int recherche(AVL* a, char* e){
     else
         return recherche(a->fd, e);
 }
-/*void traiter(AVL* a){
-    if(a != NULL)
-        printf("%d (%s)  eq=%d\n", a->elmt, a->ID, a->equil);
-}
 
-void infixe(AVL* a){
-    if(a == NULL) return;
-    infixe(a->fg);
-    traiter(a);
-    infixe(a->fd);
-}
 
-void prefixe(AVL* a){
-    if(a == NULL) return;
-    traiter(a);
-    prefixe(a->fg);
-    prefixe(a->fd);
-}
 
-void suffixe(AVL* a){
-    if(a == NULL) return;
-    suffixe(a->fg);
-    suffixe(a->fd);
-    traiter(a);
-}*/
 AVL* creationAVL(int e, char* c){
     AVL* newNode = malloc(sizeof(AVL));
     if(!newNode){
@@ -129,6 +117,8 @@ AVL* creationAVL(int e, char* c){
     return newNode;
 }
 
+
+
 /* =====================
    ROTATION GAUCHE
    ===================== */
@@ -143,6 +133,8 @@ AVL* rotationGauche(AVL* a){
 
     return p;
 }
+
+
 
 /* =====================
    ROTATION DROITE
@@ -159,15 +151,21 @@ AVL* rotationDroite(AVL* a){
     return p;
 }
 
+
+
 AVL* doubleRotationGauche(AVL* a){
     a->fd = rotationDroite(a->fd);
     return rotationGauche(a);
 }
 
+
+
 AVL* doubleRotationDroite(AVL* a){
     a->fg = rotationGauche(a->fg);
     return rotationDroite(a);
 }
+
+
 
 /* =====================
    ÉQUILIBRAGE
@@ -190,6 +188,8 @@ AVL* equilibrage(AVL* a){
 
     return a;
 }
+
+
 
 /* =====================
    INSERTION AVL
@@ -231,6 +231,8 @@ AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
     return a;
 }
 
+
+
 void ecrire(FILE * f, AVL* usine) {
 
     if(usine!=NULL){
@@ -239,6 +241,8 @@ void ecrire(FILE * f, AVL* usine) {
         ecrire(f, usine->fd);
     }
 }
+
+
 
 void division(AVL* usine) {
 
@@ -249,6 +253,8 @@ void division(AVL* usine) {
         
     }
 }
+
+
 
 int main(int argc, char* argv[]){
     int h=0;
