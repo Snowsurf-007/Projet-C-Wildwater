@@ -344,7 +344,8 @@ int main(int argc, char* argv[]) {
 
 
     /*
-    int h=0;
+    int h;
+	h=0;
     FILE* f=NULL;
     FILE* fichier=NULL;
     f=fopen(argv[1],"r+");
@@ -352,20 +353,20 @@ int main(int argc, char* argv[]) {
         exit(45);
     }
     fichier = fopen(argv[2], "w+");
+    if(fichier==NULL){
+        exit(0);
+    }
     int a;
-    char* ID = malloc(TAILLEID*sizeof(char));
+    char* ID =malloc(TAILLEID*sizeof(char));
     AVL* usine= NULL; 
     while (fscanf(f, "%21[^;];%d", ID, &a) == 2) {
-        printf("LA %s ; %d\n", ID, a);
-	    usine = insertAVL(usine, ID, &h, a);
-    }   
-    infixe(usine);
+    	usine = insertAVL(usine, ID, &h, a);
+    }                                    
     ecrire(fichier, usine);
-    if(fichier==NULL){
-        exit(46);
-    }
     fclose(fichier);
     fclose(f);
+    return 0;
+}
     */
     return 0;   
 }
