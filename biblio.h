@@ -14,12 +14,11 @@
 typedef struct AVL {
 	struct Arbre* arbre;
 	int equil;
+	int  elmt;
 	char* ID;
 	struct AVL* fg;
 	struct AVL* fd;
 } AVL;
-
-
 
 typedef struct Arbre {
 	struct Chainon* enfants;
@@ -46,10 +45,12 @@ int max(int a, int b);
 int min(int a, int b);
 int hauteur(AVL* a);
 int equilibre(AVL* a);
+void ecrire(FILE* f, AVL* usine);
 
 /* ======== Fonctions AVL ======== */
 void recherche(AVL* a, char* e,Arbre* bebe);
-AVL* creationAVL(Arbre* e, char* c);
+AVL* creationStrAVL(Arbre* e, char* c);
+AVL* creationAVL(int e, char* c);
 
 AVL* rotationGauche(AVL* a);
 AVL* rotationDroite(AVL* a);
@@ -59,6 +60,7 @@ AVL* doubleRotationDroite(AVL* a);
 AVL* equilibrage(AVL* a);
 
 AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre*p);
+AVL* insertAVL(AVL* a, char* e,int* h,int capter);
 
 /* ======== Affichage ======== */
 void traiter(AVL* a);
