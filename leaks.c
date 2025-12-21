@@ -316,7 +316,7 @@ FILE* f1 = fopen(argv[1], "r+");
     float* somme;
     *somme=0;
     calcul(res, somme);
-    printf("%f",max-*somme);
+    printf("%s %f \n",res->ID,max-*somme);
     
     fclose(f1);
     fclose(f2);
