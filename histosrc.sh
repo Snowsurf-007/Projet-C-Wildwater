@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ $# -eq 3 ]
+if [ $# -ne 1 ]
 then
-	exit
+	exit 1
 fi
 
-if [ $# -ne 3 ]
+if [ $# -eq 1 ]
 then
 
 awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > temp.csv
