@@ -1,4 +1,62 @@
-#include "biblio.h"
+//#ifndef BIBLIO_H
+//#define BIBLIO_H
+/*gcc calc2.c -o affiche2
+./affiche2 tempcapt.csv */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
+#include <unistd.h>
+#define TAILLEID 100
+
+typedef struct AVL{
+  int elmt;
+  int equil;
+  char* ID;
+  struct AVL* fg;
+  struct AVL* fd;
+}AVL;
+
+
+
+typedef struct Chainon{
+  AVL elmt;
+  struct Chainon* next;
+}Chainon;
+
+
+typedef struct File{
+  struct Chainon* head;
+  struct Chainon* tail;
+}File;
+
+
+
+
+int max(int a, int b);
+int min(int a, int b);
+int hauteur(AVL* a);
+int equilibre(AVL* a);
+int recherche(AVL* a, char* e);
+AVL* creationAVL(int e, char* c);
+AVL* rotationGauche(AVL* a);
+AVL* rotationDroite(AVL* a);
+AVL* doubleRotationGauche(AVL* a);
+AVL* doubleRotationDroite(AVL* a);
+AVL* equilibrage(AVL* a);
+AVL* insertStrAVL(AVL* a, char* e, int* h, int nb);
+void traiter(AVL* a);
+void infixe(AVL* a);
+void prefixe(AVL* a);
+void suffixe(AVL* a);
+void recupAVL(FILE* f);
+
+
+
+//#endif // BIBLIO_H
 int max(int a, int b){
     return (a > b) ? a : b;
 }
@@ -30,7 +88,7 @@ int recherche(AVL* a, char* e){
     else
         return recherche(a->fd, e);
 }
-void traiter(AVL* a){
+/*void traiter(AVL* a){
     if(a != NULL)
         printf("%d (%s)  eq=%d\n", a->elmt, a->ID, a->equil);
 }
@@ -54,8 +112,8 @@ void suffixe(AVL* a){
     suffixe(a->fg);
     suffixe(a->fd);
     traiter(a);
-}
-AVL* creationAVLcap(int e, char* c){
+}*/
+AVL* creationAVL(int e, char* c){
     AVL* newNode = malloc(sizeof(AVL));
     if(!newNode){
         printf("Erreur : malloc\n");
@@ -136,25 +194,25 @@ AVL* equilibrage(AVL* a){
 /* =====================
    INSERTION AVL
    ===================== */
-AVL* insertAVL(AVL* a, char* e,int* h,int capter) {
+AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
     if (a == NULL) {
     	*h=1;
-        return creationAVLcap(capter, e);
+        return creationAVL(capter, e);
     }
 
     int z = strcmp(a->ID, e);
 
     if (z == 0) {
         //printf("Cet élément est déjà présent dans l'AVL\n");
-        a->elmt = a->elmt+ capter; 
+        a->elmt = a->elmt+ capter;
         return a;
     }
     else if (z > 0) {
-        a->fg = insertAVL(a->fg, e, h, capter);
+        a->fg = insertStrAVL(a->fg, e, h, capter);
         *h=-*h;
     }
     else if(z < 0){
-        a->fd = insertAVL(a->fd, e, h, capter);
+        a->fd = insertStrAVL(a->fd, e, h, capter);
     }
     else{
         *h=0;
@@ -196,7 +254,7 @@ int main(int argc, char* argv[]){
     int a;
     char* ID =malloc(TAILLEID*sizeof(char));
     AVL* usine= NULL; 
-    while (fscanf(f, "%1000[^;];%d", ID, &a) == 2) {
+    while (fscanf(f, "%21[^;];%d", ID, &a) == 2) {
     	usine = insertAVL(usine, ID, &h, a);
     }                                    
     ecrire(fichier, usine);
