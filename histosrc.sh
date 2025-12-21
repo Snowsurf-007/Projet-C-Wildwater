@@ -7,7 +7,7 @@ fi
 
 if [ $# -ne 3 ]
 then
-awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' c-wildwater_v3.dat > temp.csv
+awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > temp.csv
 head temp.csv
 cut -d';' -f3,4 temp.csv > temp1.csv
 touch temp2.csv
