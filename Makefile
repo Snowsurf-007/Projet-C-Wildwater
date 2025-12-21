@@ -10,7 +10,9 @@ EXEC = histosrc historeal histoall leaks
 # Le compilateur
 CC = gcc
 CFLAGS = -Wall -Wextra -g
-	
+
+all: $(EXEC) 
+
 # Règles pour les exécutables
 histosrc: histosrc.o
 	$(CC) $(CFLAGS) -o histosrc histosrc.o AVL.o
