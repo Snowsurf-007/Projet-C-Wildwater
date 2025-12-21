@@ -1,9 +1,3 @@
-# Nom de l'exécutable
-EXEC = leaks
-
-# Fichiers source
-SRCS = leaks.c
-
 # Fichiers objets
 OBJS = $(SRCS:.c=.o)
 
