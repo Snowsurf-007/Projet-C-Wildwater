@@ -313,10 +313,10 @@ FILE* f1 = fopen(argv[1], "r+");
     Arbre*res=NULL;
     res=mega_arbre(f1,f2,f3,f4);
     float max=res->elmt;
-    float somme;
-    somme=0;
-    calcul(res, &somme);
-    printf("%f",max-somme);
+    float* somme;
+    *somme=0;
+    calcul(res, somme);
+    printf("%f",max-*somme);
     
     fclose(f1);
     fclose(f2);
