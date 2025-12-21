@@ -1,0 +1,232 @@
+#include "biblio.h"
+
+Chainon* creationChainon(Arbre* bebe) {
+	Chainon* chainon=malloc(sizeof(Chainon));
+	chainon->enfant=bebe;
+	chainon->next=NULL;
+	return chainon;
+}
+Chainon * empiler(Chainon* pliste, Arbre* bebe) {
+	Chainon* chainon=creationChainon(bebe);
+	chainon->next=pliste;
+	return chainon;
+}
+
+AVL* rechercherAVL(AVL* a, char* id) {
+	if (!a) return NULL;
+
+	int c = strcmp(id, a->ID);
+	if (c == 0) return a;
+	if (c < 0) return rechercherAVL(a->fg, id);
+	return rechercherAVL(a->fd, id);
+}
+
+Arbre* insert(char* id, int nb) {
+	Arbre* new = malloc(sizeof(Arbre));
+	if(!new) exit(66);
+
+	new->ID = malloc(sizeof(char)*strlen(id)+1);
+	strcpy (new->ID, id);
+	
+
+	if(!new->ID) exit(66);
+
+	new->elmt = nb;
+	new->enfants = NULL;
+	new->nb_enfants=0;
+	new->litre=-1;
+	return new;
+}
+
+
+AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant) {
+
+	if(a == NULL) {
+		*h = 1;
+		return creationAVL(enfant, e);
+	}
+
+	int z = strcmp(a->ID, e);
+
+	if(z == 0) {
+		printf("DC)jC  prC)sent\n");
+		*h = 0;
+		a->arbre->enfants=empiler(a->arbre->enfants,enfant);
+
+		return a;
+	}
+	else if(z > 0) {
+		a->fg = insert_enfant(a->fg, e, h, enfant);
+		*h = -*h;
+	}
+	else {
+		a->fd = insert_enfant(a->fd, e, h, enfant);
+	}
+
+	if(*h != 0) {
+		a = equilibrage(a);
+
+		if(a->equil == 0)
+			*h = 0;
+		else
+			*h = 1;
+	}
+
+	return a;
+}
+
+AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
+	// Cherche d'abord le noeud dans l'AVL
+
+	AVL* n = rechercherAVL(avl, id);
+	
+	if (n) {
+		// L'ID existe dC)jC  : renvoie l'Arbre correspondant
+		*res = n->arbre;
+		*h = 0;  // pas de modification de hauteur
+
+		return avl;
+	}
+
+	// L'ID n'exrbre
+
+	Arbre* a = insert(id, 0);      // valeur initiale = 0
+	// InsC(re le noiste pas : crC)er un nouvel Auvel Arbre dans l'AVL
+	avl = insertStrAVL(avl, id, h, a);
+
+	// Retourne le nouvel Arbre via res
+	*res = a;
+
+
+	return avl;
+}
+// Affiche un Arbre (ABR) avec indentation
+void afficherABR(Arbre* a, int niveau) {
+	if (!a) return;
+
+	// Indentation selon le niveau
+	for (int i = 0; i < niveau; i++) printf("  ");
+
+	printf("%s (valeur = %.3f)\n", a->ID, a->elmt);
+
+	// Affiche les enfants
+	Chainon* c = a->enfants;
+	while (c) {
+		afficherABR(c->enfant, niveau + 1);
+		c = c->next;
+	}
+}
+
+// Affiche complet
+void afficherAVL(AVL* a) {
+	if (!a) return;
+
+	// Sous-arbre gauche
+	afficherAVL(a->fg);
+
+	// Noeud courant
+	printf("AVL: %s\n", a->ID);
+	afficherABR(a->arbre, 1);  // enfants du noeud
+
+	// Sous-arbre droit
+	afficherAVL(a->fd);
+}
+
+
+Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
+	char id[TAILLEID];
+	char id2[TAILLEID];
+	float fuite = 0;
+	float max = 0;
+
+	AVL* avl = NULL;
+	int h = 0;
+	Arbre* parent = NULL;
+	Arbre* enfant = NULL;
+	Arbre*usine=NULL;
+	// --- Lecture du fichier US ---
+	FILE* f = US;
+	if (fscanf(f, "%21[^;];%f\n", id, &max) == 2) {
+		avl = get_or_create(avl, id, &h, &parent);
+		parent->elmt = max;
+	}
+
+    usine=parent;
+	// --- Lecture des relations internes US ---
+	while (fscanf(f, "%21[^;];%21[^;];%f\n", id, id2, &fuite) == 3) {
+		parent = NULL;
+		enfant = NULL;
+	
+	
+		avl = get_or_create(avl, id, &h, &parent);
+
+		avl = get_or_create(avl, id2, &h, &enfant);
+
+		// mettre C  jour la valeur de l'enfant
+		enfant->elmt = fuite;
+
+		// ajouter enfant C  la liste chaC.nC)e du parent
+		parent->enfants = empiler(parent->enfants, enfant);
+		parent->nb_enfants+=1;
+	
+	
+	}
+	  
+	
+	// --- Lecture des autres fichiers SJ, JR, RU ---
+	FILE* fichiers[3] = {SJ, JR, RU};
+
+	for (int k = 0; k < 3; k++) {
+	
+
+		f = fichiers[k];
+    
+		while (fscanf(f, "%21[^;];%21[^;];%f\n", id, id2, &fuite) == 3) {
+		   
+    
+			parent = NULL;
+			enfant = NULL;
+
+			avl = get_or_create(avl, id, &h, &parent);
+			avl = get_or_create(avl, id2, &h, &enfant);
+
+			enfant->elmt = fuite;
+			parent->enfants = empiler(parent->enfants, enfant);
+		    	parent->nb_enfants+=1;
+
+	
+		}
+
+
+	
+	}
+//	afficherAVL(avl);
+afficherABR(usine,0);
+
+return usine;
+	// --- Affichage pour vC)rification ---
+
+}
+
+void calcul(Arbre* a,float* somme){
+    if(a->enfants==NULL){
+        *somme += a->litre;
+        return;
+    }
+    
+    if(a->litre==-1){
+        a->litre=a->elmt;
+    }
+    printf("Noeud %s | litre = %.2f | nb_enfants = %d\n",
+       a->ID, a->litre, a->nb_enfants);
+
+    float vol=(a->litre)/a->nb_enfants;
+    Chainon* temp=a->enfants;
+    while(temp!=NULL){
+        temp->enfant->litre=vol-(((temp->enfant->elmt)*vol)/100.0);
+        calcul(temp->enfant,somme);
+        temp=temp->next;
+    }
+    
+    return;
+}
