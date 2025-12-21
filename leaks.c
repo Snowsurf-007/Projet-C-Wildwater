@@ -9,10 +9,21 @@ Chainon* creationChainon(Arbre* bebe) {
 
 
 
-Chainon * empiler(Chainon* pliste, Arbre* bebe) {
+Chainon* empiler(Chainon* pliste, Arbre* bebe) {
 	Chainon* chainon=creationChainon(bebe);
 	chainon->next=pliste;
 	return chainon;
+}
+
+
+
+void ecrire(FILE * f, AVL* usine ) {
+
+    if(usine!=NULL){
+        ecrire(f,usine->fg);
+        fprintf(f, "%s;%d\n",usine->ID, usine->elmt);
+        ecrire(f, usine->fd);
+    }
 }
 
 
@@ -51,7 +62,7 @@ AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant) {
 
 	if(a == NULL) {
 		*h = 1;
-		return creationAVL(enfant, e);
+		return creationStrAVL(enfant, e);
 	}
 
 	int z = strcmp(a->ID, e);
@@ -196,13 +207,16 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 		avl = get_or_create(avl, id, &h, &parent);
 		parent->elmt = max;
 	}
+	else {
+            printf("ERREUR: Impossible de lire la première ligne du fichier US\n");
+            return NULL;  // Retourner NULL explicitement
+        }
 
     usine=parent;
 	// --- Lecture des relations internes US ---
 	while (fscanf(f, "%21[^;];%21[^;];%f\n", id, id2, &fuite) == 3) {
 		parent = NULL;
 		enfant = NULL;
-	
 	
 		avl = get_or_create(avl, id, &h, &parent);
 
@@ -246,23 +260,20 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 	
 	}
-//afficherAVL(avl);
-//afficherABR(usine,0);
+    afficherAVL(avl);
+    afficherABR(usine,0);
 
-
-
-return usine;
-	// --- Affichage pour vC)rification ---
+    return usine;
 
 }
 
 
 
 void calcul(Arbre* a,float* somme){
-	if(a==NULL){
-	*somme=-1;
-	return;
-	}
+    if(a==NULL){
+      *somme=-1;
+      return;
+    }
     if(a->enfants==NULL){
         *somme += a->litre;
         return;
@@ -287,39 +298,74 @@ void calcul(Arbre* a,float* somme){
 
 
 int main(int argc, char* argv[]) {
-    
+
     // passer US SJ JR RU
-FILE* f1 = fopen(argv[1], "r+");
+    FILE* f1 = fopen(argv[1], "r+");
     if(f1 == NULL){
-        perror("Erreur ouverture fichier");
+        printf("Erreur ouverture fichier");
         exit(545);
     }
     FILE* f2 = fopen(argv[2], "r+");
     if(f2 == NULL){
-        perror("Erreur ouverture fichier");
+        printf("Erreur ouverture fichier");
         exit(545);
     }
     FILE* f3 = fopen(argv[3], "r+");
     if(f3 == NULL){
-        perror("Erreur ouverture fichier");
+        printf("Erreur ouverture fichier");
         exit(545);
     }
     FILE* f4 = fopen(argv[4], "r+");
     if(f4 == NULL){
-        perror("Erreur ouverture fichier");
+        printf("Erreur ouverture fichier");
         exit(545);
     }
-    Arbre*res=NULL;
-    res=mega_arbre(f1,f2,f3,f4);
+    Arbre* res = mega_arbre(f1,f2,f3,f4);
+
+    if(res == NULL) {
+        printf("ERREUR: Impossible de créer l'arbre (fichier US.csv vide ou mal formaté?)\n");
+        fclose(f1);
+        fclose(f2);
+        fclose(f3);
+        fclose(f4);
+        return 1;
+    }
+
     float max=res->elmt;
-    float somme=0;
-    calcul(res, &somme);
-    printf("%s %f \n",res->ID,max-somme);
-    
+    float* somme=NULL;
+    *somme=0;
+    calcul(res, somme);
+    printf("%s %f \n",res->ID,max-*somme);
+
     fclose(f1);
     fclose(f2);
     fclose(f3);
     fclose(f4);
 
+
+    /*
+    int h=0;
+    FILE* f=NULL;
+    FILE* fichier=NULL;
+    f=fopen(argv[1],"r+");
+    if(f==NULL){
+        exit(45);
+    }
+    fichier = fopen(argv[2], "w+");
+    int a;
+    char* ID = malloc(TAILLEID*sizeof(char));
+    AVL* usine= NULL; 
+    while (fscanf(f, "%21[^;];%d", ID, &a) == 2) {
+        printf("LA %s ; %d\n", ID, a);
+	    usine = insertAVL(usine, ID, &h, a);
+    }   
+    infixe(usine);
+    ecrire(fichier, usine);
+    if(fichier==NULL){
+        exit(46);
+    }
+    fclose(fichier);
+    fclose(f);
+    */
     return 0;   
 }
