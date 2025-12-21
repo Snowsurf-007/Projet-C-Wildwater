@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ $# -eq 3 ]
+if [ $# -ne 1 ]
 then
-	exit
+	exit 1
 fi
 
-if [ $# -ne 3 ]
+if [ $# -eq 1 ]
 then
 	awk -F';' '$NF ~ /-/' $1 > temp.csv #mettre le nom du fichier en premier argument
 	cut -d';' -f2,4 temp.csv > temp2.csv
