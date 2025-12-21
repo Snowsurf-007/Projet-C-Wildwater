@@ -8,7 +8,7 @@ if [ $# -lt 3 ] #trop peu d'arguments
 then 
 	echo "ERREUR: commande incomplete, il manque des arguments !"
 	
-	#Trouve et donne le temps mis par le programme pour l'executionS
+	#Trouve et donne le temps mis par le programme pour l'execution
 	fin=$(date +%s.%N)
 	time=`echo "$fin-$debut" | bc`
 	time=`echo "$time*1000" | bc`
