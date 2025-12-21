@@ -240,19 +240,18 @@ void ecrire(FILE * f, AVL* usine) {
     }
 }
 
-void division(FILE * f, AVL* usine) {
+void division(AVL* usine) {
 
     if(usine!=NULL){
         ecrire(f,usine->fg);
-        usine->elmt=usine->elmt/1000;
+        usine->elmt=usine->elmt/1000.0;
         ecrire(f, usine->fd);
         
     }
 }
 
 int main(int argc, char* argv[]){
-	int h;
-	h=0;
+    int h=0;
     FILE* f=NULL;
     FILE* fichier=NULL;
     f=fopen(argv[1],"r+");
@@ -268,9 +267,11 @@ int main(int argc, char* argv[]){
     AVL* usine= NULL; 
     while (fscanf(f, "%21[^;];%d", ID, &a) == 2) {
     	usine = insertStrAVL(usine, ID, &h, a);
-    }                                    
+    }                       
+    division(usine);
     ecrire(fichier, usine);
     fclose(fichier);
     fclose(f);
+    free(ID);
     return 0;
 }
