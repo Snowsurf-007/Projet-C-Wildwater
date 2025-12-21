@@ -2,15 +2,14 @@
 
 fichier="$1"
 
-if [ $# -eq 3 ]
+if [ $# -ne 1 ]
 then
 	exit
 fi
 
-if [ $# -ne 3 ]
+if [ $# -eq 1 ]
 then
 	awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' "$fichier" > temp.csv
-	head temp.csv
 	cut -d';' -f3,4 temp.csv > temp1.csv
 	touch temp2.csv
 	gcc -o captation captation.c
@@ -23,7 +22,7 @@ then
 	tail -n 10 temp6.csv > src_vol10.csv
 
 gnuplot <<EOF
-set title "Histogramme des capacités maximales des 50 plus petites usines" font ",20" center
+set title "Histogramme des volumes prélevés des 50 plus petites usines" font ",20" center
 set terminal png size 1600,1000 font "Arial,12"
 set lmargin 13
 set rmargin 5
@@ -43,7 +42,7 @@ plot "src_vol50.csv" using 2:xtic(1) notitle lc rgb "magenta"
 EOF
 
 gnuplot <<EOF
-set title "Histogramme des capacités maximales des 10 plus grandes usines" font ",20" center
+set title "Histogramme des volumes prélevés des 10 plus grandes usines" font ",20" center
 set terminal png size 1600,1000 font "Arial,12"
 set lmargin 13
 set rmargin 5
@@ -52,7 +51,7 @@ set bmargin 20
 set xtics rotate by -90 offset 0,-2 nomirror
 set terminal png
 set output "histo_src_grand.png"
-set xlabel "Nom des usines" font ",16"
+set xlabel "Nom des usines" font ",16" offset 0, -5
 set ylabel "Volume (M.m^3)" font ",16"
 set xtics rotate by -90 font ",10" nomirror
 set yrange [0:*]
@@ -64,7 +63,7 @@ EOF
 
 sort -k1 -r temp2.csv > vol_src.csv
 
-	rm temp*.csv
+	#rm temp*.csv
 	rm src_vol10.csv
 	rm src_vol50.csv
 
