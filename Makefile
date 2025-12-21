@@ -12,17 +12,17 @@ CC = gcc
 CFLAGS = -Wall -Wextra -g
 	
 # Règles pour les exécutables
-histosrc: histosrc.o AVL.o
-	$(CC) $(CFLAGS) -o histosrc histosrc.o AVL.o
+histosrc: histosrc.o
+	$(CC) $(CFLAGS) -o histosrc histosrc.o
 
-historeal: historeal.o AVL.o
-	$(CC) $(CFLAGS) -o historeal historeal.o AVL.o
+historeal: historeal.o
+	$(CC) $(CFLAGS) -o historeal historeal.o
 
-histoall: histoall.o AVL.o
-	$(CC) $(CFLAGS) -o histoall histoall.o AVL.o
+histoall: histoall.o
+	$(CC) $(CFLAGS) -o histoall histoall.o
 
-leaks: leaks.o AVL.o
-	$(CC) $(CFLAGS) -o leaks leaks.o AVL.o
+leaks: leaks.o
+	$(CC) $(CFLAGS) -o leaks leaks.o
 
 # Règles pour les fichiers objets
 histosrc.o: histosrc.c biblio.h
@@ -36,9 +36,6 @@ histoall.o: histoall.c biblio.h
 
 leaks.o: leaks.c biblio.h
 	$(CC) $(CFLAGS) -c leaks.c
-
-AVL.o: AVL.c biblio.h
-	$(CC) $(CFLAGS) -c AVL.c
 	
 # Nettoyage des fichiers objets
 clean:
