@@ -160,7 +160,7 @@ case "$commande" in
 		
 		#partie appel code C
 		make leaks
-		./leaks "$fichier" "$usine"
+		./leaks US.csv SJ.csv JR.csv RU.csv >> rendements.dat
 		#./leaks US SJ JR RU >> historique_rendements.dat #jsp si c est bon
 		#verif retour code C
 		retc=$?
