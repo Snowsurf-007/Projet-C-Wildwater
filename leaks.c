@@ -332,10 +332,10 @@ int main(int argc, char* argv[]) {
     }
 
     float max=res->elmt;
-    float* somme=NULL;
-    *somme=0;
+    float somme=NULL;
+    somme=0;
     calcul(res, somme);
-    printf("%s %f \n",res->ID,max-*somme);
+    printf("%s %f \n",res->ID,max-somme);
 
     fclose(f1);
     fclose(f2);
