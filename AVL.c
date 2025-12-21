@@ -33,7 +33,7 @@ int equilibre(AVL* a){
    CRÉATION AVL
    ===================== */
 
-AVL* creationAVL(Arbre* e, char* c){
+AVL* creationStrAVL(Arbre* e, char* c){
     AVL* n = malloc(sizeof(AVL));
     if(!n){
         perror("malloc");
@@ -54,6 +54,24 @@ AVL* creationAVL(Arbre* e, char* c){
     strcpy(n->ID, c);
 
     return n;
+}
+
+
+
+AVL* creationAVL(int e, char* c){
+    AVL* newNode = malloc(sizeof(AVL));
+    if(!newNode){
+        printf("Erreur : malloc\n");
+        exit(1);
+    }
+
+    newNode->elmt = e;
+    newNode->fg = NULL;
+    newNode->fd = NULL;
+    newNode->equil = 0;
+    newNode->ID = strdup(c);
+
+    return newNode;
 }
 
 /* =====================
@@ -124,7 +142,7 @@ AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre* p){
 
     if(a == NULL){
         *h = 1;
-        return creationAVL(p, e);
+        return creationStrAVL(p, e);
     }
 
     int z = strcmp(e, a->ID);
@@ -147,6 +165,45 @@ AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre* p){
         *h = (a->equil == 0) ? 0 : 1;
     }
 
+    return a;
+}
+
+
+
+AVL* insertAVL(AVL* a, char* e,int* h,int capter) {
+    if (a == NULL) {
+    	*h=1;
+        return creationAVL(capter, e);
+    }
+
+    int z = strcmp(a->ID, e);
+
+    if (z == 0) {
+        //printf("Cet élément est déjà présent dans l'AVL\n");
+        a->elmt = a->elmt+ capter; 
+        return a;
+    }
+    else if (z > 0) {
+        a->fg = insertAVL(a->fg, e, h, capter);
+        *h=-*h;
+    }
+    else if(z < 0){
+        a->fd = insertAVL(a->fd, e, h, capter);
+    }
+    else{
+        *h=0;
+        return a;
+    }
+    if(*h!=0){
+        a->equil=a->equil+*h;
+        a=equilibrage(a);
+        if(a->equil==0){
+            *h=0;
+        }
+        else{
+            *h=1;
+        }
+    }
     return a;
 }
 
