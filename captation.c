@@ -230,7 +230,8 @@ AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
     }
     return a;
 }
-void ecrire(FILE * f, AVL* usine ) {
+
+void ecrire(FILE * f, AVL* usine) {
 
     if(usine!=NULL){
         ecrire(f,usine->fg);
@@ -238,6 +239,17 @@ void ecrire(FILE * f, AVL* usine ) {
         ecrire(f, usine->fd);
     }
 }
+
+void division(FILE * f, AVL* usine) {
+
+    if(usine!=NULL){
+        ecrire(f,usine->fg);
+        usine->elmt=usine->elmt/1000;
+        ecrire(f, usine->fd);
+        
+    }
+}
+
 int main(int argc, char* argv[]){
 	int h;
 	h=0;
