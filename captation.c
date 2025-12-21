@@ -139,7 +139,7 @@ AVL* equilibrage(AVL* a){
 AVL* insertAVL(AVL* a, char* e,int* h,int capter) {
     if (a == NULL) {
     	*h=1;
-        return creationAVL(capter, e);
+        return creationAVLcap(capter, e);
     }
 
     int z = strcmp(a->ID, e);
