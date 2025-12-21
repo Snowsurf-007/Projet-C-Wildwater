@@ -55,7 +55,7 @@ void suffixe(AVL* a){
     suffixe(a->fd);
     traiter(a);
 }
-AVL* creationAVL(int e, char* c){
+AVL* creationAVLcap(int e, char* c){
     AVL* newNode = malloc(sizeof(AVL));
     if(!newNode){
         printf("Erreur : malloc\n");
