@@ -9,24 +9,33 @@ OBJS = $(SRCS:.c=.o)
 
 # Le compilateur
 CC = gcc
-
-# Options de compilation
-CFLAGS = -Wall -Wextra -std=c11
-
-# Options de liaison
-LDFLAGS = -lm
 	
-histosrc: $(OBJS) biblio.h
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+histosrc: histosrc.o AVL.o
+	$(CC) -o $(EXEC) $(OBJS)
 	
-historeal: $(OBJS) biblio.h
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+histosrc.o: histosrc.c biblio.h
+	$(CC) -o $(EXEC) $(OBJS)
 	
-histoall: $(OBJS) biblio.h
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+historeal: historeal.o AVL.o
+	$(CC) -o $(EXEC) $(OBJS)
 	
-leaks: $(OBJS) biblio.h
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+historeal.o: historeal.c biblio.h
+	$(CC) -o $(EXEC) $(OBJS)
+	
+histoall: histoall.o AVL.o
+	$(CC) -o $(EXEC) $(OBJS)
+	
+histoall.o: histoall.c biblio.h
+	$(CC) -o $(EXEC) $(OBJS)
+	
+leaks: leaks.o AVL.o
+	$(CC) -o $(EXEC) $(OBJS)
+	
+leaks.o: leaks.c
+	$(CC) -o $(EXEC) $(OBJS)
+	
+AVL.o: AVL.c
+	$(CC) -o $(EXEC) $(OBJS)
 	
 # Nettoyage des fichiers objets
 clean:
