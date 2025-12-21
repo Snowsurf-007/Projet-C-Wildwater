@@ -6,11 +6,16 @@ Chainon* creationChainon(Arbre* bebe) {
 	chainon->next=NULL;
 	return chainon;
 }
+
+
+
 Chainon * empiler(Chainon* pliste, Arbre* bebe) {
 	Chainon* chainon=creationChainon(bebe);
 	chainon->next=pliste;
 	return chainon;
 }
+
+
 
 AVL* rechercherAVL(AVL* a, char* id) {
 	if (!a) return NULL;
@@ -20,6 +25,8 @@ AVL* rechercherAVL(AVL* a, char* id) {
 	if (c < 0) return rechercherAVL(a->fg, id);
 	return rechercherAVL(a->fd, id);
 }
+
+
 
 Arbre* insert(char* id, int nb) {
 	Arbre* new = malloc(sizeof(Arbre));
@@ -37,6 +44,7 @@ Arbre* insert(char* id, int nb) {
 	new->litre=-1;
 	return new;
 }
+
 
 
 AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant) {
@@ -75,6 +83,8 @@ AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant) {
 	return a;
 }
 
+
+
 AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
 	// Cherche d'abord le noeud dans l'AVL
 
@@ -100,6 +110,9 @@ AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
 
 	return avl;
 }
+
+
+
 // Affiche un Arbre (ABR) avec indentation
 void afficherABR(Arbre* a, int niveau) {
 	if (!a) return;
@@ -117,6 +130,8 @@ void afficherABR(Arbre* a, int niveau) {
 	}
 }
 
+
+
 // Affiche complet
 void afficherAVL(AVL* a) {
 	if (!a) return;
@@ -131,6 +146,38 @@ void afficherAVL(AVL* a) {
 	// Sous-arbre droit
 	afficherAVL(a->fd);
 }
+
+
+
+void libererArbre(Arbre* a) {
+    if (a==NULL){
+        return;
+    }
+    
+    // Libérer la liste des enfants
+    Chainon* c=a->enfants;
+    while (c!=NULL) {
+        Chainon* temp=c;
+        libererArbre(c->enfant);
+        c=c->next;
+        free(temp);
+    }
+    
+    free(a->ID);
+    free(a);
+}
+
+
+
+void libererAVL(AVL* a) {
+    if (a==NULL) return;
+    
+    libererAVL(a->fg);
+    libererAVL(a->fd);
+    free(a->ID);
+    free(a);
+}
+
 
 
 Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
@@ -200,17 +247,22 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 	
 	}
-//	afficherAVL(avl);
+//afficherAVL(avl);
 //afficherABR(usine,0);
+
+
 
 return usine;
 	// --- Affichage pour vC)rification ---
 
 }
 
+
+
 void calcul(Arbre* a,float* somme){
 	if(a==NULL){
-	*somme=-1
+	*somme=-1;
+	return;
 	}
     if(a->enfants==NULL){
         *somme += a->litre;
@@ -220,8 +272,7 @@ void calcul(Arbre* a,float* somme){
     if(a->litre==-1){
         a->litre=a->elmt;
     }
-    printf("Noeud %s | litre = %.2f | nb_enfants = %d\n",
-       a->ID, a->litre, a->nb_enfants);
+    printf("Noeud %s | litre = %.2f | nb_enfants = %d\n", a->ID, a->litre, a->nb_enfants);
 
     float vol=(a->litre)/a->nb_enfants;
     Chainon* temp=a->enfants;
@@ -233,6 +284,8 @@ void calcul(Arbre* a,float* somme){
     
     return;
 }
+
+
 
 int main(int argc, char* argv[]) {
     
@@ -258,12 +311,17 @@ FILE* f1 = fopen(argv[1], "r+");
         exit(545);
     }
     Arbre*res=NULL;
-res=mega_arbre(f1,f2,f3,f4);
-float max=res->elmt;
-float* somme;
-*somme=0;
-calcul(res,somme);
-printf("%f",max-*somme);
+    res=mega_arbre(f1,f2,f3,f4);
+    float max=res->elmt;
+    float somme;
+    somme=0;
+    calcul(res, &somme);
+    printf("%f",max-somme);
+    
+    fclose(f1);
+    fclose(f2);
+    fclose(f3);
+    fclose(f4);
 
- return 0;   
+    return 0;   
 }
