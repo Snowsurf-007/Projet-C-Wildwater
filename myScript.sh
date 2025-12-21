@@ -161,7 +161,7 @@ case "$commande" in
 		#partie appel code C
 		make leaks
 		./leaks "$fichier" "$usine"
-		
+		#./leaks US SJ JR RU >> historique_rendements.dat #jsp si c est bon
 		#verif retour code C
 		retc=$?
 		if [ $retc -ne 0 ] 
