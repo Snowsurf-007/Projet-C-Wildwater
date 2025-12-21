@@ -178,3 +178,4 @@ void suffixe(AVL* a){
     suffixe(a->fg);
     suffixe(a->fd);
     traiter(a);
+}
