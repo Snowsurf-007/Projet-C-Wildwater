@@ -136,7 +136,7 @@ AVL* equilibrage(AVL* a){
 /* =====================
    INSERTION AVL
    ===================== */
-AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
+AVL* insertAVL(AVL* a, char* e,int* h,int capter) {
     if (a == NULL) {
     	*h=1;
         return creationAVL(capter, e);
@@ -150,11 +150,11 @@ AVL* insertStrAVL(AVL* a, char* e,int* h,int capter) {
         return a;
     }
     else if (z > 0) {
-        a->fg = insertStrAVL(a->fg, e, h, capter);
+        a->fg = insertAVL(a->fg, e, h, capter);
         *h=-*h;
     }
     else if(z < 0){
-        a->fd = insertStrAVL(a->fd, e, h, capter);
+        a->fd = insertAVL(a->fd, e, h, capter);
     }
     else{
         *h=0;
@@ -197,7 +197,7 @@ int main(int argc, char* argv[]){
     char* ID =malloc(TAILLEID*sizeof(char));
     AVL* usine= NULL; 
     while (fscanf(f, "%1000[^;];%d", ID, &a) == 2) {
-    	usine = insertStrAVL(usine, ID, &h, a);
+    	usine = insertAVL(usine, ID, &h, a);
     }                                    
     ecrire(fichier, usine);
     fclose(fichier);
