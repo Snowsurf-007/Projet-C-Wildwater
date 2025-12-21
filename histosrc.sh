@@ -11,8 +11,8 @@ then
 	awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > temp.csv
 	cut -d';' -f3,4 temp.csv > temp1.csv
 	touch temp2.csv
-	gcc -o calc calc2.c 
-	./calc temp1.csv temp2.csv
+	make leaks
+	./leaks temp1.csv temp2.csv
 	grep -v '^$' temp2.csv > temp3.csv
 	sort -k2 -n temp3.csv > temp4.csv
 	head -n 50 temp4.csv > src_vol50.csv
@@ -61,7 +61,7 @@ EOF
 
 	sort -k1 -r temp2.csv > vol_src.csv
 
-	rm temp*.csv
+	#rm temp*.csv
 	rm src_vol10.csv
 	rm src_vol50.csv
 
