@@ -84,7 +84,6 @@ AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant) {
 }
 
 
-
 AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
 	// Cherche d'abord le noeud dans l'AVL
 
@@ -313,10 +312,9 @@ FILE* f1 = fopen(argv[1], "r+");
     Arbre*res=NULL;
     res=mega_arbre(f1,f2,f3,f4);
     float max=res->elmt;
-    float* somme;
-    *somme=0;
-    calcul(res, somme);
-    printf("%s %f \n",res->ID,max-*somme);
+    float somme=0;
+    calcul(res, &somme);
+    printf("%s %f \n",res->ID,max-somme);
     
     fclose(f1);
     fclose(f2);
