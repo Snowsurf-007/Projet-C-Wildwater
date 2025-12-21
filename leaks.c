@@ -303,22 +303,22 @@ int main(int argc, char* argv[]) {
     FILE* f1 = fopen(argv[1], "r+");
     if(f1 == NULL){
         printf("Erreur ouverture fichier");
-        exit(545);
+        exit(55);
     }
     FILE* f2 = fopen(argv[2], "r+");
     if(f2 == NULL){
         printf("Erreur ouverture fichier");
-        exit(545);
+        exit(55);
     }
     FILE* f3 = fopen(argv[3], "r+");
     if(f3 == NULL){
         printf("Erreur ouverture fichier");
-        exit(545);
+        exit(45);
     }
     FILE* f4 = fopen(argv[4], "r+");
     if(f4 == NULL){
         printf("Erreur ouverture fichier");
-        exit(545);
+        exit(45);
     }
     Arbre* res = mega_arbre(f1,f2,f3,f4);
 
