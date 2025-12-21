@@ -137,8 +137,8 @@ case "$commande" in
 				
 				#Trouve et donne le temps mis par le programme pour l'execution
     				fin=$(date +%s.%N)
-				time=`echo "$fin-$debut" | bc`
-				time=`echo "$time*1000" | bc`
+					time=`echo "$fin-$debut" | bc`
+					time=`echo "$time*1000" | bc`
 			    	echo "Le programme a mis $time ms à être exécuté"
     				exit 8;;
 		esac;;
@@ -166,7 +166,7 @@ case "$commande" in
 		retc=$?
 		if [ $retc -ne 0 ] 
 		then
-			clear
+			#clear
 			echo "Échec du code C !"
 			fin=$(date +%s.%N)
 			time=`echo "$fin-$debut" | bc`
@@ -182,8 +182,8 @@ case "$commande" in
 		fin=$(date +%s.%N)
 		time=`echo "$fin-$debut" | bc`
 		time=`echo "$time*1000" | bc`
-	    	echo "Le programme a mis $time ms à être exécuté"
-    		exit 10;;
+	    echo "Le programme a mis $time ms à être exécuté"
+    	exit 10;;
 esac
 
 
