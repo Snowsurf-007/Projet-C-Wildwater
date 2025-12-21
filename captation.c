@@ -255,7 +255,7 @@ int main(int argc, char* argv[]){
     char* ID =malloc(TAILLEID*sizeof(char));
     AVL* usine= NULL; 
     while (fscanf(f, "%21[^;];%d", ID, &a) == 2) {
-    	usine = insertAVL(usine, ID, &h, a);
+    	usine = insertStrAVL(usine, ID, &h, a);
     }                                    
     ecrire(fichier, usine);
     fclose(fichier);
