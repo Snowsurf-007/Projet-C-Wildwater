@@ -7,7 +7,7 @@ fi
 
 if [ $# -ne 3 ]
 then
-awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > temp.csv
+awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' c-wildwater_v3.dat > temp.csv
 head temp.csv
 cut -d';' -f3,4 temp.csv > temp1.csv
 touch temp2.csv
@@ -24,42 +24,47 @@ cat src_vol50.csv
 fi
 
 gnuplot <<EOF
-set title "Histogramme des volumes preleves des 50 plus petites usines" font ",20" center
-set terminal png size 1600,1000 font "Arial,12"
-set lmargin 13
-set rmargin 5
-set tmargin 5
-set bmargin 20
-set xtics rotate by -90 offset 0,-2 nomirror
 set terminal png
-set output "histo_src.png"
+set title "Histogramme des volumes preleves des 50 plus petites usines" font ",20"
+set terminal png size 1600,1000 font "Arial,12"
+set output "histopetites_src.png"
+set lmargin 15
+set bmargin 25
 set xlabel "Nom des usines" font ",16"
-set ylabel "Volume (M.m^3)" font ",16"
-set xtics rotate by -90 font ",10" nomirror
-set yrange [0.5:1.5]
-set style fill solid 1.0 border -1
+set ylabel "Volume (m³)" font ",16"
 set style data histograms
-set boxwidth 1
-plot "src_vol50.csv" using 2:xtic(1) title "" lc rgb "blue"
+set style fill solid 1.0 border -1
+set boxwidth 0.8
+set xtics rotate by -90 font ",8" offset 0,-4 nomirror
+set ytics nomirror
+set yrange [0:*]
+set format y "%.0s%c"
+plot "src_vol50.csv" using 2:xtic(1) notitle lc rgb "blue"
+
 EOF
 
 gnuplot <<EOF
-set title "Histogramme des volumes preleves des 10 plus grandes usines" font ",20" center
+gnuplot <<EOF
 set terminal png size 1600,1000 font "Arial,12"
-set lmargin 13
+set output "histo_max_grand.png"
+set title "Histogramme des volumes preleves des 10 plus grandes usines" font ",20"
+set lmargin 15
+set bmargin 22
 set rmargin 5
 set tmargin 5
-set bmargin 20
-set xtics rotate by -90 offset 0,-2 nomirror
-set terminal png
-set output "histo_max_grand.png"
 set xlabel "Nom des usines" font ",16"
-set ylabel "Volume (M.m^3)" font ",16"
-set xtics rotate by -90 font ",10" nomirror
-set yrange [0:75000]
-set style fill solid 1.0 border -1
+set ylabel "Volume (m³)" font ",16"
 set style data histograms
-set boxwidth 1
-plot "src_vol10.csv" using 2:xtic(1) title "" lc rgb "blue"
+set style fill solid 1.0 border -1
+set boxwidth 0.8
+set xtics rotate by -90 font ",10" offset 0,-3 nomirror
+set ytics nomirror
+set yrange [0:*]
+set format y "%.0s%c"
+
+plot "src_vol10.csv" using 2:xtic(1) notitle lc rgb "red"
+EOF
+
+
 EOF
 
