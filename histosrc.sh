@@ -7,16 +7,16 @@ fi
 
 if [ $# -eq 1 ]
 then
-
-awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > temp.csv
-cut -d';' -f3,4 temp.csv > temp1.csv
-touch temp2.csv
-gcc -o temp calc2.c 
-./temp temp1.csv temp2.csv
-grep -v '^$' temp2.csv > temp3.csv
-sort -k2 -n temp3.csv > temp4.csv
-head -n 50 temp4.csv > src_vol50.csv
-tail -n 10 temp4.csv > src_vol10.csv
+		
+		awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' $1 > temp.csv
+		cut -d';' -f3,4 temp.csv > temp1.csv
+		touch temp2.csv
+		gcc -o temp calc2.c 
+		./temp temp1.csv temp2.csv
+		grep -v '^$' temp2.csv > temp3.csv
+		sort -k2 -n temp3.csv > temp4.csv
+		head -n 50 temp4.csv > src_vol50.csv
+		tail -n 10 temp4.csv > src_vol10.csv
 fi
 
 gnuplot <<EOF
