@@ -73,6 +73,24 @@ Chainon* empiler(Chainon* pliste, Arbre* bebe);
 Arbre* creation(char* idav);
 Arbre* creation2(char* idam, char* idav, float fuite);
 void affichage(Arbre* a,int niveau);
-Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU);
-void calcul(Arbre* a,float* somme);
 #endif // BIBLIO_H
+Chainon* creationChainon(Arbre* bebe);
+Chainon* empiler(Chainon* pliste, Arbre* bebe);
+
+/* AVL */
+AVL* rechercherAVL(AVL* a, char* id);
+AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant);
+AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res);
+
+/* Arbres */
+Arbre* insert(char* id, int nb);
+
+/* Affichage */
+void afficherABR(Arbre* a, int niveau);
+void afficherAVL(AVL* a);
+
+/* Construction */
+Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU);
+
+/* Calcul */
+void calcul(Arbre* a, float* somme);
