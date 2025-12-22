@@ -60,8 +60,11 @@ set style data histograms
 set boxwidth 1
 plot "src_vol10.csv" using 2:xtic(1) title "" lc rgb "magenta"
 EOF
-
-sort -k1 -r temp6.csv > vol_src.csv
+	
+	echo "Nom usine;Volumes prélevés (M.m^3)" > vol_src.csv
+	sort -k2 -r src_vol10.csv > temp9.csv
+	sort -k2 -r src_vol50.csv >> temp9.csv
+	sed  's/ /;/g' temp9.csv >> vol_src.csv
 
 	rm temp*.csv
 	rm src_vol10.csv
