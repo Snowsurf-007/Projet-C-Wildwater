@@ -11,6 +11,12 @@
 #include <unistd.h>
 #define TAILLEID 20
 
+
+
+/* =====================
+        STRUCTURES
+   ===================== */
+
 typedef struct AVL {
 	struct Arbre* arbre;
 	int equil;
@@ -19,6 +25,8 @@ typedef struct AVL {
 	struct AVL* fg;
 	struct AVL* fd;
 } AVL;
+
+
 
 typedef struct Arbre {
 	struct Chainon* enfants;
@@ -35,10 +43,18 @@ typedef struct File{
   struct Chainon* tail;
 }File;
 
+
+
 typedef struct Chainon {
 	struct Arbre* enfant;
 	struct Chainon* next;
 } Chainon;
+
+
+
+/* =====================
+	PROTOTYPES DES FCTS
+   ===================== */
 
 int main(int argc, char* argv[]);
 int max(int a, int b);
@@ -47,7 +63,7 @@ int hauteur(AVL* a);
 int equilibre(AVL* a);
 void ecrire(FILE* f, AVL* usine);
 
-/* ======== Fonctions AVL ======== */
+
 void recherche(AVL* a, char* e,Arbre* bebe);
 AVL* creationStrAVL(Arbre* e, char* c);
 AVL* creationAVL(int e, char* c);
@@ -62,7 +78,7 @@ AVL* equilibrage(AVL* a);
 AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre*p);
 AVL* insertAVL(AVL* a, char* e,int* h,int capter);
 
-/* ======== Affichage ======== */
+
 void traiter(AVL* a);
 void infixe(AVL* a);
 void prefixe(AVL* a);
@@ -75,24 +91,21 @@ Chainon* empiler(Chainon* pliste, Arbre* bebe);
 Arbre* creation(char* idav);
 Arbre* creation2(char* idam, char* idav, float fuite);
 void affichage(Arbre* a,int niveau);
-#endif // BIBLIO_H
 Chainon* creationChainon(Arbre* bebe);
 Chainon* empiler(Chainon* pliste, Arbre* bebe);
 
-/* AVL */
+
 AVL* rechercherAVL(AVL* a, char* id);
 AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant);
 AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res);
 
-/* Arbres */
 Arbre* insert(char* id, int nb);
 
-/* Affichage */
 void afficherABR(Arbre* a, int niveau);
 void afficherAVL(AVL* a);
 
-/* Construction */
 Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU);
 
-/* Calcul */
 void calcul(Arbre* a, float* somme);
+
+#endif // BIBLIO_H
