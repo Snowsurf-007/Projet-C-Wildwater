@@ -164,7 +164,7 @@ case "$commande" in
 		retc=$?
 		if [ $retc -ne 0 ] 
 		then
-			#clear
+			clear
 			echo "Échec du code C !"
 			fin=$(date +%s.%N)
 			time=`echo "$fin-$debut" | bc`
