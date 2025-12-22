@@ -180,8 +180,6 @@ case "$commande" in
     	exit 10;;
 esac
 
-rm temp*.csv
-
 #Trouve et donne le temps mis par le programme pour l'execution
 fin=$(date +%s.%N)
 time=`echo "$fin-$debut" | bc`
