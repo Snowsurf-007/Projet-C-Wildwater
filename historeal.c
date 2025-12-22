@@ -1,8 +1,6 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <Realing.h>
+#include <string.h>
 #include <math.h>
 #include <time.h>
 #include <unistd.h>
@@ -251,6 +249,7 @@ void infixe(AVL* a){
 
 
 int main(int argc, char* argv[]){
+    argc+=1; //pour eviter le warning
     int h=0;
     FILE* f=NULL;
     FILE* fichier=NULL;
@@ -269,7 +268,6 @@ int main(int argc, char* argv[]){
     AVL* usine= NULL; 
     while (fscanf(f, "%100[^;];%d;%f", ID, &a, &b) == 3) {
     	c=a/1.0-(a*(b/100));
-    	printf("%f\n",c);
     	usine = insertRealAVL(usine, ID, &h, c);
     	c=0;
     }
@@ -280,4 +278,3 @@ int main(int argc, char* argv[]){
     free(ID);
     return 0;
 }
-
