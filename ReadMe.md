@@ -75,7 +75,7 @@ bash myScript.sh c-wildwater_v3.dat leaks "Facility complex #RH400057F"
 
 ## 📂 **Fichiers de sortie**
 
-- Fichiers de données (.csv)
+- Fichiers de données (.csv et .dat)
 - Images PNG des histogrammes générés
 - Fichier d’historique des fuites par usine (.csv)
 - Noms de fichiers distincts selon le traitement effectué
