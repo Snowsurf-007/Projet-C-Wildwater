@@ -298,75 +298,53 @@ void calcul(Arbre* a,float* somme){
 
 
 int main(int argc, char* argv[]) {
+    
+    if (argc==4){
+        // passer US SJ JR RU
+        FILE* f1 = fopen(argv[1], "r+");
+        if(f1 == NULL){
+            printf("Erreur ouverture fichier");
+            exit(55);
+        }
+        FILE* f2 = fopen(argv[2], "r+");
+        if(f2 == NULL){
+            printf("Erreur ouverture fichier");
+            exit(55);
+        }
+        FILE* f3 = fopen(argv[3], "r+");
+        if(f3 == NULL){
+            printf("Erreur ouverture fichier");
+            exit(45);
+        }
+        FILE* f4 = fopen(argv[4], "r+");
+        if(f4 == NULL){
+            printf("Erreur ouverture fichier");
+            exit(45);
+        }
+        Arbre* res = mega_arbre(f1,f2,f3,f4);
 
-    // passer US SJ JR RU
-    FILE* f1 = fopen(argv[1], "r+");
-    if(f1 == NULL){
-        printf("Erreur ouverture fichier");
-        exit(55);
-    }
-    FILE* f2 = fopen(argv[2], "r+");
-    if(f2 == NULL){
-        printf("Erreur ouverture fichier");
-        exit(55);
-    }
-    FILE* f3 = fopen(argv[3], "r+");
-    if(f3 == NULL){
-        printf("Erreur ouverture fichier");
-        exit(45);
-    }
-    FILE* f4 = fopen(argv[4], "r+");
-    if(f4 == NULL){
-        printf("Erreur ouverture fichier");
-        exit(45);
-    }
-    Arbre* res = mega_arbre(f1,f2,f3,f4);
+        if(res == NULL) {
+            printf("ERREUR: Impossible de créer l'arbre (fichier US.csv vide ou mal formaté?)\n");
+            fclose(f1);
+            fclose(f2);
+            fclose(f3);
+            fclose(f4);
+            return 1;
+        }
 
-    if(res == NULL) {
-        printf("ERREUR: Impossible de créer l'arbre (fichier US.csv vide ou mal formaté?)\n");
+        float max=res->elmt;
+        float somme=0;
+        calcul(res, &somme);
+        printf("%s %f \n",res->ID,max-somme);
+
         fclose(f1);
         fclose(f2);
         fclose(f3);
         fclose(f4);
-        return 1;
     }
-
-    float max=res->elmt;
-    float somme=NULL;
-    somme=0;
-    calcul(res, somme);
-    printf("%s %f \n",res->ID,max-somme);
-
-    fclose(f1);
-    fclose(f2);
-    fclose(f3);
-    fclose(f4);
-
-
-    /*
-    int h;
-	h=0;
-    FILE* f=NULL;
-    FILE* fichier=NULL;
-    f=fopen(argv[1],"r+");
-    if(f==NULL){
-        exit(45);
+    else{
+        return 2;
     }
-    fichier = fopen(argv[2], "w+");
-    if(fichier==NULL){
-        exit(0);
-    }
-    int a;
-    char* ID =malloc(TAILLEID*sizeof(char));
-    AVL* usine= NULL; 
-    while (fscanf(f, "%21[^;];%d", ID, &a) == 2) {
-    	usine = insertAVL(usine, ID, &h, a);
-    }                                    
-    ecrire(fichier, usine);
-    fclose(fichier);
-    fclose(f);
-    return 0;
-}
-    */
+    
     return 0;   
 }
