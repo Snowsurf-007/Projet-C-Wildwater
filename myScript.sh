@@ -90,25 +90,26 @@ case "$commande" in
 				fi
 				;;
 			real)
-				echo "La fonction de l'histogramme real n'est pas disponible pour l'instant ;/ !"
-				fin=$(date +%s.%N)
-				time=`echo "$fin-$debut" | bc`
-				time=`echo "$time*1000" | bc`
-	    			echo "Le programme a mis $time ms à être exécuté"
-				exit
+				#echo "La fonction de l'histogramme real n'est pas disponible pour l'instant ;/ !"
+				#fin=$(date +%s.%N)
+				#time=`echo "$fin-$debut" | bc`
+				#time=`echo "$time*1000" | bc`
+	    			#echo "Le programme a mis $time ms à être exécuté"
+				#exit
+				
 				#partie appel fonction histogramme max
-				#bash historeal.sh "$fichier"
+				bash historeal.sh "$fichier"
 				#verif retour code
-				#ret=$?
-				#if [ $ret -ne 0 ] 
-				#then
-					#echo "Échec de la création de l'histogramme !"
-					#fin=$(date +%s.%N)
-					#time=`echo "$fin-$debut" | bc`
-					#time=`echo "$time*1000" | bc`
-		    			#echo "Le programme a mis $time ms à être exécuté"
-					#exit 6
-				#fi
+				ret=$?
+				if [ $ret -ne 0 ] 
+				then
+					echo "Échec de la création de l'histogramme !"
+					fin=$(date +%s.%N)
+					time=`echo "$fin-$debut" | bc`
+					time=`echo "$time*1000" | bc`
+		    			echo "Le programme a mis $time ms à être exécuté"
+					exit 6
+				fi
 				;;
 			all)	
 				echo "La fonction de l'histogramme all n'est pas disponible pour l'instant ;/ !"
