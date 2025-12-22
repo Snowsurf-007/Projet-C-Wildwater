@@ -95,7 +95,6 @@ AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant) {
 }
 
 
-
 AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
 	// Cherche d'abord le noeud dans l'AVL
 
@@ -231,30 +230,32 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 		// ajouter enfant C  la liste chaC.nC)e du parent
 		parent->enfants = empiler(parent->enfants, enfant);
 		parent->nb_enfants+=1;
-	}
-
 	
+	
+	}
+	  
 	
 	// --- Lecture des autres fichiers SJ, JR, RU ---
 	FILE* fichiers[3] = {SJ, JR, RU};
 
 	for (int k = 0; k < 3; k++) {
+	
+
 		f = fichiers[k];
-		while (fscanf(f, "%99[^;];%99[^;];%f\n", id, id2, &fuite) == 3) {  
+    
+		while (fscanf(f, "%99[^;];%99[^;];%f\n", id, id2, &fuite) == 3) {
 			parent = NULL;
 			enfant = NULL;
+
 			avl = get_or_create(avl, id, &h, &parent);
 			avl = get_or_create(avl, id2, &h, &enfant);
+
 			enfant->elmt = fuite;
 			parent->enfants = empiler(parent->enfants, enfant);
 		    	parent->nb_enfants+=1;
 		}
 	}
-    afficherAVL(avl);
-    afficherABR(usine,0);
-
     return usine;
-
 }
 
 
@@ -268,9 +269,6 @@ void calcul(Arbre* a, float* somme_fuites) {
     if(a->litre == -1) {
         a->litre = a->elmt;  // Volume initial à la racine
     }
-    
-    printf("Noeud %s | litre = %.2f | nb_enfants = %d\n", 
-           a->ID, a->litre, a->nb_enfants);
     
     // Si c'est une feuille, pas de distribution
     if(a->enfants == NULL) {
@@ -339,13 +337,13 @@ int main(int argc, char* argv[]) {
         float max=res->elmt;
         float somme=0.0;
         calcul(res, &somme);
-        printf("%s %f \n",res->ID,max-somme);
+        
         // Afficher le résultat
-        printf("\n=== RÉSULTAT ===\n");
+        printf("=== RÉSULTAT ===\n");
         printf("Usine: %s\n", res->ID);
-        printf("Capacité initiale: %.2f litres\n", max);
-        printf("Total des fuites: %.2f litres\n", somme);
-        printf("Volume restant: %.2f litres\n", max - somme);
+        printf("Capacité initiale: %.2f M.m^3\n", max/1000.0);
+        printf("Total des fuites: %.2f M.m^3\n", somme/1000.0);
+        printf("Volume restant: %.2f M.m^3\n", (max - somme)/1000.0);
 
         fclose(f1);
         fclose(f2);
