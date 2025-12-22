@@ -9,7 +9,7 @@
 #include <math.h>
 #include <time.h>
 #include <unistd.h>
-#define TAILLEID 20
+#define TAILLEID 100
 
 
 
