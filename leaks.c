@@ -341,9 +341,9 @@ int main(int argc, char* argv[]) {
         // Afficher le résultat
         printf("=== RÉSULTAT ===\n");
         printf("Usine: %s\n", res->ID);
-        printf("Capacité initiale: %.2f M.m^3\n", max/1000.0);
-        printf("Total des fuites: %.2f M.m^3\n", somme/1000.0);
-        printf("Volume restant: %.2f M.m^3\n", (max - somme)/1000.0);
+        printf("Capacité initiale: %.2f k.m^3\n", max);
+        printf("Total des fuites: %.2f k.m^3\n", somme);
+        printf("Volume restant: %.2f k.m^3\n", (max - somme));
 
         fclose(f1);
         fclose(f2);
