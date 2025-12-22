@@ -95,6 +95,7 @@ AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant) {
 }
 
 
+
 AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
 	// Cherche d'abord le noeud dans l'AVL
 
@@ -180,7 +181,9 @@ void libererArbre(Arbre* a) {
 
 
 void libererAVL(AVL* a) {
-    if (a==NULL) return;
+    if (a==NULL){
+        return;
+    }
     
     libererAVL(a->fg);
     libererAVL(a->fd);
@@ -203,7 +206,7 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 	Arbre*usine=NULL;
 	// --- Lecture du fichier US ---
 	FILE* f = US;
-	if (fscanf(f, "%21[^;];%f\n", id, &max) == 2) {
+	if (fscanf(f, "%99[^;];%f\n", id, &max) == 2) {
 		avl = get_or_create(avl, id, &h, &parent);
 		parent->elmt = max;
 	}
@@ -214,7 +217,7 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
     usine=parent;
 	// --- Lecture des relations internes US ---
-	while (fscanf(f, "%21[^;];%21[^;];%f\n", id, id2, &fuite) == 3) {
+	while (fscanf(f, "%99[^;];%99[^;];%f\n", id, id2, &fuite) == 3) {
 		parent = NULL;
 		enfant = NULL;
 	
@@ -228,37 +231,24 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 		// ajouter enfant C  la liste chaC.nC)e du parent
 		parent->enfants = empiler(parent->enfants, enfant);
 		parent->nb_enfants+=1;
-	
-	
 	}
-	  
+
+	
 	
 	// --- Lecture des autres fichiers SJ, JR, RU ---
 	FILE* fichiers[3] = {SJ, JR, RU};
 
 	for (int k = 0; k < 3; k++) {
-	
-
 		f = fichiers[k];
-    
-		while (fscanf(f, "%21[^;];%21[^;];%f\n", id, id2, &fuite) == 3) {
-		   
-    
+		while (fscanf(f, "%99[^;];%99[^;];%f\n", id, id2, &fuite) == 3) {  
 			parent = NULL;
 			enfant = NULL;
-
 			avl = get_or_create(avl, id, &h, &parent);
 			avl = get_or_create(avl, id2, &h, &enfant);
-
 			enfant->elmt = fuite;
 			parent->enfants = empiler(parent->enfants, enfant);
 		    	parent->nb_enfants+=1;
-
-	
 		}
-
-
-	
 	}
     afficherAVL(avl);
     afficherABR(usine,0);
@@ -269,30 +259,44 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 
 
-void calcul(Arbre* a,float* somme){
-    if(a==NULL){
-      *somme=-1;
-      return;
-    }
-    if(a->enfants==NULL){
-        *somme += a->litre;
+void calcul(Arbre* a, float* somme_fuites) {
+    if(a == NULL) {
         return;
     }
     
-    if(a->litre==-1){
-        a->litre=a->elmt;
-    }
-    printf("Noeud %s | litre = %.2f | nb_enfants = %d\n", a->ID, a->litre, a->nb_enfants);
-
-    float vol=(a->litre)/a->nb_enfants;
-    Chainon* temp=a->enfants;
-    while(temp!=NULL){
-        temp->enfant->litre=vol-(((temp->enfant->elmt)*vol)/100.0);
-        calcul(temp->enfant,somme);
-        temp=temp->next;
+    // Initialiser le volume à ce nœud si c'est la racine
+    if(a->litre == -1) {
+        a->litre = a->elmt;  // Volume initial à la racine
     }
     
-    return;
+    printf("Noeud %s | litre = %.2f | nb_enfants = %d\n", 
+           a->ID, a->litre, a->nb_enfants);
+    
+    // Si c'est une feuille, pas de distribution
+    if(a->enfants == NULL) {
+        return;
+    }
+    
+    // Calculer le volume à distribuer à chaque enfant
+    float vol_par_enfant = a->litre / a->nb_enfants;
+    
+    // Parcourir tous les enfants
+    Chainon* temp = a->enfants;
+    while(temp != NULL) {
+        // Calculer la fuite pour cet enfant
+        float fuite = (temp->enfant->elmt * vol_par_enfant) / 100.0;
+        
+        // ADDITIONNER LA FUITE AU TOTAL
+        *somme_fuites += fuite;
+        
+        // Le volume qui arrive à l'enfant (après la fuite)
+        temp->enfant->litre = vol_par_enfant - fuite;
+        
+        // Récursion sur l'enfant
+        calcul(temp->enfant, somme_fuites);
+        
+        temp = temp->next;
+    }
 }
 
 
@@ -303,28 +307,28 @@ int main(int argc, char* argv[]) {
         // passer US SJ JR RU
         FILE* f1 = fopen(argv[1], "r+");
         if(f1 == NULL){
-            printf("Erreur ouverture fichier");
+            printf("Erreur ouverture fichier US\n");
             exit(55);
         }
         FILE* f2 = fopen(argv[2], "r+");
         if(f2 == NULL){
-            printf("Erreur ouverture fichier");
+            printf("Erreur ouverture fichier SJ\n");
             exit(55);
         }
         FILE* f3 = fopen(argv[3], "r+");
         if(f3 == NULL){
-            printf("Erreur ouverture fichier");
+            printf("Erreur ouverture fichier JR\n");
             exit(45);
         }
         FILE* f4 = fopen(argv[4], "r+");
         if(f4 == NULL){
-            printf("Erreur ouverture fichier");
+            printf("Erreur ouverture fichier RU\n");
             exit(45);
         }
         Arbre* res = mega_arbre(f1,f2,f3,f4);
 
         if(res == NULL) {
-            printf("ERREUR: Impossible de créer l'arbre (fichier US.csv vide ou mal formaté?)\n");
+            printf("ERREUR: Impossible de créer l'arbre\n");
             fclose(f1);
             fclose(f2);
             fclose(f3);
@@ -333,9 +337,15 @@ int main(int argc, char* argv[]) {
         }
 
         float max=res->elmt;
-        float somme=0;
+        float somme=0.0;
         calcul(res, &somme);
         printf("%s %f \n",res->ID,max-somme);
+        // Afficher le résultat
+        printf("\n=== RÉSULTAT ===\n");
+        printf("Usine: %s\n", res->ID);
+        printf("Capacité initiale: %.2f litres\n", max);
+        printf("Total des fuites: %.2f litres\n", somme);
+        printf("Volume restant: %.2f litres\n", max - somme);
 
         fclose(f1);
         fclose(f2);
