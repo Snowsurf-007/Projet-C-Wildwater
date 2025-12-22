@@ -49,7 +49,12 @@ commande="$2"
 
 case "$commande" in
 	#partie histogramme en shell
+	
 	histo) 
+		
+		mkdir -p histogrammes
+		mkdir -p fichiers_resultats
+		
 		option="$3"
 		
 		case "$option" in
