@@ -162,7 +162,6 @@ case "$commande" in
 		
 		#verif retour code C
 		retc=$?
-		echo "$retc"
 		if [ $retc -ne 0 ] 
 		then
 			#clear
