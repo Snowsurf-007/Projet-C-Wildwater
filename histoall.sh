@@ -13,20 +13,25 @@ then
 	bash histosrc.sh "$fichier"
 	bash historeal.sh "$fichier"
 	cd ./fichiers_resultats
+	touch temp4.csv
 	awk 'NR > 1' vol_max.csv > temp1.csv
 	awk 'NR > 1' vol_real.csv > temp2.csv
 	awk 'NR > 1' vol_src.csv > temp3.csv
-	paste -d";" temp1.csv temp2.csv temp3.csv> fusion.csv
-	rm temp*.csv
-	mv fusion.csv ..
+	gcc -o all all.c
+	./all temp1.csv temp2.csv temp3.csv temp4.csv
+	#paste -d";" temp1.csv temp2.csv temp3.csv> fusion.csv
+	#rm temp*.csv
+	mv temp4.csv ..
 	cd ..
-	cut -d';' -f1,2,4,6 fusion.csv > vol_all.csv
-	sed  's/;/ /g' vol_all.csv > vol_all2.csv
-	tail -n 10 vol_all2.csv > all_vol10.csv
-	head -n 50 vol_all2.csv > all_vol50.csv
+	#cut -d';' -f1,2,4,6 fusion.csv > vol_all.csv
+	grep -v '^$' temp4.csv > temp5.csv
+	sort -t';' -k2 -n temp5.csv > temp6.csv
+	sed  's/;/ /g' temp6.csv > vol_all.csv
+	tail -n 10 vol_all.csv > all_vol10.csv
+	head -n 50 vol_all.csv > all_vol50.csv
 fi
 gnuplot <<EOF
-set title "Histogramme global des 50 plus petites usines" font ",20" center
+set title "Histogramme global des 50 plus petites usines" font ",20" centerx  
 set terminal png size 1600,1000 font "Arial,12"
 set lmargin 13
 set rmargin 5
