@@ -45,6 +45,8 @@ cd Projet-C-Wildwater
 
 Le script Shell constitue le point d’entrée du projet.
 
+Esuite il faut déplacer le fichier de données dans le dossier Projet-C-Wildwater
+
 Commandes disponibles :
 
 1/ Histogrammes :
