@@ -63,6 +63,9 @@ EOF
 	sort -k2 -r max_vol10.csv > temp9.csv
 	sort -k2 -r max_vol50.csv >> temp9.csv
 	sed  's/ /;/g' temp9.csv >> vol_max.csv
+	mv vol_max.csv fichiers_resultats/
+	mv histo_max_petit.png histogrammes/
+	mv histo_max_grand.png histogrammes/
 
 	rm temp*.csv
 	rm max_vol10.csv
