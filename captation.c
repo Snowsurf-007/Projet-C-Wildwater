@@ -1,9 +1,3 @@
-//#ifndef BIBLIO_H
-//#define BIBLIO_H
-/*gcc calc2.c -o affiche2
-./affiche2 tempcapt.csv */
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -244,18 +238,6 @@ void ecrire(FILE * f, AVL* usine) {
 
 
 
-void division(AVL* usine) {
-
-    if(usine!=NULL){
-        ecrire(f,usine->fg);
-        usine->elmt=usine->elmt/1000.0;
-        ecrire(f, usine->fd);
-        
-    }
-}
-
-
-
 int main(int argc, char* argv[]){
     int h=0;
     FILE* f=NULL;
@@ -271,10 +253,9 @@ int main(int argc, char* argv[]){
     int a;
     char* ID =malloc(TAILLEID*sizeof(char));
     AVL* usine= NULL; 
-    while (fscanf(f, "%21[^;];%d", ID, &a) == 2) {
+    while (fscanf(f, "%100[^;];%d", ID, &a) == 2) {
     	usine = insertStrAVL(usine, ID, &h, a);
-    }                       
-    division(usine);
+    }
     ecrire(fichier, usine);
     fclose(fichier);
     fclose(f);
