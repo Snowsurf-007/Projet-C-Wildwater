@@ -61,7 +61,7 @@ set boxwidth 1
 plot "src_vol10.csv" using 2:xtic(1) title "" lc rgb "magenta"
 EOF
 
-sort -k1 -r temp2.csv > vol_src.csv
+sort -k1 -r temp6.csv > vol_src.csv
 
 	rm temp*.csv
 	rm src_vol10.csv
