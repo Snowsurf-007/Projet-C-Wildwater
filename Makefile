@@ -15,13 +15,13 @@ all: $(EXEC)
 
 # Règles pour les exécutables
 histosrc: histosrc.o
-	$(CC) $(CFLAGS) -o histosrc histosrc.o AVL.o
+	$(CC) $(CFLAGS) -o histosrc histosrc.o
 
 historeal: historeal.o
-	$(CC) $(CFLAGS) -o historeal historeal.o AVL.o
+	$(CC) $(CFLAGS) -o historeal historeal.o
 
 histoall: histoall.o
-	$(CC) $(CFLAGS) -o histoall histoall.o AVL.o
+	$(CC) $(CFLAGS) -o histoall histoall.o
 
 leaks: leaks.o AVL.o
 	$(CC) $(CFLAGS) -o leaks leaks.o AVL.o
