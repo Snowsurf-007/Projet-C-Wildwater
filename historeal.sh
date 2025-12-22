@@ -54,7 +54,7 @@ set bmargin 20
 set xtics rotate by -90 offset 0,-2 nomirror
 set terminal png
 set output "histo_real_grand.png"
-set xlabel "Nom des usines" font ",16" offset 0, -5
+set xlabel "Nom des usines" font ",16"
 set ylabel "Volume (M.m^3)" font ",16"
 set xtics rotate by -90 font ",10" nomirror
 set yrange [0:*]
