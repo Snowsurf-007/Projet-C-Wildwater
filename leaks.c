@@ -299,7 +299,7 @@ void calcul(Arbre* a,float* somme){
 
 int main(int argc, char* argv[]) {
     
-    if (argc==4){
+    if (argc==5){
         // passer US SJ JR RU
         FILE* f1 = fopen(argv[1], "r+");
         if(f1 == NULL){
