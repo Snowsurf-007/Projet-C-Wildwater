@@ -58,8 +58,11 @@ set style data histograms
 set boxwidth 1
 plot "max_vol10.csv" using 2:xtic(1) title "" lc rgb "blue"
 EOF
-
-	sort -k1 -r temp2.csv > vol_max.csv
+	
+	echo "Nom usine;Capacité maximale (M.m^3)" > vol_max.csv
+	sort -k2 -r max_vol10.csv > temp9.csv
+	sort -k2 -r max_vol50.csv >> temp9.csv
+	sed  's/ /;/g' temp9.csv >> vol_max.csv
 
 	rm temp*.csv
 	rm max_vol10.csv
