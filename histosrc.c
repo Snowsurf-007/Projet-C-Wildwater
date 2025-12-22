@@ -239,6 +239,7 @@ void ecrire(FILE * f, AVL* usine) {
 
 
 int main(int argc, char* argv[]){
+    argc+=1; //pour eviter le warning
     int h=0;
     FILE* f=NULL;
     FILE* fichier=NULL;
