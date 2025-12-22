@@ -3,20 +3,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+
 /* =====================
-   UTILS
+         UTILS
    ===================== */
 
 int max(int a, int b){
     return (a > b) ? a : b;
 }
 
+
+
 int min(int a, int b){
     return (a < b) ? a : b;
 }
 
+
+
 /* =====================
-   HAUTEUR / ÉQUILIBRE
+    HAUTEUR / ÉQUILIBRE
    ===================== */
 
 int hauteur(AVL* a){
@@ -24,13 +30,17 @@ int hauteur(AVL* a){
     return 1 + max(hauteur(a->fg), hauteur(a->fd));
 }
 
+
+
 int equilibre(AVL* a){
     if(a == NULL) return 0;
     return hauteur(a->fd) - hauteur(a->fg);
 }
 
+
+
 /* =====================
-   CRÉATION AVL
+        CRÉATION AVL
    ===================== */
 
 AVL* creationStrAVL(Arbre* e, char* c){
@@ -74,8 +84,10 @@ AVL* creationAVL(int e, char* c){
     return newNode;
 }
 
+
+
 /* =====================
-   ROTATIONS
+         ROTATIONS
    ===================== */
 
 AVL* rotationGauche(AVL* a){
@@ -90,6 +102,8 @@ AVL* rotationGauche(AVL* a){
     return p;
 }
 
+
+
 AVL* rotationDroite(AVL* a){
     AVL* p = a->fg;
 
@@ -102,18 +116,24 @@ AVL* rotationDroite(AVL* a){
     return p;
 }
 
+
+
 AVL* doubleRotationGauche(AVL* a){
     a->fd = rotationDroite(a->fd);
     return rotationGauche(a);
 }
+
+
 
 AVL* doubleRotationDroite(AVL* a){
     a->fg = rotationGauche(a->fg);
     return rotationDroite(a);
 }
 
+
+
 /* =====================
-   ÉQUILIBRAGE
+         ÉQUILIBRAGE
    ===================== */
 
 AVL* equilibrage(AVL* a){
@@ -134,8 +154,10 @@ AVL* equilibrage(AVL* a){
     return a;
 }
 
+
+
 /* =====================
-   INSERTION AVL
+      INSERTION AVL
    ===================== */
 
 AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre* p){
@@ -207,14 +229,18 @@ AVL* insertAVL(AVL* a, char* e,int* h,int capter) {
     return a;
 }
 
+
+
 /* =====================
-   AFFICHAGE AVL
+       AFFICHAGE AVL
    ===================== */
 
 void traiter(AVL* a){
     if(a)
         printf("(%s) eq=%d\n", a->ID, a->equil);
 }
+
+
 
 void infixe(AVL* a){
     if(a == NULL) return;
@@ -223,12 +249,16 @@ void infixe(AVL* a){
     infixe(a->fd);
 }
 
+
+
 void prefixe(AVL* a){
     if(a == NULL) return;
     traiter(a);
     prefixe(a->fg);
     prefixe(a->fd);
 }
+
+
 
 void suffixe(AVL* a){
     if(a == NULL) return;
