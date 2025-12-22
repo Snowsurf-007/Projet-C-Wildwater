@@ -66,7 +66,7 @@ EOF
 	echo "Nom usine;Volume totale traités (M.m^3)" > vol_real.csv #ajoute une entete au fichier
 	sort -k2 -r real_vol10.csv > temp9.csv #tris dans le sens décroissant en fct de la colonne 2 et met dans temp9
 	sort -k2 -r real_vol50.csv >> temp9.csv #tris dans le sens décroissant en fct de la colonne 2 et ajoute a temp9
-	sed  's/ /;/g' temp9.csv >> vol_real.csv #remplace les epaces par ; et ajoute temp9 rié dans vol_max.csv
+	sed  's/ /;/g' temp9.csv >> vol_real.csv #remplace les epaces par ; et ajoute temp9 rié dans vol_real.csv
 	mv vol_real.csv fichiers_resultats/
 	mv histo_real_petit.png histogrammes/
 	mv histo_real_grand.png histogrammes/
