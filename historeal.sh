@@ -13,12 +13,13 @@ then
 	cut -d';' -f3,4,5 temp.csv > temp1.csv
 	sed  's/ //g' temp1.csv > temp2.csv
 	touch temp3.csv
-	gcc -o real mainreal.c
-	./real temp2.csv temp3.csv
+	make historeal
+	./historeal temp2.csv temp3.csv
 	grep -v '^$' temp3.csv > temp4.csv
 	sed  's/ //g' temp4.csv > temp5.csv
 	sort -t';' -k2 -n temp5.csv > temp6.csv
 	sed  's/;/ /g' temp6.csv > temp7.csv
+	#transforme les chiffres de la deuxiemes colones en flottant et divise
 	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp7.csv | sed 's/,/./g' > temp8.csv
 	head -n 50 temp8.csv > real_vol50.csv
 	tail -n 10 temp8.csv > real_vol10.csv
@@ -40,7 +41,7 @@ set yrange [0.0:*]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
-plot "real_vol50.csv" using 2:xtic(1) notitle lc rgb "magenta"
+plot "real_vol50.csv" using 2:xtic(1) notitle lc rgb "yellow"
 EOF
 
 gnuplot <<EOF
@@ -60,13 +61,19 @@ set yrange [0:*]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
-plot "real_vol10.csv" using 2:xtic(1) title "" lc rgb "magenta"
+plot "real_vol10.csv" using 2:xtic(1) title "" lc rgb "yellow"
 EOF
+	
+	echo "Nom usine;Volumes total traité (M.m^3)" > vol_real.csv
+	sort -k1 -r temp2.csv > vol_real.csv
+	mv vol_real.csv fichiers_resultats/
+	mv histo_real_petit.png histogrammes/
+	mv histo_real_grand.png histogrammes/
 
-sort -k1 -r temp2.csv > real_src.csv
-
-	#rm temp*.csv
-	#rm src_vol10.csv
-	#rm src_vol50.csv
+	rm temp*.csv
+	rm real_vol10.csv
+	rm real_vol50.csv
+	rm historeal.o
+	rm historeal
 
 fi
