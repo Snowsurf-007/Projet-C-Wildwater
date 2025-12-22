@@ -118,7 +118,6 @@ case "$commande" in
 				time=`echo "$time*1000" | bc`
 	    			echo "Le programme a mis $time ms à être exécuté"
 				exit
-				#partie appel fonction histogramme max
 				#bash histoall.sh "$fichier"
 				#verif retour code
 				#ret=$?
@@ -158,7 +157,7 @@ case "$commande" in
 		
 		#partie appel code C
 		make leaks
-		./leaks US.dat SJ.dat JR.dat RU.dat > rendements.dat
+		./leaks US.dat SJ.dat JR.dat RU.dat > fuites.dat
 		
 		#verif retour code C
 		retc=$?
@@ -172,6 +171,9 @@ case "$commande" in
 		    	echo "Le programme a mis $time ms à être exécuté"
 			exit 9
 		fi
+		
+		mv fuites.dat fichiers_resultats/
+		
 		;;
 	*)
 		echo "Commande inconnue, veuillez relancer le programme"
