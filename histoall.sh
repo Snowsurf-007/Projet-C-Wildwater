@@ -52,3 +52,25 @@ plot "all_vol50.csv" using 2:xtic(1) lc rgb "cyan"    title "Colonne 2", \
      ""             using 3          lc rgb "magenta" title "Colonne 3", \
      ""             using 4          lc rgb "yellow"  title "Colonne 4"
 EOF
+gnuplot <<EOF
+set title "Histogramme global des 10 plus grandes usines" font ",20" centerx  
+set terminal png size 1600,1000 font "Arial,12"
+set lmargin 13
+set rmargin 5
+set tmargin 5
+set bmargin 20
+set xtics rotate by -90 offset 0,-2 nomirror
+set terminal png
+set output "histo_all_grands.png"
+set xlabel "Nom des usines" font ",16" offset 0, -5
+set ylabel "Volume (M.m^3)" font ",16"
+set xtics rotate by -90 font ",10" nomirror
+set yrange [0.5:*]
+set style fill solid 1.0 border -1
+set style data histograms
+set boxwidth 1
+set style histogram rowstacked
+plot "all_vol10.csv" using 2:xtic(1) lc rgb "cyan"    title "Colonne 2", \
+     ""             using 3          lc rgb "magenta" title "Colonne 3", \
+     ""             using 4          lc rgb "yellow"  title "Colonne 4"
+EOF
