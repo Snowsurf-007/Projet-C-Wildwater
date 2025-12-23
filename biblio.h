@@ -11,7 +11,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define TAILLEID 100
+#define TAILLEID 1000000
 
 /* =====================
         STRUCTURES
@@ -20,7 +20,7 @@ typedef struct AVL {
     struct Arbre* arbre;
     int equil;
     float elmt;
-    float max;
+    double max;
     float real;
     float src;
     char* ID;
@@ -30,7 +30,7 @@ typedef struct AVL {
 
 typedef struct Arbre {
     struct Chainon* enfants;
-    float elmt;
+    double elmt;
     float litre;
     int nb_enfants;
     char* ID;
@@ -67,14 +67,19 @@ AVL* equilibrage(AVL* a);
 // Création et insertion
 AVL* creationAVL(int e, char* c);
 AVL* creationRealAVL(float max, float real, float src, char* c);
+AVL* creationStrAVL(Arbre* e, char* c);
 AVL* insertAVL(AVL* a, char* e, int* h, int capter);
 AVL* insertRealAVL(AVL* a, char* e, int* h, float max, float real, float src);
+AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre* p);
+AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant);
 
 // Affichage et traitement
 void traiter(AVL* a);
 void traiterReal(AVL* a);
 void infixe(AVL* a);
 void infixeReal(AVL* a);
+void prefixe(AVL* a);
+void suffixe(AVL* a);
 
 // Fichiers
 void ecrire(FILE* f, AVL* usine);
@@ -82,5 +87,7 @@ void ecrireReal(FILE* f, AVL* usine);
 
 // Libération mémoire
 void libererAVL(AVL* a);
+
+void calcul(Arbre* a, double* somme_fuites);
 
 #endif // BIBLIO_H
