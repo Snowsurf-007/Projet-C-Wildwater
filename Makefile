@@ -1,11 +1,11 @@
 # Fichiers sources
-SRCS = histosrc.c historeal.c histoall.c leaks.c AVL.c
+SRCS = histo.c leaks.c AVL.c
 
 # Fichiers objets
 OBJS = $(SRCS:.c=.o)
 
 # Exécutables
-EXEC = histosrc historeal histoall leaks
+EXEC = histo leaks
 
 # Le compilateur
 CC = gcc
@@ -14,27 +14,15 @@ CFLAGS = -Wall -Wextra -g
 all: $(EXEC) 
 
 # Règles pour les exécutables
-histosrc: histosrc.o
-	$(CC) $(CFLAGS) -o histosrc histosrc.o
-
-historeal: historeal.o
-	$(CC) $(CFLAGS) -o historeal historeal.o
-
-histoall: histoall.o
-	$(CC) $(CFLAGS) -o histoall histoall.o
+histo: histo.o
+	$(CC) $(CFLAGS) -o histo histo.o
 
 leaks: leaks.o AVL.o
 	$(CC) $(CFLAGS) -o leaks leaks.o AVL.o
 
 # Règles pour les fichiers objets
-histosrc.o: histosrc.c biblio.h
-	$(CC) $(CFLAGS) -c histosrc.c
-
-historeal.o: historeal.c biblio.h
-	$(CC) $(CFLAGS) -c historeal.c
-
-histoall.o: histoall.c biblio.h
-	$(CC) $(CFLAGS) -c histoall.c
+histo.o: histo.c biblio.h
+	$(CC) $(CFLAGS) -c histo.c
 
 leaks.o: leaks.c biblio.h
 	$(CC) $(CFLAGS) -c leaks.c
