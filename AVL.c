@@ -231,10 +231,10 @@ AVL* insertAVL(AVL* a, char* e,int* h,int capter) {
 /* =====================
        AFFICHAGE AVL
    ===================== */
-
-void traiter(AVL* a){
-    if(a)
-        printf("(%s) eq=%d\n", a->ID, a->equil);
+   
+void traiter(AVL* a) {
+    if(a != NULL)
+        printf("%f (%s)  eq=%d\n", a->elmt, a->ID, a->equil);
 }
 
 
