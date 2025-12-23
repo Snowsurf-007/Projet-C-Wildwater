@@ -19,7 +19,7 @@ then
 	sort -t';' -k2 -n temp5.csv > temp6.csv
 	sed  's/;/ /g' temp6.csv > temp7.csv
 	#transforme les chiffres de la deuxiemes colones en flottant et divise
-	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp7.csv | sed 's/,/./g' > temp8.csv
+	awk '{ printf "%s %.3f\n", $1, $2 / 1000.0 }' temp7.csv | sed 's/,/./g' > temp8.csv
 	head -n 50 temp8.csv > real_vol50.csv
 	tail -n 10 temp8.csv > real_vol10.csv
 
@@ -39,7 +39,7 @@ set yrange [0.0:*]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
-plot "real_vol50.csv" using 2:xtic(1) notitle lc rgb "yellow"
+plot "real_vol50.csv" using 2:xtic(1) title "" lc rgb "yellow"
 EOF
 
 gnuplot <<EOF
