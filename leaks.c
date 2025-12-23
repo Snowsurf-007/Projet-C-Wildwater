@@ -302,9 +302,10 @@ void calcul(Arbre* a, float* somme_fuites) {
 
 
 int main(int argc, char* argv[]) {
-    
+
+	//verifie que le nombre d'arguments passées et le bon
     if (argc==5){
-        // passer US SJ JR RU
+        // passer US SJ JR RU et les verifier
         FILE* f1 = fopen(argv[1], "r+");
         if(f1 == NULL){
             printf("Erreur ouverture fichier US\n");
@@ -325,8 +326,10 @@ int main(int argc, char* argv[]) {
             printf("Erreur ouverture fichier RU\n");
             exit(45);
         }
+		
         Arbre* res = mega_arbre(f1,f2,f3,f4);
 
+		//probleme dans la création de méga arbre
         if(res == NULL) {
             printf("ERREUR: Impossible de créer l'arbre\n");
             fclose(f1);
@@ -347,12 +350,20 @@ int main(int argc, char* argv[]) {
         printf("Total des fuites: %.2f k.m^3\n", somme);
         printf("Volume restant: %.2f k.m^3\n", (max - somme));
 
+		// Libération mémoire
+		libererArbre(res);
+		libererAVL(avl);
+
+		//fermeture des fichiers
         fclose(f1);
         fclose(f2);
         fclose(f3);
         fclose(f4);
     }
+
+	//si mauvais nombre d'arguments
     else{
+		 printf("ERREUR: Nombre d'arguments mauvais\n");
         return 2;
     }
     
