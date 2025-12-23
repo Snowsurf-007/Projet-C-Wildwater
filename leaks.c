@@ -117,7 +117,6 @@ AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
 	// Retourne le nouvel Arbre via res
 	*res = a;
 
-
 	return avl;
 }
 
@@ -278,13 +277,13 @@ void calcul(Arbre* a, double* somme_fuites) {
     }
     
     // Calculer le volume à distribuer à chaque enfant
-    float vol_par_enfant = a->litre / a->nb_enfants;
+    double vol_par_enfant = a->litre / a->nb_enfants;
     
     // Parcourir tous les enfants
     Chainon* temp = a->enfants;
     while(temp != NULL) {
         // Calculer la fuite pour cet enfant
-        float fuite = (temp->enfant->elmt * vol_par_enfant) / 100.0;
+        double fuite = (temp->enfant->elmt * vol_par_enfant) / 100.0;
         
         // ADDITIONNER LA FUITE AU TOTAL
         *somme_fuites += fuite;
