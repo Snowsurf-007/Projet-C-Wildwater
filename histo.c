@@ -253,14 +253,14 @@ void mode1(char* inputFile, char* outputFile) {
     if(fichier == NULL) {
         printf("Erreur: impossible de créer %s\n", outputFile);
         fclose(f);
-        exit(0);
+        exit(46);
     }
     
     int a;
     char* ID = malloc(TAILLEID * sizeof(char));
     AVL* usine = NULL;
     
-    while (fscanf(f, "%100[^;];%d", ID, &a) == 2) {
+    while (fscanf(f, "%99[^;];%d", ID, &a) == 2) {
         usine = insertAVL(usine, ID, &h, a);
     }
     
@@ -281,7 +281,7 @@ void mode2(char* inputFile, char* outputFile) {
     
     if(f == NULL) {
         printf("Erreur: impossible d'ouvrir %s\n", inputFile);
-        exit(45);
+        exit(47);
     }
     
     FILE* fichier = fopen(outputFile, "w");
@@ -289,7 +289,7 @@ void mode2(char* inputFile, char* outputFile) {
     if(fichier == NULL) {
         printf("Erreur: impossible de créer %s\n", outputFile);
         fclose(f);
-        exit(0);
+        exit(48);
     }
     
     int a;
@@ -344,18 +344,18 @@ void mode3(char* maxFile, char* realFile, char* srcFile, char* outputFile) {
     AVL* usine = NULL;
     
     // Lecture du fichier max
-    while (fscanf(fmax, "%100[^;];%f", ID, &a) == 2) {
+    while (fscanf(fmax, "%99[^;];%f", ID, &a) == 2) {
         usine = insertRealAVL(usine, ID, &h, a, 0, 0);
     }
     
     // Lecture du fichier real
     rewind(freal);
-    while (fscanf(freal, "%100[^;];%f", ID, &a) == 2) {
+    while (fscanf(freal, "%99[^;];%f", ID, &a) == 2) {
         usine = insertRealAVL(usine, ID, &h, 0, a, 0);
     }
     
     // Lecture du fichier src
-    while (fscanf(fsrc, "%100[^;];%f", ID, &a) == 2) {
+    while (fscanf(fsrc, "%99[^;];%f", ID, &a) == 2) {
         usine = insertRealAVL(usine, ID, &h, 0, 0, a);
     }
     
