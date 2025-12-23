@@ -255,6 +255,7 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 		    	parent->nb_enfants+=1;
 		}
 	}
+	libererAVL(avl);
     return usine;
 }
 
