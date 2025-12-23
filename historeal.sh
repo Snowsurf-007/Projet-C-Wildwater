@@ -12,13 +12,13 @@ then
 	cut -d';' -f3,4,5 temp.csv > temp1.csv
 	sed  's/ //g' temp1.csv > temp2.csv
 	touch temp3.csv
-	make historeal
-	./historeal temp2.csv temp3.csv
+	make histo
+	./histo 2 temp2.csv temp3.csv
 	grep -v '^$' temp3.csv > temp4.csv
 	sed  's/ //g' temp4.csv > temp5.csv
 	sort -t';' -k2 -n temp5.csv > temp6.csv
 	sed  's/;/ /g' temp6.csv > temp7.csv
-	#transforme les chiffres de la deuxiemes colones en flottant et divise
+	#transforme les chiffres de la deuxièmes colonnes en flottant et divise
 	awk '{ printf "%s %.3f\n", $1, $2 / 1000.0 }' temp7.csv | sed 's/,/./g' > temp8.csv
 	head -n 50 temp8.csv > real_vol50.csv
 	tail -n 10 temp8.csv > real_vol10.csv
