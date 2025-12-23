@@ -55,57 +55,32 @@ typedef struct Chainon {
 /* =====================
 	PROTOTYPES DES FCTS
    ===================== */
-
-int main(int argc, char* argv[]);
+//utilitaire
 int max(int a, int b);
 int min(int a, int b);
 int hauteur(AVL* a);
-int equilibre(AVL* a);
-void ecrire(FILE* f, AVL* usine);
 
-
-void recherche(AVL* a, char* e,Arbre* bebe);
+//creation et insertion
 AVL* creationStrAVL(Arbre* e, char* c);
 AVL* creationAVL(int e, char* c);
+AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre* p);
+AVL* insertAVL(AVL* a, char* e,int* h,int capter);
 
+//rotations et equilibre
 AVL* rotationGauche(AVL* a);
 AVL* rotationDroite(AVL* a);
 AVL* doubleRotationGauche(AVL* a);
 AVL* doubleRotationDroite(AVL* a);
-
+int equilibre(AVL* a);
 AVL* equilibrage(AVL* a);
 
-AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre*p);
-AVL* insertAVL(AVL* a, char* e,int* h,int capter);
 
-
+//affichage
 void traiter(AVL* a);
 void infixe(AVL* a);
 void prefixe(AVL* a);
 void suffixe(AVL* a);
 
-void test(FILE* f);
 
-Chainon* creationChainon(Arbre* bebe);
-Chainon* empiler(Chainon* pliste, Arbre* bebe);
-Arbre* creation(char* idav);
-Arbre* creation2(char* idam, char* idav, float fuite);
-void affichage(Arbre* a,int niveau);
-Chainon* creationChainon(Arbre* bebe);
-Chainon* empiler(Chainon* pliste, Arbre* bebe);
-
-
-AVL* rechercherAVL(AVL* a, char* id);
-AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant);
-AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res);
-
-Arbre* insert(char* id, int nb);
-
-void afficherABR(Arbre* a, int niveau);
-void afficherAVL(AVL* a);
-
-Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU);
-
-void calcul(Arbre* a, float* somme);
 
 #endif // BIBLIO_H
