@@ -1,11 +1,11 @@
 #!/bin/bash
 
-fichier="$1"
-
 if [ $# -ne 1 ]
 then
 	exit
 fi
+
+fichier="$1"
 
 if [ $# -eq 1 ]
 then
