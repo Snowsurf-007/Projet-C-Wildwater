@@ -21,7 +21,7 @@ void ecrire(FILE * f, AVL* usine ) {
 
     if(usine!=NULL){
         ecrire(f,usine->fg);
-        fprintf(f, "%s;%d\n",usine->ID, usine->elmt);
+        fprintf(f, "%s;%f\n",usine->ID, usine->elmt);
         ecrire(f, usine->fd);
     }
 }
@@ -196,17 +196,17 @@ void libererAVL(AVL* a) {
 Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 	char id[TAILLEID];
 	char id2[TAILLEID];
-	float fuite = 0;
-	float max = 0;
+	double fuite = 0;
+	double max = 0;
 
 	AVL* avl = NULL;
 	int h = 0;
 	Arbre* parent = NULL;
 	Arbre* enfant = NULL;
-	Arbre*usine=NULL;
+	Arbre* usine=NULL;
 	// --- Lecture du fichier US ---
 	FILE* f = US;
-	if (fscanf(f, "%99[^;];%f\n", id, &max) == 2) {
+	if (fscanf(f, "%99[^;];%lf\n", id, &max) == 2) {
 		avl = get_or_create(avl, id, &h, &parent);
 		parent->elmt = max;
 	}
@@ -215,9 +215,9 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
             return NULL;  // Retourner NULL explicitement
         }
 
-    usine=parent;
+        usine=parent;
 	// --- Lecture des relations internes US ---
-	while (fscanf(f, "%99[^;];%99[^;];%f\n", id, id2, &fuite) == 3) {
+	while (fscanf(f, "%99[^;];%99[^;];%lf\n", id, id2, &fuite) == 3) {
 		parent = NULL;
 		enfant = NULL;
 	
@@ -244,7 +244,7 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 		f = fichiers[k];
     
-		while (fscanf(f, "%99[^;];%99[^;];%f\n", id, id2, &fuite) == 3) {
+		while (fscanf(f, "%99[^;];%99[^;];%lf\n", id, id2, &fuite) == 3) {
 			parent = NULL;
 			enfant = NULL;
 
@@ -262,7 +262,7 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 
 
-void calcul(Arbre* a, float* somme_fuites) {
+void calcul(Arbre* a, double* somme_fuites) {
     if(a == NULL) {
         return;
     }
@@ -303,7 +303,7 @@ void calcul(Arbre* a, float* somme_fuites) {
 
 int main(int argc, char* argv[]) {
 
-	//verifie que le nombre d'arguments passées et le bon
+    //verifie que le nombre d'arguments passées et le bon
     if (argc==5){
         // passer US SJ JR RU et les verifier
         FILE* f1 = fopen(argv[1], "r+");
@@ -339,20 +339,21 @@ int main(int argc, char* argv[]) {
             return 1;
         }
 
-        float max=res->elmt;
-        float somme=0.0;
+        double max=res->elmt;
+        double somme=0.0;
         calcul(res, &somme);
+        float pourcentage = (somme / max) * 100;
         
         // Afficher le résultat
         printf("=== RÉSULTAT ===\n");
         printf("Usine: %s\n", res->ID);
-        printf("Capacité initiale: %.2f k.m^3\n", max);
-        printf("Total des fuites: %.2f k.m^3\n", somme);
-        printf("Volume restant: %.2f k.m^3\n", (max - somme));
+        printf("Capacité initiale: %.2lf k.m^3\n", max);
+        printf("Total des fuites: %.2lf k.m^3\n", somme);
+        printf("Volume restant: %.2lf k.m^3\n", (max - somme));
+        printf("Pourcentage de fuite: %.3f %% \n", pourcentage);
 
 		// Libération mémoire
 		libererArbre(res);
-		libererAVL(avl);
 
 		//fermeture des fichiers
         fclose(f1);
