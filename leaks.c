@@ -187,6 +187,7 @@ void libererAVL(AVL* a) {
     libererAVL(a->fg);
     libererAVL(a->fd);
     free(a->ID);
+    // NE PAS libérer a->arbre car il est utilisé ailleurs
     free(a);
 }
 
