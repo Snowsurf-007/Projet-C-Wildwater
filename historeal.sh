@@ -18,8 +18,8 @@ then
 	sed  's/ //g' temp4.csv > temp5.csv
 	sort -t';' -k2 -n temp5.csv > temp6.csv
 	sed  's/;/ /g' temp6.csv > temp7.csv
-	#transforme les chiffres de la deuxièmes colonnes en flottant et divise
-	awk '{ printf "%s %.3f\n", $1, $2 / 1000.0 }' temp7.csv | sed 's/,/./g' > temp8.csv
+	#transforme les chiffres de la deuxiemes colones en flottant et divise
+	awk '{ printf "%s %.3f\n", $1, $2 / 1000 }' temp7.csv | sed 's/,/./g' > temp8.csv
 	head -n 50 temp8.csv > real_vol50.csv
 	tail -n 10 temp8.csv > real_vol10.csv
 
@@ -31,6 +31,7 @@ set rmargin 5
 set tmargin 5
 set bmargin 20
 set xtics rotate by -90 offset 0,-2 nomirror
+set terminal png
 set output "histo_real_petit.png"
 set xlabel "Nom des usines" font ",16" offset 0, -5
 set ylabel "Volume (M.m^3)" font ",16"
@@ -39,7 +40,7 @@ set yrange [0.0:*]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
-plot "real_vol50.csv" using 2:xtic(1) title "" lc rgb "yellow"
+plot "real_vol50.csv" using 2:xtic(1) notitle lc rgb "yellow"
 EOF
 
 gnuplot <<EOF
@@ -50,6 +51,7 @@ set rmargin 5
 set tmargin 5
 set bmargin 20
 set xtics rotate by -90 offset 0,-2 nomirror
+set terminal png
 set output "histo_real_grand.png"
 set xlabel "Nom des usines" font ",16"
 set ylabel "Volume (M.m^3)" font ",16"
