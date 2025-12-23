@@ -7,8 +7,9 @@ then
 fi
 
 if [ $# -eq 1 ]
-then
-	awk -F';' '$NF ~ /-/' $1 > temp.csv #mettre le nom du fichier en premier argument
+then	
+	fichier="$1"
+	awk -F';' '$NF ~ /-/' "$fichier" > temp.csv #mettre le nom du fichier en premier argument
 	cut -d';' -f2,4 temp.csv > temp2.csv #garde uniquement la colonne 2 et la colonne 4
 	sed  's/ //g' temp2.csv > temp.csv #suppression des espaces
 	sed  's/;/ /g' temp.csv > temp2.csv #remplace ; par un espace
