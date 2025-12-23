@@ -74,7 +74,5 @@ EOF
 	rm temp*.csv
 	rm real_vol10.csv
 	rm real_vol50.csv
-	rm historeal.o
-	rm historeal
 
 fi
