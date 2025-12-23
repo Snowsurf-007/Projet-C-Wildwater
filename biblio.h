@@ -50,11 +50,6 @@ typedef struct Chainon {
 	struct Chainon* next;
 } Chainon;
 
-
-
-/* =====================
-	PROTOTYPES DES FCTS
-   ===================== */
 //utilitaire
 int max(int a, int b);
 int min(int a, int b);
@@ -63,6 +58,8 @@ int hauteur(AVL* a);
 //creation et insertion
 AVL* creationStrAVL(Arbre* e, char* c);
 AVL* creationAVL(int e, char* c);
+AVL* creationRealAVL(float max, float real, float src, char* c);
+AVL* insertRealAVL(AVL* a, char* e, int* h, float max, float real, float src);
 AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre* p);
 AVL* insertAVL(AVL* a, char* e,int* h,int capter);
 
@@ -81,6 +78,8 @@ void infixe(AVL* a);
 void prefixe(AVL* a);
 void suffixe(AVL* a);
 
-
+//fichiers
+int recherche(AVL* a, char* e);
+void ecrire(FILE* f, AVL* usine);
 
 #endif // BIBLIO_H
