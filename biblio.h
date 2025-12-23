@@ -19,7 +19,7 @@
 typedef struct AVL {
     struct Arbre* arbre;
     int equil;
-    float elmt;
+    double elmt;
     double max;
     float real;
     float src;
@@ -31,7 +31,7 @@ typedef struct AVL {
 typedef struct Arbre {
     struct Chainon* enfants;
     double elmt;
-    float litre;
+    double litre;
     int nb_enfants;
     char* ID;
 } Arbre;
