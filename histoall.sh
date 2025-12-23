@@ -2,7 +2,6 @@
 
 if [ $# -ne 1 ]
 then
-	echo "la"
 	exit 40
 fi
 
