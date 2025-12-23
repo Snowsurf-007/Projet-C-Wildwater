@@ -5,10 +5,9 @@ then
 	exit
 fi
 
-fichier="$1"
-
 if [ $# -eq 1 ]
 then
+	fichier="$1"
 	awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' "$fichier" > temp.csv
 	cut -d';' -f3,4 temp.csv > temp1.csv
 	touch temp2.csv
