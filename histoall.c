@@ -1,326 +1,98 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
-#include <unistd.h>
-#define TAILLEID 100
-
-
-
-typedef struct AVL{
-  float real;
-  float max;
-  float src;
-  int equil;
-  char* ID;
-  struct AVL* fg;
-  struct AVL* fd;
-}AVL;
-
-
-
-typedef struct Chainon{
-  AVL elmt;
-  struct Chainon* next;
-}Chainon;
-
-
-
-typedef struct File{
-  struct Chainon* head;
-  struct Chainon* tail;
-}File;
-
-
-
-int max(int a, int b);
-int min(int a, int b);
-int hauteur(AVL* a);
-int equilibre(AVL* a);
-int recherche(AVL* a, char* e);
-AVL* creationallAVL(float max, float real, float src, char* c);
-AVL* rotationGauche(AVL* a);
-AVL* rotationDroite(AVL* a);
-AVL* doubleRotationGauche(AVL* a);
-AVL* doubleRotationDroite(AVL* a);
-AVL* equilibrage(AVL* a);
-AVL* insertalllAVL(AVL* a, char* e, int* h, float max, float real, float src);
-void traiter(AVL* a);
-void infixe(AVL* a);
-void prefixe(AVL* a);
-void suffixe(AVL* a);
-void recupAVL(FILE* f);
-
-
-
-//#endif // BIBLIO_H
-int max(int a, int b){
-    return (a > b) ? a : b;
-}
-
-
-
-int min(int a, int b){
-    return (a < b) ? a : b;
-}
-
-
-
-int hauteur(AVL* a){
-    if(a == NULL) return -1;
-    return 1 + max(hauteur(a->fg), hauteur(a->fd));
-}
-
-
-
-int equilibre(AVL* a){
-    if(a == NULL) return 0;
-    return hauteur(a->fd) - hauteur(a->fg);
-}
-
-
-
-int recherche(AVL* a, char* e){
-    if(a == NULL)
-        return 1;
-
-    int z = strcmp(a->ID, e);
-
-    if(z == 0)
-        return 0;
-    else if(z > 0)
-        return recherche(a->fg, e);
-    else
-        return recherche(a->fd, e);
-}
-
-
-
-AVL* creationRealAVL(float max, float real, float src, char* c){
-    AVL* newNode = malloc(sizeof(AVL));
-    if(!newNode){
-        printf("Erreur : malloc\n");
-        exit(1);
-    }
-
-    newNode->max = max;
-    newNode->real = real;
-    newNode->src = src;
-    newNode->fg = NULL;
-    newNode->fd = NULL;
-    newNode->equil = 0;
-    newNode->ID = strdup(c);
-
-    return newNode;
-}
-
-
-
-/* =====================
-   ROTATION GAUCHE
-   ===================== */
-AVL* rotationGauche(AVL* a){
-    AVL* p = a->fd;
-
-    a->fd = p->fg;
-    p->fg = a;
-
-    a->equil = equilibre(a);
-    p->equil = equilibre(p);
-
-    return p;
-}
-
-
-
-/* =====================
-   ROTATION DROITE
-   ===================== */
-AVL* rotationDroite(AVL* a){
-    AVL* p = a->fg;
-
-    a->fg = p->fd;
-    p->fd = a;
-
-    a->equil = equilibre(a);
-    p->equil = equilibre(p);
-
-    return p;
-}
-
-
-
-AVL* doubleRotationGauche(AVL* a){
-    a->fd = rotationDroite(a->fd);
-    return rotationGauche(a);
-}
-
-
-
-AVL* doubleRotationDroite(AVL* a){
-    a->fg = rotationGauche(a->fg);
-    return rotationDroite(a);
-}
-
-
-
-/* =====================
-   ÉQUILIBRAGE
-   ===================== */
-AVL* equilibrage(AVL* a){
-    a->equil = equilibre(a);
-
-    if(a->equil == 2){ // trop à droite
-        if(a->fd->equil < 0)
-            return doubleRotationGauche(a);
-        else
-            return rotationGauche(a);
-    }
-    else if(a->equil == -2){ // trop à gauche
-        if(a->fg->equil > 0)
-            return doubleRotationDroite(a);
-        else
-            return rotationDroite(a);
-    }
-
-    return a;
-}
-
-
-
-/* =====================
-   INSERTION AVL
-   ===================== */
-AVL* insertRealAVL(AVL* a, char* e,int* h,float max, float real, float src) {
-    if (a == NULL) {
-    	*h=1;
-        return creationRealAVL(max, real, src, e);
-    }
-    int z = strcmp(a->ID, e);
-
-    if (z == 0) {
-        //printf("Cet élément est déjà présent dans l'AVL\n");
-        if(max!=0){
-        a->max = a->max+ max;
-        return a;
-        }
-        else if(real!=0){
-        a->real = a->real+ real;
-        return a;
-        }
-        else if(src!=0){
-        a->src = a->src+ src;
-        return a;
-        }
-       
-    }
-    else if (z > 0) {
-        a->fg = insertRealAVL(a->fg, e, h, max, real, src);
-        *h=-*h;
-    }
-    else if(z < 0){
-        a->fd = insertRealAVL(a->fd, e, h, max, real, src);
-    }
-    else{
-        *h=0;
-        return a;
-    }
-    if(*h!=0){
-        a->equil=a->equil+*h;
-        a=equilibrage(a);
-        if(a->equil==0){
-            *h=0;
-        }
-        else{
-            *h=1;
-        }
-    }
-    return a;
-}
-
-
-
-void ecrire(FILE * f, AVL* usine) {
-
-    if(usine!=NULL){
-        ecrire(f,usine->fg);
-        fprintf(f, "%s;%f;%f;%f\n",usine->ID, usine->max, usine->real, usine->src);
-        ecrire(f, usine->fd);
-    }
-}
-void traiter(AVL* a){
-    if(a != NULL)
-        printf("max=%f real=%f src=%f (%s)  eq=%d\n", a->max, a->real, a->src, a->ID, a->equil);
-}
-
-void infixe(AVL* a){
-    if(a == NULL) return;
-    infixe(a->fg);
-    traiter(a);
-    infixe(a->fd);
-}
-
-
-int main(int argc, char* argv[]){
-	printf(" lancer");
-    argc+=1; //pour eviter le warning
-    int h=0;
-    FILE* fmax=NULL;
-    FILE* freal=NULL;
-    FILE* fsrc=NULL;
-    FILE* fichier=NULL;
-    fmax=fopen(argv[1],"r+");
-    freal=fopen(argv[2],"r+");
-    fsrc=fopen(argv[3],"r+");
-    if(fmax==NULL){
-        exit(45);
-    }
-    if(freal==NULL){
-        exit(55);
-    }
-    if(fsrc==NULL){
-        exit(35);
-    }
-    fichier = fopen(argv[4], "w+");
-    if(fichier==NULL){
-        exit(0);
-    }
-    float a;
-    float b;
-    float c;
-    char* ID =malloc(TAILLEID*sizeof(char));
-    AVL* usine= NULL; 
-    while (fscanf(fmax, "%100[^;];%f", ID, &a) == 2) {
-	c=a/1.0;
-	printf("%f",c);
-	usine = insertRealAVL(usine, ID, &h, a, 0, 0);
-    	c=0;
-    }  
-    printf("\n 1ER\n");
-    infixe(usine);
-   
-    while (fscanf(freal, "%100[^;];%f", ID, &a) == 2) {
-	c=a/1.0;
-	printf("%f",c);
-	usine = insertRealAVL(usine, ID, &h, 0, a, 0);
-    	c=0;
-    }
-    printf("\n 2EME\n");
-     infixe(usine);
-    while (fscanf(freal, "%100[^;];%f", ID, &a) == 2) {
-	c=a/1.0;
-	printf("%f",c);
-	usine = insertRealAVL(usine, ID, &h, 0, 0, a);
-    	c=0;
-    }
-    printf("\n 3EME\n");
-    infixe(usine);
-    ecrire(fichier, usine);
-    fclose(fichier);
-    fclose(fmax);
-    fclose(freal);
-    fclose(fsrc);
-    free(ID);
-    return 0;
-}
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+	echo "la"
+	exit 40
+fi
+
+if [ $# -eq 1 ]
+then
+	fichier="$1"
+	bash histomax.sh "$fichier"
+	bash histosrc.sh "$fichier"
+	bash historeal.sh "$fichier"
+	touch temp4.csv
+	cd ./fichiers_resultats
+	awk 'NR > 1' vol_max.csv > temp1.csv
+	awk 'NR > 1' vol_real.csv > temp2.csv
+	awk 'NR > 1' vol_src.csv > temp3.csv
+	mv temp1.csv ../
+	mv temp2.csv ../
+	mv temp3.csv ../
+	cd ..
+	make histo
+	./histo 3 temp1.csv temp2.csv temp3.csv temp4.csv
+	paste -d";" temp1.csv temp2.csv temp3.csv> fusion.csv
+	cut -d';' -f1,2,4,6 fusion.csv > vol_all.csv
+	grep -v '^$' temp4.csv > temp5.csv
+	sort -t';' -k2 -n temp5.csv > temp6.csv
+	sed  's/;/ /g' temp6.csv > vol_all.csv
+	tail -n 10 vol_all.csv > all_vol10.csv
+	head -n 50 vol_all.csv > all_vol50.csv
+
+#gnuplot histogramme petit
+gnuplot <<EOF
+set title "Histogramme global des 50 plus petites usines" font ",20" center
+set terminal png size 1600,1000 font "Arial,12"
+set lmargin 13
+set rmargin 5
+set tmargin 5
+set bmargin 20
+set xtics rotate by -90 offset 0,-2 nomirror
+set terminal png
+set output "histo_all_petit.png"
+set xlabel "Nom des usines" font ",16" offset 0, -5
+set ylabel "Volume (M.m^3)" font ",16"
+set xtics rotate by -90 font ",10" nomirror
+set yrange [0.5:*]
+set style fill solid 1.0 border -1
+set style data histograms
+set boxwidth 1
+set style histogram rowstacked
+plot "all_vol50.csv" using 2:xtic(1) lc rgb "cyan" title "Capacité max", \
+     "" using 3 lc rgb "magenta" title "Vol. prélevés", \
+     "" using 4 lc rgb "yellow" title "Vol. traités"
+EOF
+
+#gnuplot histogramme grand
+gnuplot <<EOF
+set title "Histogramme global des 10 plus grandes usines" font ",20" center
+set terminal png size 1600,1000 font "Arial,12"
+set lmargin 13
+set rmargin 5
+set tmargin 5
+set bmargin 20
+set xtics rotate by -90 offset 0,-2 nomirror
+set terminal png
+set output "histo_all_grand.png"
+set xlabel "Nom des usines" font ",16" offset 0, -5
+set ylabel "Volume (M.m^3)" font ",16"
+set xtics rotate by -90 font ",10" nomirror
+set yrange [0.5:*]
+set style fill solid 1.0 border -1
+set style data histograms
+set boxwidth 1
+set style histogram rowstacked
+plot "all_vol10.csv" using 2:xtic(1) lc rgb "cyan" title "Capacité max", \
+     "" using 3 lc rgb "magenta" title "Vol. prélevés", \
+     "" using 4 lc rgb "yellow" title "Vol. traités"
+EOF
+
+	#fichier de sortie propre dans le bon format
+	echo "Nom usine;Capacité maximale (M.m^3);Volumes prélevés (M.m^3);Volume totale traités (M.m^3)" > vol_max.csv #ajoute une entete au fichier
+	sort -k2 -r all_vol10.csv > temp7.csv #tris dans le sens décroissant en fct de la colonne 2 et met dans temp9
+	sort -k2 -r all_vol50.csv >> temp7.csv #tris dans le sens décroissant en fct de la colonne 2 et ajoute a temp9
+	sed  's/ /;/g' temp7.csv >> vol_all.csv #remplace les epaces par ; et ajoute temp7 trié dans vol_max.csv
+
+	#ranger le fichier de sortie dans le dossier
+	mv vol_all.csv fichiers_resultats/
+	mv histo_all_petit.png histogrammes/
+	mv histo_all_grand.png histogrammes/
+
+	#supprimer les fichiers intermédiaires
+	rm temp*.csv
+	rm fusion.csv
+	rm all_vol10.csv
+	rm all_vol50.csv
+fi
