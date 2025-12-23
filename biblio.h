@@ -20,7 +20,6 @@
 typedef struct AVL {
 	struct Arbre* arbre;
 	int equil;
-	int  elmt;
 	char* ID;
 	struct AVL* fg;
 	struct AVL* fd;
@@ -39,15 +38,15 @@ typedef struct Arbre {
 
 
 typedef struct File{
-  struct Chainon* head;
-  struct Chainon* tail;
+	  struct Chainon* head;
+	  struct Chainon* tail;
 }File;
 
 
 
 typedef struct Chainon {
-	struct Arbre* enfant;
-	struct Chainon* next;
+		struct Arbre* enfant;
+		struct Chainon* next;
 } Chainon;
 
 //utilitaire
@@ -59,9 +58,16 @@ int hauteur(AVL* a);
 AVL* creationStrAVL(Arbre* e, char* c);
 AVL* creationAVL(int e, char* c);
 AVL* creationRealAVL(float max, float real, float src, char* c);
+Chainon* creationChainon(Arbre* bebe);
 AVL* insertRealAVL(AVL* a, char* e, int* h, float max, float real, float src);
 AVL* insertStrAVL(AVL* a, char* e, int* h, Arbre* p);
 AVL* insertAVL(AVL* a, char* e,int* h,int capter);
+Chainon* empiler(Chainon* pliste, Arbre* bebe);
+AVL* rechercherAVL(AVL* a, char* id);
+Arbre* insert(char* id, int nb);
+AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant);
+AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res);
+Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) ;
 
 //rotations et equilibre
 AVL* rotationGauche(AVL* a);
@@ -77,9 +83,24 @@ void traiter(AVL* a);
 void infixe(AVL* a);
 void prefixe(AVL* a);
 void suffixe(AVL* a);
+void afficherABR(Arbre* a, int niveau);
+void afficherAVL(AVL* a);
+
+
+//calculs
+void calcul(Arbre* a, float* somme_fuites);
 
 //fichiers
 int recherche(AVL* a, char* e);
 void ecrire(FILE* f, AVL* usine);
+
+//main
+int main(int argc, char* argv[]);
+
+//memoire
+void libererArbre(Arbre* a);
+void libererAVL(AVL* a) ;
+
+
 
 #endif // BIBLIO_H
