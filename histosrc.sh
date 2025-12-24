@@ -11,8 +11,8 @@ then
 	awk -F';' '$1 ~ /-/ && $2 != "-" && $3 != "-" && $4 != "-" &&  $NF != "-"' "$fichier" > temp.csv
 	cut -d';' -f3,4 temp.csv > temp1.csv
 	touch temp2.csv
-	make histo
-	./histo 1 temp1.csv temp2.csv
+	make projet
+	./projet 1 temp1.csv temp2.csv
 	grep -v '^$' temp2.csv > temp3.csv
 	sed  's/ //g' temp3.csv > temp4.csv
 	sort -t';' -k2 -n temp4.csv > temp5.csv
