@@ -20,8 +20,8 @@ then
 	mv temp2.csv ../
 	mv temp3.csv ../
 	cd ..
-	make histo
-	./histo 3 temp1.csv temp2.csv temp3.csv temp4.csv > fusion.csv
+	make projet
+	./projet 3 temp1.csv temp2.csv temp3.csv temp4.csv > fusion.csv
 	#paste -d";" temp1.csv temp2.csv temp3.csv > fusion.csv
 	cut -d';' -f1,2,4,6 fusion.csv > vol_all.csv
 	grep -v '^$' temp4.csv > temp5.csv
