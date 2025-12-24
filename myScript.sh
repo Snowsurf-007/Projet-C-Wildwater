@@ -155,8 +155,8 @@ case "$commande" in
 		awk -F';' '$1 ~ /Service #[A-Za-z0-9]+/' fichier_filtré.csv > RU.dat
 		
 		#partie appel code C
-		make leaks
-		rm leaks.o
+		make projet
+		rm projet.o
 		rm AVL.o
 		
 		if [ -f "fichiers_resultats/fuites.dat" ];
@@ -166,14 +166,14 @@ case "$commande" in
 			cd ..
 		fi
 		
-		./leaks SU.dat US.dat SJ.dat JR.dat RU.dat >> fuites.dat		
+		./projet 4 SU.dat US.dat SJ.dat JR.dat RU.dat >> fuites.dat		
 		
 		#verif retour code C
 		retc=$?
 	
 		if [ $retc -ne 0 ] 
 		then
-			clear
+			#clear
 			echo "Échec du code C !"
 			fin=$(date +%s.%N)
 			time=`echo "$fin-$debut" | bc`
