@@ -11,7 +11,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define TAILLEID 1000000
+#define TAILLEID 100
 
 /* =====================
         STRUCTURES
