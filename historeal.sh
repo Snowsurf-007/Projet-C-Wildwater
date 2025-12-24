@@ -12,8 +12,8 @@ then
 	cut -d';' -f3,4,5 temp.csv > temp1.csv
 	sed  's/ //g' temp1.csv > temp2.csv
 	touch temp3.csv
-	make histo
-	./histo 2 temp2.csv temp3.csv
+	make projet
+	./projet 2 temp2.csv temp3.csv
 	grep -v '^$' temp3.csv > temp4.csv
 	sed  's/ //g' temp4.csv > temp5.csv
 	sort -t';' -k2 -n temp5.csv > temp6.csv
