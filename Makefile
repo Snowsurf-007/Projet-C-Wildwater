@@ -14,18 +14,12 @@ CFLAGS = -Wall -Wextra -g
 all: $(EXEC) 
 
 # Règles pour les exécutables
-histo: histo.o
-	$(CC) $(CFLAGS) -o histo histo.o
-
-leaks: leaks.o AVL.o
-	$(CC) $(CFLAGS) -o leaks leaks.o AVL.o
+projet: projet.o AVL.o
+	$(CC) $(CFLAGS) -o projet projet.o AVL.o
 
 # Règles pour les fichiers objets
-histo.o: histo.c biblio.h
-	$(CC) $(CFLAGS) -c histo.c
-
-leaks.o: leaks.c biblio.h
-	$(CC) $(CFLAGS) -c leaks.c
+projet.o: projet.c biblio.h
+	$(CC) $(CFLAGS) -c projet.c
 	
 AVL.o: AVL.c biblio.h
 	$(CC) $(CFLAGS) -c AVL.c
