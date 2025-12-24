@@ -2,6 +2,9 @@
 
 Chainon* creationChainon(Arbre* bebe) {
 	Chainon* chainon=malloc(sizeof(Chainon));
+	if(malloc==NULL){
+	return -1;
+	}
 	chainon->enfant=bebe;
 	chainon->next=NULL;
 	return chainon;
@@ -142,15 +145,6 @@ void afficherABR(Arbre* a, int niveau) {
 
 
 // Affiche complet
-void libererAVL(AVL* a) {
-    if (a == NULL)
-        return;
-
-    libererAVL(a->fg);
-    libererAVL(a->fd);
-
-    free(a);
-}
 
 void libererAVL(AVL* a) {
     if (a==NULL){
@@ -236,6 +230,9 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 
 float source(FILE* f){
+	if(f==NULL){
+	return -1;
+	}
     char source[99];
     char unit[99];
     float volume;
