@@ -68,7 +68,7 @@ AVL* insert_enfant(AVL* a, char* e, int* h, Arbre* enfant) {
 	int z = strcmp(a->ID, e);
 
 	if(z == 0) {
-		printf("DC)jC  prC)sent\n");
+		printf("Déja  présent\n");
 		*h = 0;
 		a->arbre->enfants=empiler(a->arbre->enfants,enfant);
 
@@ -101,7 +101,7 @@ AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
 	AVL* n = rechercherAVL(avl, id);
 	
 	if (n) {
-		// L'ID existe dC)jC  : renvoie l'Arbre correspondant
+		// L'ID existe : renvoie l'Arbre correspondant
 		*res = n->arbre;
 		*h = 0;  // pas de modification de hauteur
 
@@ -111,7 +111,7 @@ AVL* get_or_create(AVL* avl, char* id, int* h, Arbre** res) {
 	// L'ID n'exrbre
 
 	Arbre* a = insert(id, 0);      // valeur initiale = 0
-	// InsC(re le noiste pas : crC)er un nouvel Auvel Arbre dans l'AVL
+	// Si il n'existe pas : creer un nouvel Arbre dans l'AVL
 	avl = insertStrAVL(avl, id, h, a);
 
 	// Retourne le nouvel Arbre via res
@@ -202,7 +202,7 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 	int h = 0;
 	Arbre* parent = NULL;
 	Arbre* enfant = NULL;
-	Arbre* usine=NULL;
+	Arbre* usine = NULL;
 	// --- Lecture du fichier US ---
 	FILE* f = US;
 	if (fscanf(f, "%99[^;];%lf\n", id, &max) == 2) {
@@ -261,7 +261,7 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
 
 
 
-void calcul(Arbre* a, double* somme_fuites) {
+void calcul(Arbre* a, double* somme) {
     if(a == NULL) {
         return;
     }
@@ -283,16 +283,16 @@ void calcul(Arbre* a, double* somme_fuites) {
     Chainon* temp = a->enfants;
     while(temp != NULL) {
         // Calculer la fuite pour cet enfant
-        double fuite = (temp->enfant->elmt * vol_par_enfant) / 100.0;
+        double volume = (temp->enfant->elmt * vol_par_enfant) / 100.0;
         
         // ADDITIONNER LA FUITE AU TOTAL
-        *somme_fuites += fuite;
+        *somme += volume;
         
         // Le volume qui arrive à l'enfant (après la fuite)
-        temp->enfant->litre = vol_par_enfant - fuite;
+        temp->enfant->litre = vol_par_enfant - volume;
         
         // Récursion sur l'enfant
-        calcul(temp->enfant, somme_fuites);
+        calcul(temp->enfant, somme);
         
         temp = temp->next;
     }
@@ -303,7 +303,7 @@ void calcul(Arbre* a, double* somme_fuites) {
 int main(int argc, char* argv[]) {
 
     //verifie que le nombre d'arguments passées et le bon
-    if (argc==5){
+    if (argc==6){
         // passer US SJ JR RU et les verifier
         FILE* f1 = fopen(argv[1], "r+");
         if(f1 == NULL){
@@ -325,16 +325,22 @@ int main(int argc, char* argv[]) {
             printf("Erreur ouverture fichier RU\n");
             exit(45);
         }
+        FILE* f5 = fopen(argv[5], "r+");
+        if(f5 == NULL){
+            printf("Erreur ouverture fichier US\n");
+            exit(65);
+        }
 		
-        Arbre* res = mega_arbre(f1,f2,f3,f4);
+        Arbre* res = mega_arbre(f2,f3,f4,f5);
 
-		//probleme dans la création de méga arbre
+	//probleme dans la création de méga arbre
         if(res == NULL) {
             printf("ERREUR: Impossible de créer l'arbre\n");
             fclose(f1);
             fclose(f2);
             fclose(f3);
             fclose(f4);
+            fclose(f5);
             return 1;
         }
 
@@ -346,7 +352,16 @@ int main(int argc, char* argv[]) {
         // Afficher le résultat
         printf("=== RÉSULTAT ===\n");
         printf("Usine: %s\n", res->ID);
-        printf("Capacité initiale: %.2lf k.m^3\n", max);
+        
+        //A FAIRE IMPERATIVEMENT
+        
+
+        printf("Quantité captée: %.2lf k.m^3\n", max);
+
+        
+        //A FAIRE IMPERATIVEMENT
+        
+        printf("Capacité maximale: %.2lf k.m^3\n", max);
         printf("Total des fuites: %.2lf k.m^3\n", somme);
         printf("Volume restant: %.2lf k.m^3\n", (max - somme));
         printf("Pourcentage de fuite: %.3f %% \n", pourcentage);
