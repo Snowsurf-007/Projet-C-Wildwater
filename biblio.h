@@ -89,5 +89,5 @@ void ecrireReal(FILE* f, AVL* usine);
 void libererAVL(AVL* a);
 
 void calcul(Arbre* a, double* somme_fuites);
-
+float source(FILE* f);
 #endif // BIBLIO_H
