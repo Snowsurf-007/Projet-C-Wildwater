@@ -152,7 +152,10 @@ case "$commande" in
 		make leaks
 		rm leaks.o
 		rm AVL.o
-		./leaks SU.dat US.dat SJ.dat JR.dat RU.dat > fuites.dat		
+		cd fichiers_resultats/
+		mv fuites.dat ../
+		cd ..
+		./leaks SU.dat US.dat SJ.dat JR.dat RU.dat >> fuites.dat		
 		
 		#verif retour code C
 		retc=$?
