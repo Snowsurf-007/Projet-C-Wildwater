@@ -76,7 +76,7 @@ set output "histo_all_petit.png"
 set xlabel "Nom des usines" font ",16" offset 0, -5
 set ylabel "Volume (M.m^3)" font ",16"
 set xtics rotate by -90 font ",10" nomirror
-set yrange [0.5:*]
+set yrange [0:*]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
@@ -98,7 +98,7 @@ set output "histo_all_grands.png"
 set xlabel "Nom des usines" font ",16" offset 0, -5
 set ylabel "Volume (M.m^3)" font ",16"
 set xtics rotate by -90 font ",10" nomirror
-set yrange [0.5:*]
+set yrange [0:*]
 set style fill solid 1.0 border -1
 set style data histograms
 set boxwidth 1
