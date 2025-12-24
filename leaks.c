@@ -297,27 +297,27 @@ int main(int argc, char* argv[]) {
         // passer SU US SJ JR RU et les verifier
         FILE* f1 = fopen(argv[1], "r+");
         if(f1 == NULL){
-            printf("Erreur ouverture fichier US\n");
+            printf("Erreur ouverture fichier SU\n");
             exit(55);
         }
         FILE* f2 = fopen(argv[2], "r+");
         if(f2 == NULL){
-            printf("Erreur ouverture fichier SJ\n");
+            printf("Erreur ouverture fichier US\n");
             exit(55);
         }
         FILE* f3 = fopen(argv[3], "r+");
         if(f3 == NULL){
-            printf("Erreur ouverture fichier JR\n");
+            printf("Erreur ouverture fichier SJ\n");
             exit(45);
         }
         FILE* f4 = fopen(argv[4], "r+");
         if(f4 == NULL){
-            printf("Erreur ouverture fichier RU\n");
+            printf("Erreur ouverture fichier JR\n");
             exit(45);
         }
         FILE* f5 = fopen(argv[5], "r+");
         if(f5 == NULL){
-            printf("Erreur ouverture fichier US\n");
+            printf("Erreur ouverture fichier RU\n");
             exit(65);
         }
 		
