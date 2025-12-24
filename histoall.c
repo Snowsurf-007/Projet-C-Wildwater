@@ -98,7 +98,7 @@ int recherche(AVL* a, int b){
 
 
 
-AVL* creationRealAVL(int b, double max, double real, double src, char* c){
+AVL* creationallAVL(int b, double max, double real, double src, char* c){
     AVL* newNode = malloc(sizeof(AVL));
     if(!newNode){
         printf("Erreur : malloc\n");
@@ -197,10 +197,10 @@ void traiter(AVL* a){
 /* =====================
    INSERTION AVL
    ===================== */
-AVL* insertRealAVL(AVL* a, char* e,int* h, int b, double max, double real, double src) {
+AVL* insertallAVL(AVL* a, char* e,int* h, int b, double max, double real, double src) {
     if (a == NULL) {
     	*h=1;
-        return creationRealAVL(b, max, real, src, e);
+        return creationalllAVL(b, max, real, src, e);
     }
     //int z = strcmp(a->ID, e);
 
@@ -220,11 +220,11 @@ AVL* insertRealAVL(AVL* a, char* e,int* h, int b, double max, double real, doubl
        
     }
     else if (a->nom > b) {
-        a->fg = insertRealAVL(a->fg, e, h, b, max, real, src);
+        a->fg = insertallAVL(a->fg, e, h, b, max, real, src);
         *h=-*h;
     }
     else if(a->nom < b){
-        a->fd = insertRealAVL(a->fd, e, h, b, max, real, src);
+        a->fd = insertallAVL(a->fd, e, h, b, max, real, src);
     }
     else{
         *h=0;
