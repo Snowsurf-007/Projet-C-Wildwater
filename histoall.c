@@ -331,27 +331,6 @@ while (fgets(ligne, sizeof ligne, fsrc)) {
     b++;
     usine = insertRealAVL(usine, ID, &h, b, 0, 0, c);
 }
-/*infixe(usine);
-printf("la c'est val b=%d", b); 
-    //printf("\n 1ER\n");
-    //infixe(usine);
-     //printf(" entrer 2\n");
-    b=0;
-    while (fscanf(fmax, "%f", &c) == 1) {
-	//printf("%f\n",c);
-	b=b+1;
-	usine = insertRealAVL(usine, ID, &h, b, c, 0, 0);
-    }
-    /*printf("\n 2EME\n");
-    infixe(usine);
-    b=0;
-    while (fscanf(fmax, "%f", &c) == 1) {
-	//printf("%f\n",c);
-	b=b+1;
-	usine = insertRealAVL(usine, ID, &h, b, c, 0, 0);
-    } */
-    //printf("\n 3EME\n");
-    //infixe(usine);
     ecrire(fichier, usine);
     fclose(fichier);
     fclose(fmax);
