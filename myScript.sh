@@ -47,14 +47,20 @@ fi
 #appel du bon programme en fct de la commande entrée
 commande="$2"
 
-mkdir -p fichiers_resultats
+
+if [ ! -f "fichiers_resultats" ];
+then
+    	mkdir -p fichiers_resultats
+fi
 
 case "$commande" in
 	#partie histogramme en shell
 	
 	histo) 
-		
-		mkdir -p histogrammes
+		if [ ! -f "histogrammes" ];
+		then
+    			mkdir -p histogrammes
+    		fi
 		
 		option="$3"
 		
@@ -152,9 +158,14 @@ case "$commande" in
 		make leaks
 		rm leaks.o
 		rm AVL.o
-		cd fichiers_resultats/
-		mv fuites.dat ../
-		cd ..
+		
+		if [ -f "fichiers_resultats/fuites.dat" ];
+		then
+    			cd fichiers_resultats/
+			mv fuites.dat ../
+			cd ..
+		fi
+		
 		./leaks SU.dat US.dat SJ.dat JR.dat RU.dat >> fuites.dat		
 		
 		#verif retour code C
