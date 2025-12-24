@@ -259,7 +259,18 @@ Arbre* mega_arbre(FILE* US, FILE* SJ, FILE* JR, FILE* RU) {
     return usine;
 }
 
-
+/*float source(FILE* f){
+char source[99];
+char unit[99];
+float volume;
+float pourcentage;
+float res=0;
+    while (fscanf(f,"%99[^;];%99[^;];%f;%f",source, unit, &volume, &pourcentage) == 4){
+        res+=volume*(1-(pourcentage/100));
+    }
+    printf("%f",res);
+    return res;
+}*/
 
 void calcul(Arbre* a, double* somme) {
     if(a == NULL) {
@@ -343,7 +354,7 @@ int main(int argc, char* argv[]) {
             fclose(f5);
             return 1;
         }
-
+		//res->elmt=source(f5);
         double max=res->elmt;
         double somme=0.0;
         calcul(res, &somme);
