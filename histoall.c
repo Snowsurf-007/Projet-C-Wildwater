@@ -205,7 +205,7 @@ AVL* insertRealAVL(AVL* a, char* e,int* h, int b, double max, double real, doubl
     //int z = strcmp(a->ID, e);
 
     if (a->nom == b) {
-        printf("Cet élément est déjà présent dans l'AVL\n");
+
         if(a->max==0){
         a->max = a->max+ max;
         }
