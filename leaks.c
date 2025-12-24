@@ -354,7 +354,7 @@ int main(int argc, char* argv[]) {
             fclose(f5);
             return 1;
         }
-		//res->elmt=source(f5);
+		//res->elmt=source(f1);
         double max=res->elmt;
         double somme=0.0;
         calcul(res, &somme);
