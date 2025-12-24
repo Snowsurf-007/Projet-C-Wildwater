@@ -150,6 +150,8 @@ case "$commande" in
 		
 		#partie appel code C
 		make leaks
+		rm leaks.o
+		rm AVL.o
 		./leaks SU.dat US.dat SJ.dat JR.dat RU.dat > fuites.dat		
 		
 		#verif retour code C
@@ -167,8 +169,17 @@ case "$commande" in
 		fi
 		
 		mv fuites.dat fichiers_resultats/
+		rm SU.dat
+		rm US.dat
+		rm SJ.dat
+		rm JR.dat
+		rm RU.dat
+		rm temp*.csv
+		rm leaks_usine.csv
+		rm fichier_filtré.csv
 		
 		;;
+		
 	*)
 		echo "Commande inconnue, veuillez relancer le programme"
 		
