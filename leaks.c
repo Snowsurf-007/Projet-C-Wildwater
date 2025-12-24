@@ -142,19 +142,16 @@ void afficherABR(Arbre* a, int niveau) {
 
 
 // Affiche complet
-void afficherAVL(AVL* a) {
-	if (!a) return;
+void libererAVL(AVL* a) {
+    if (a == NULL)
+        return;
 
-	// Sous-arbre gauche
-	afficherAVL(a->fg);
+    libererAVL(a->fg);
+    libererAVL(a->fd);
 
-	// Noeud courant
-	printf("AVL: %s\n", a->ID);
-	afficherABR(a->arbre, 1);  // enfants du noeud
-
-	// Sous-arbre droit
-	afficherAVL(a->fd);
+    free(a);
 }
+
 
 
 
@@ -383,7 +380,6 @@ int main(int argc, char* argv[]) {
 
 		// Libération mémoire
 		libererArbre(res);
-
 		//fermeture des fichiers
         fclose(f1);
         fclose(f2);
