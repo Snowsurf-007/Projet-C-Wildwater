@@ -1,4 +1,5 @@
 
+
 #!/bin/bash
 
 if [ $# -ne 1 ]
@@ -57,7 +58,7 @@ then
 	gcc -o all all.c
 	./all tempnom.csv tempmax5.csv tempreal11.csv tempsrc10.csv tempnv.csv
 	grep -v '^$' tempnv.csv > temp6.csv
-	sort -k2 -n temp6.csv > temp7.csv
+	sort -t';' -k2 -n temp6.csv > temp7.csv
 	sed  's/;/ /g' temp7.csv > vol_all.csv
 	tail -n 10 vol_all.csv > all_vol10.csv
 	head -n 50 vol_all.csv > all_vol50.csv
