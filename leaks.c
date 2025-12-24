@@ -389,6 +389,7 @@ int main(int argc, char* argv[]) {
         fclose(f2);
         fclose(f3);
         fclose(f4);
+		fclose(f5);
     }
 
 	//si mauvais nombre d'arguments
