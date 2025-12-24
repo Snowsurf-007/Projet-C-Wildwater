@@ -83,6 +83,25 @@ AVL* creationAVL(int e, char* c){
 
 
 
+AVL* creationRealAVL(float max, float real, float src, char* c) {
+    AVL* newNode = malloc(sizeof(AVL));
+    if(!newNode) {
+        printf("Erreur : malloc\n");
+        exit(1);
+    }
+    newNode->elmt = 0;
+    newNode->max = max;
+    newNode->real = real;
+    newNode->src = src;
+    newNode->fg = NULL;
+    newNode->fd = NULL;
+    newNode->equil = 0;
+    newNode->ID = strdup(c);
+    return newNode;
+}
+
+
+
 /* =====================
          ROTATIONS
    ===================== */
@@ -228,6 +247,40 @@ AVL* insertAVL(AVL* a, char* e,int* h,int capter) {
 
 
 
+AVL* insertRealAVL(AVL* a, char* e, int* h, float max, float real, float src) {
+    if (a == NULL) {
+        *h = 1;
+        return creationRealAVL(max, real, src, e);
+    }
+    int z = strcmp(a->ID, e);
+    if (z == 0) {
+        if(max != 0) a->max = a->max + max;
+        else if(real != 0) a->real = a->real + real;
+        else if(src != 0) a->src = a->src + src;
+        return a;
+    }
+    else if (z > 0) {
+        a->fg = insertRealAVL(a->fg, e, h, max, real, src);
+        *h = -*h;
+    }
+    else if(z < 0) {
+        a->fd = insertRealAVL(a->fd, e, h, max, real, src);
+    }
+    else {
+        *h = 0;
+        return a;
+    }
+    if(*h != 0) {
+        a->equil = a->equil + *h;
+        a = equilibrage(a);
+        if(a->equil == 0) *h = 0;
+        else *h = 1;
+    }
+    return a;
+}
+
+
+
 /* =====================
        AFFICHAGE AVL
    ===================== */
@@ -262,4 +315,42 @@ void suffixe(AVL* a){
     suffixe(a->fg);
     suffixe(a->fd);
     traiter(a);
+}
+
+
+
+//recherche un ID dans l'AVL
+AVL* rechercherAVL(AVL* a, char* id) {
+	if (!a){
+	    return NULL;
+	}
+
+	int c = strcmp(id, a->ID);
+	
+	//si trouvé
+	if (c == 0){
+	    return a;
+	}
+	//si plus petit
+	if (c < 0){
+	    return rechercherAVL(a->fg, id);
+	}
+	//si plus grand
+	else{
+	    return rechercherAVL(a->fd, id);
+	}
+}
+
+
+
+//fonction liberation memoire d'AVL
+void libererAVL(AVL* a) {
+    if (a==NULL){
+        return;
+    }
+    
+    libererAVL(a->fg);
+    libererAVL(a->fd);
+    free(a->ID);
+    free(a);
 }
