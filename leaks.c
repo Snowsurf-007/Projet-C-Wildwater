@@ -152,29 +152,6 @@ void libererAVL(AVL* a) {
     free(a);
 }
 
-
-
-
-void libererArbre(Arbre* a) {
-    if (a==NULL){
-        return;
-    }
-    
-    // Libérer la liste des enfants
-    Chainon* c=a->enfants;
-    while (c!=NULL) {
-        Chainon* temp=c;
-        libererArbre(c->enfant);
-        c=c->next;
-        free(temp);
-    }
-    
-    free(a->ID);
-    free(a);
-}
-
-
-
 void libererAVL(AVL* a) {
     if (a==NULL){
         return;
