@@ -47,13 +47,14 @@ fi
 #appel du bon programme en fct de la commande entrée
 commande="$2"
 
+mkdir -p fichiers_resultats
+
 case "$commande" in
 	#partie histogramme en shell
 	
 	histo) 
 		
 		mkdir -p histogrammes
-		mkdir -p fichiers_resultats
 		
 		option="$3"
 		
@@ -90,6 +91,7 @@ case "$commande" in
 				fi
 				;;
 			real)
+				#partie appel fonction histogramme real
 				bash historeal.sh "$fichier"
 				#verif retour code
 				ret=$?
@@ -104,6 +106,7 @@ case "$commande" in
 				fi
 				;;
 			all)	
+				#partie appel fonction histogramme all
 				bash histoall.sh "$fichier"
 				#verif retour code
 				ret=$?
